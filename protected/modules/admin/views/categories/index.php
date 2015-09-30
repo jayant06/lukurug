@@ -2,10 +2,10 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-                <div style="float:left;">Categories</div>
+                <div style="float:left;">Courses</div>
                 <div style="float:right">
                 	<?php
-                	echo CHtml::link('Add Category',array('/admin/categories/create'),array('class' => 'btn btn-primary'));
+                	echo CHtml::link('Add Course',array('/admin/categories/create'),array('class' => 'btn btn-primary'));
                 	?>
                 </div>
                 <div style="clear:both;"></div>

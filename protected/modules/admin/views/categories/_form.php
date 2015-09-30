@@ -8,9 +8,6 @@
 			<?php echo $form->errorSummary($model); ?>
 			<?php echo $form->textFieldRow($model,'cat_name',array('class'=>'form-control','maxlength'=>255)); ?>
 			<?php echo $form->textAreaRow($model,'cat_description',array('rows'=>6, 'cols'=>50, 'class'=>'form-control')); ?>
-			<?php echo $form->textAreaRow($model,'cat_meta_title',array('rows'=>6, 'cols'=>50, 'class'=>'form-control')); ?>
-			<?php echo $form->textAreaRow($model,'cat_meta_keyword',array('rows'=>6, 'cols'=>50, 'class'=>'form-control')); ?>
-			<?php echo $form->textAreaRow($model,'cat_meta_description',array('rows'=>6, 'cols'=>50, 'class'=>'form-control')); ?>
 			<div>&nbsp;</div>
 			<div class="form-actions">
 				<?php 
@@ -35,6 +32,6 @@
 	$(document).ready(function(){
 		$('#cancelBtn').click(function(){
 			window.location = '<?php echo Yii::app()->baseUrl; ?>/admin/categories';
-		});
+		});		
 	});
 </script>

@@ -2,7 +2,7 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-                Create Categories
+                Create Courses
             </div>
             <div class="panel-body">
 				<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

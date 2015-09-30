@@ -46,7 +46,7 @@ class Categories extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'catSubcats'=>array(self::HAS_MANY, 'Subcategories','sub_cat_id'),
+			'catExams'=>array(self::HAS_MANY, 'Exams','ex_category_id'),
 		);
 	}
 
@@ -56,11 +56,11 @@ class Categories extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'cat_name' => 'Category Name',
-			'cat_description' => 'Category Description',
-			'cat_meta_title' => 'Category Meta Title',
-			'cat_meta_keyword' => 'Category Meta Keyword',
-			'cat_meta_description' => 'Category Meta Description',
+			'cat_name' => 'Course Name',
+			'cat_description' => 'Course Description',
+			'cat_meta_title' => 'Course Meta Title',
+			'cat_meta_keyword' => 'Course Meta Keyword',
+			'cat_meta_description' => 'Course Meta Description',
 		);
 	}
 
