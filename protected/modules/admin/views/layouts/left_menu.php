@@ -11,6 +11,7 @@ $sitesetting = '';
 $subcategories = '';
 $userlist = '';
 $exams = '';
+$questions = '';
 if($page=='UserIndex')
     $dashboard = 'active-menu';
 else if($page=='UserUserlist' || $page=='UserAdd' || $page=='UserEdit')
@@ -23,6 +24,8 @@ else if($page=='CategoriesIndex' || $page=='CategoriesCreate' || $page=='Categor
     $categories = 'active-menu';
 else if($page=='ExamsIndex' || $page=='ExamsCreate' || $page=='ExamsUpdate')
     $exams = 'active-menu';
+else if($page=='QuestionsIndex' || $page=='QuestionsCreate' || $page=='QuestionsUpdate')
+    $questions = 'active-menu';
 else if($page=='SubcategoriesIndex' || $page=='SubcategoriesCreate' || $page=='SubcategoriesUpdate')
     $subcategories = 'active-menu';
 else if($page=='UserSitesettings')
@@ -49,6 +52,11 @@ else if($page=='UserSitesettings')
             <li>
                 <?php
                 echo CHtml::link('<i class="fa fa-file-text"></i> Exams',array('/admin/exams/index'),array('class' => $exams));
+                ?>
+            </li>
+            <li>
+                <?php
+                echo CHtml::link('<i class="fa fa-file-text"></i> Questions',array('/admin/questions/index'),array('class' => $questions));
                 ?>
             </li>
             <li>

@@ -50,6 +50,7 @@ class Exams extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'catExams'=>array(self::BELONGS_TO, 'Categories','ex_category_id'),
+			'qatExams'=>array(self::HAS_MANY, 'Questions','qt_exam_id'),
 		);
 	}
 

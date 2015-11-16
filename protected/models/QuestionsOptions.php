@@ -1,21 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "{{fabric_buttons}}".
+ * This is the model class for table "{{questions_options}}".
  *
- * The followings are the available columns in table '{{fabric_buttons}}':
- * @property integer $fbt_id
- * @property integer $fbt_fabric_id
- * @property integer $fbt_button_id
+ * The followings are the available columns in table '{{questions_options}}':
+ * @property integer $qto_id
+ * @property string $qto_name
+ * @property string $qto_image
  */
-class FabricButtons extends CActiveRecord
+class QuestionsOptions extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{fabric_buttons}}';
+		return '{{questions_options}}';
 	}
 
 	/**
@@ -26,11 +26,12 @@ class FabricButtons extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fbt_fabric_id, fbt_button_id', 'required'),
-			array('fbt_fabric_id, fbt_button_id', 'numerical', 'integerOnly'=>true),
+			array('qto_name, qto_question_id', 'required'),
+			array('qto_name', 'length', 'max'=>200),
+			array('qto_image', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('fbt_id, fbt_fabric_id, fbt_button_id', 'safe', 'on'=>'search'),
+			array('qto_id, qto_name, qto_image, qto_question_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -42,8 +43,7 @@ class FabricButtons extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'fabButtons'=>array(self::BELONGS_TO, 'Fabrics','fbt_fabric_id'),
-			'buttonsFab'=>array(self::BELONGS_TO, 'Buttons','fbt_button_id'),
+			'qoptQat'=>array(self::BELONGS_TO, 'Questions','qto_question_id'),
 		);
 	}
 
@@ -53,9 +53,9 @@ class FabricButtons extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'fbt_id' => 'Fbt',
-			'fbt_fabric_id' => 'Fbt Fabric',
-			'fbt_button_id' => 'Fbt Button',
+			'qto_name' => 'Option',
+			'qto_image' => 'Option Image',
+			'qto_question_id' => 'Question'
 		);
 	}
 
@@ -77,10 +77,9 @@ class FabricButtons extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('fbt_id',$this->fbt_id);
-		$criteria->compare('fbt_fabric_id',$this->fbt_fabric_id);
-		$criteria->compare('fbt_button_id',$this->fbt_button_id);
-
+		$criteria->compare('qto_id',$this->qto_id);
+		$criteria->compare('qto_name',$this->qto_name,true);
+		$criteria->compare('qto_question_id',$this->qto_question_id);
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
@@ -90,7 +89,7 @@ class FabricButtons extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return FabricButtons the static model class
+	 * @return QuestionsOptions the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

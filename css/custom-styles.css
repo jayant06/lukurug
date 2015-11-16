@@ -429,4 +429,12 @@ font-size: 19px;
 }
 }
 
-
+.question_options .left{
+  float: left;
+}
+.question_options .clear{
+  clear: both;
+}
+.question_options .hide{
+  display: none;    
+}

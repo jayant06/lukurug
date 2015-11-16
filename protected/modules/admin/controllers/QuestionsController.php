@@ -1,6 +1,5 @@
 <?php
-
-class ExamsController extends Controller
+class QuestionsController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -14,17 +13,33 @@ class ExamsController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Exams;
-
+		$model=new Questions;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Exams'])){
-			$model->attributes=$_POST['Exams'];
-			if($model->save())
+		if(isset($_POST['Questions']))
+		{
+			$model->attributes=$_POST['Questions'];
+			$type = $_POST['Questions']['qt_type'];
+			if($model->save()){
+				if(!empty($_POST['qoptions'])){
+					foreach ($_POST['qoptions'] as $optKey => $optName) {
+						if(!empty($optName)){
+							$optionModel = new QuestionsOptions;
+							$optionModel->qto_name = $optName;
+							$optionModel->qto_question_id = $model->qt_id;
+							if($type==2){
+								if(!empty($_FILES['qfile']['name'][$optKey])){
+									$imgName = $this->imageUpload($_FILES['qfile']['name'][$optKey],$_FILES['qfile']['tmp_name'][$optKey],'qoptions');
+									$optionModel->qto_image = $imgName;
+								}
+							}
+							$optionModel->save();
+						}
+					}					
+				}
 				$this->redirect(array('index'));
+			}
 		}
-
 		$this->render('create',array(
 			'model'=>$model,
 		));
@@ -42,9 +57,9 @@ class ExamsController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Exams']))
+		if(isset($_POST['Questions']))
 		{
-			$model->attributes=$_POST['Exams'];
+			$model->attributes=$_POST['Questions'];
 			if($model->save())
 				$this->redirect(array('index'));
 		}
@@ -79,7 +94,7 @@ class ExamsController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$model = new Exams;
+		$model = new Questions;
 		$this->render('index',array(
 			'model'=>$model,
 		));
@@ -92,7 +107,7 @@ class ExamsController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Exams::model()->findByPk($id);
+		$model=Questions::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -104,10 +119,27 @@ class ExamsController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='exams-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='questions-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+	public function actionDeleteoption(){
+		$deleted = 0;
+		if(!empty($_POST)){
+			$qtid = $_POST['qtid'];
+			if(!empty($qtid)){
+				$model=QuestionsOptions::model()->findByPk($qtid);
+				if($model!==null){
+					if($model->delete()){
+						$deleted = 1;
+					}
+				}
+			}
+		}
+		echo $deleted;
+		Yii::app()->end();
 	}
 }

@@ -1,25 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "{{subcategories}}".
+ * This is the model class for table "{{questions}}".
  *
- * The followings are the available columns in table '{{subcategories}}':
- * @property integer $sub_id
- * @property integer $sub_cat_id
- * @property string $sub_cat_name
- * @property string $sub_cat_description
- * @property string $sub_cat_title
- * @property string $sub_cat_keyword
- * @property string $sub_meta_description
+ * The followings are the available columns in table '{{questions}}':
+ * @property integer $qt_id
+ * @property integer $qt_exam_id
+ * @property string $qt_name
+ * @property string $qt_description
+ * @property integer $qt_type
+ * @property integer $qt_marks
+ * @property string $qt_created
+ * @property string $qt_modified
  */
-class Subcategories extends CActiveRecord
+class Questions extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{subcategories}}';
+		return '{{questions}}';
 	}
 
 	/**
@@ -30,13 +31,13 @@ class Subcategories extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('sub_cat_id, sub_cat_name', 'required'),
-			array('sub_cat_id', 'numerical', 'integerOnly'=>true),
-			array('sub_cat_name', 'length', 'max'=>200),
-			array('sub_cat_description, sub_cat_title, sub_cat_keyword, sub_meta_description', 'safe'),
+			array('qt_exam_id, qt_name, qt_type, qt_marks', 'required'),
+			array('qt_exam_id, qt_type, qt_marks', 'numerical', 'integerOnly'=>true),
+			array('qt_name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('sub_id, sub_cat_id, sub_cat_name, sub_cat_description, sub_cat_title, sub_cat_keyword, sub_meta_description', 'safe', 'on'=>'search'),
+			array('qt_id, qt_exam_id, qt_name, qt_description, qt_type, qt_marks, qt_created, qt_modified', 'safe'),
+			array('qt_id, qt_exam_id, qt_name, qt_description, qt_type, qt_marks, qt_created, qt_modified', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,8 +49,8 @@ class Subcategories extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'catSubcats'=>array(self::BELONGS_TO, 'Categories','sub_cat_id'),
-			'subcatItems'=>array(self::HAS_MANY, 'Items','itm_subcategory_id'),
+			'qatExams'=>array(self::BELONGS_TO, 'Exams','qt_exam_id'),
+			'qoptQat'=>array(self::HAS_MANY, 'QuestionsOptions','qto_question_id'),
 		);
 	}
 
@@ -59,12 +60,11 @@ class Subcategories extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'sub_cat_id' => 'Category Name',
-			'sub_cat_name' => 'Subcategory Name',
-			'sub_cat_description' => 'Subcategory Description',
-			'sub_cat_title' => 'Subcategory Meta Title',
-			'sub_cat_keyword' => 'Subcategory Meta Keyword',
-			'sub_meta_description' => 'Sub Category Meta Description',
+			'qt_exam_id' => 'Exams',
+			'qt_name' => 'Question',
+			'qt_description' => 'Description',
+			'qt_type' => 'Question Type',
+			'qt_marks' => 'Total Marks'
 		);
 	}
 
@@ -86,13 +86,11 @@ class Subcategories extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('sub_id',$this->sub_id);
-		$criteria->compare('sub_cat_id',$this->sub_cat_id);
-		$criteria->compare('sub_cat_name',$this->sub_cat_name,true);
-		$criteria->compare('sub_cat_description',$this->sub_cat_description,true);
-		$criteria->compare('sub_cat_title',$this->sub_cat_title,true);
-		$criteria->compare('sub_cat_keyword',$this->sub_cat_keyword,true);
-		$criteria->compare('sub_meta_description',$this->sub_meta_description,true);
+		$criteria->compare('qt_exam_id',$this->qt_exam_id);
+		$criteria->compare('qt_name',$this->qt_name,true);
+		$criteria->compare('qt_description',$this->qt_description,true);
+		$criteria->compare('qt_type',$this->qt_type);
+		$criteria->compare('qt_marks',$this->qt_marks);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -103,10 +101,21 @@ class Subcategories extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Subcategories the static model class
+	 * @return Questions the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function behaviors(){
+		return array(
+			'CTimestampBehavior' => array(
+				'class' => 'zii.behaviors.CTimestampBehavior',
+				'createAttribute' => 'qt_created',
+				'updateAttribute' => 'qt_modified',
+				'setUpdateOnCreate'=> true
+			)
+		);
 	}
 }

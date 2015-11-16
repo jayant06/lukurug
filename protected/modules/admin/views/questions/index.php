@@ -2,10 +2,10 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-                <div style="float:left;">Buttons</div>
+                <div style="float:left;">Questions</div>
                 <div style="float:right">
                 	<?php
-                	echo CHtml::link('Add Button',array('/admin/buttons/create'),array('class' => 'btn btn-primary'));
+                	echo CHtml::link('Add Question',array('/admin/questions/create'),array('class' => 'btn btn-primary'));
                 	?>
                 </div>
                 <div style="clear:both;"></div>
@@ -19,9 +19,19 @@
 	                'filter'=>$model,
 	                'columns'=>array(
 						array(
-							'name'=>'but_name',
+							'name'=>'qt_name',
 							'type'=>'raw',
-							'value'=>'CHtml::encode($data->but_name)'
+							'value'=>'CHtml::encode($data->qt_name)'
+						),
+						array(
+							'name'=>'qt_description',
+							'type'=>'raw',
+							'value'=>'CHtml::encode($data->qt_description)'
+						),
+						array(
+							'name'=>'qt_marks',
+							'type'=>'raw',
+							'value'=>'CHtml::encode($data->qt_marks)'
 						),
 						array(
 							'header'=>'Action',
@@ -31,12 +41,12 @@
 								'update'=>array(
 									'label'=>'Edit',								            
 									'imageUrl'=>false,
-									'url'=>'Yii::app()->createUrl("/admin/buttons/update", array("id"=>$data->but_id))',
+									'url'=>'Yii::app()->createUrl("/admin/questions/update", array("id"=>$data->qt_id))',
 								),
 								'delete'=>array(
 									'label'=>'Delete',								            
 									'imageUrl'=>false,
-									'url'=>'Yii::app()->createUrl("/admin/buttons/delete", array("id"=>$data->but_id))',
+									'url'=>'Yii::app()->createUrl("/admin/questions/delete", array("id"=>$data->qt_id))',
 								)
 							)
 						)
