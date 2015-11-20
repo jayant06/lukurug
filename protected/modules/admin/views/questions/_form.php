@@ -33,35 +33,55 @@
 				if(!empty($model->qoptQat)){
 					foreach ($model->qoptQat as $optKey => $optArr) {
 						?>
-						<div>
-							<div class="left">
-								<div>
-									<input type="text" placeholder="Option 1" name="qoptions[]" value="<?php echo $optArr->qto_name; ?>">
+						<div class="col-md-12">
+							<div class="col-md-10">
+								<div class="col-md-8">
+									<div>
+										<input type="text" placeholder="Option 1" name="qoptions[]" value="<?php echo $optArr->qto_name; ?>">
+									</div>
+									<div class="image" style="display: <?php echo $display; ?>;">
+										<input type="file" name="qfile[]">
+									</div>
+									<div style="display: <?php echo $display; ?>">
+										<img src="<?php echo Yii::app()->baseUrl; ?>/storage/qoptions/<?php echo $optArr->qto_image; ?>" height="100">
+									</div>
 								</div>
-								<div class="image" style="display: <?php echo $display; ?>;">
-									<input type="file" name="qfile[]">
+								<div class="col-md-4" align="center">
+									Right Ans<br>
+									<input type="radio" name="rightans[]" value="1" <?php echo ($optArr->qto_right_ans==1) ? 'checked' : ''; ?>>
+									<input type="hidden" name="rightansh[]" value="<?php echo ($optArr->qto_right_ans==1) ? 1 : 0; ?>">
 								</div>
-								<div style="display: <?php echo $display; ?>">
-									<img src="<?php echo Yii::app()->baseUrl; ?>/storage/qoptions/<?php echo $optArr->qto_image; ?>" height="100">
-								</div>
+								<div class="clear">&nbsp;</div>
 							</div>
-							<div class="left"><a href="javascript:void(0);" class="removeOption" qtid='<?php echo $optArr->qto_id; ?>'><b>Remove</b></a></div>
+							<div class="col-md-2"><a href="javascript:void(0);" class="removeOption" qtid='<?php echo $optArr->qto_id; ?>'><b><i class="glyphicon glyphicon-remove"></i></b></a></div>
 							<div class="clear">&nbsp;</div>
 						</div>
 						<?php
 					}					
 				}
 				?>
-				<div class="optionCnt left">
-					<div>
-						<input type="text" name="qoptions[]" placeholder="Option 1">
-					</div>
-					<div class="image hide">
-						<input type="file" name="qfile[]">
+				<div>
+					<div class="col-md-12">
+						<div class="optionCnt col-md-10">
+							<div class="col-md-8">
+								<div>
+									<input type="text" name="qoptions[]" placeholder="Option 1">
+								</div>
+								<div class="image" style="display: <?php echo $display; ?>">
+									<input type="file" name="qfile[]">
+								</div>
+							</div>
+							<div class="col-md-4" align="center">
+								Right Ans<br>
+								<input type="radio" name="rightans[]" value="1">
+								<input type="hidden" name="rightansh[]">
+							</div>
+							<div class="clear">&nbsp;</div>
+						</div>
+						<div class="col-md-2"><a href="javascript:void(0);" class="addMoreOptions"><b><i class="glyphicon glyphicon-plus"></i></b></a></div>
+						<div class="clear">&nbsp;</div>
 					</div>
 				</div>
-				<div class="left"><a href="javascript:void(0);" class="addMoreOptions"><b>Add More</b></a></div>
-				<div class="clear">&nbsp;</div>
 			</div>
 			<div>&nbsp;</div>
 			<div class="form-actions">
@@ -105,14 +125,20 @@
 				$('.question_options .image').hide();
 			}else{
 				$('.question_options .image').show();
+				$('.question_options .image').removeClass('hide');
+				$('.question_options .image').removeAttr('style');
 			}
 
 			var html = $('.optionCnt').html();
 			var newHtml = '';
-			newHtml += '<div><div class="left">';
+			newHtml += '<div class="col-md-12">';
+			newHtml += '<div class="col-md-10">';
 			newHtml += html;
-			newHtml += '</div><div class="left"><a href="javascript:void(0);" class="removeOption" qtid=""><b>Remove</b></a></div><div class="clear">&nbsp;</div></div>';
-			$('.optionCnt').parent().append(newHtml);
+			newHtml += '</div>';
+			newHtml += '<div class="col-md-2"><a href="javascript:void(0);" class="removeOption" qtid=""><b><i class="glyphicon glyphicon-remove"></i></b></a></div>';
+			newHtml += '<div class="clear">&nbsp;</div>';
+			newHtml += '</div>';
+			$('.optionCnt').parent().parent().append(newHtml);
 		});
 
 		$( ".add-edit-question-form" ).on( "click", "a.removeOption", function() {
@@ -135,6 +161,14 @@
 				}else{
 					$(obj).parent().parent().remove();
 				}
+			}
+		});
+
+		$( ".add-edit-question-form" ).on( "click", "input[type='radio']", function() {
+			if($(this).is(':checked')){
+				$(this).parent().find("input[type='hidden']").val(1);
+			}else{
+				$(this).parent().find("input[type='hidden']").val(0);
 			}
 		});
 	});

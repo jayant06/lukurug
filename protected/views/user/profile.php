@@ -14,33 +14,8 @@ $this->widget('zii.widgets.jui.CJuiTabs',array(
         		true
         	),
         	'id' => 'accountInfoTab'
-        ),
-        'MY MEASURMENT'=>array(
-        	'content'=>$this->renderPartial(
-        		'_mymeasurment',array(
-        			'model' => $model,
-        			'userMesurements' => $userMesurements
-        		),
-        		true
-        	),
-        	'id' => 'myMeasurmentTab',        	
-        ),
-        'MY ORDER HISTORY'=>array(
-        	'content'=>$this->renderPartial(
-        		'_myorderhistory',array(
-        			'orderModel' => $orderModel
-        		),
-        		true
-        	),
-        	'id' => 'myOrderHistory'
-        ),        
-    ),
-    /*'options'=>array(
-        'select' => 'javascript://function(){
-			location.hash = "myMeasurmentTab"
-			alert("sadasdasd");
-		}'
-    ),*/    
+        ),                
+    ),    
 )); 
 ?>			
 <script type="text/javascript">

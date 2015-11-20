@@ -78,8 +78,6 @@ class UserController extends Controller
 				
 			}
 		}
-		$orderModel = new Cart;
-		$orderModel->cart_user_id = $user_id;
 		
 		$criteria=new CDbCriteria;
 		$criteria->order = 'cnt_name ASC';
@@ -123,26 +121,13 @@ class UserController extends Controller
 			$states2 = CHtml::listData($statesData,'st_id','st_name');
 		}
 
-		$criteria1=new CDbCriteria;
-		$criteria1->condition = "umr_user_id=:umr_user_id";
-		$criteria1->params = array(':umr_user_id' => $user_id);
-		$userMesurementData = UserMeasurements::model()->findAll($criteria1);
-		$userMesurements = array();
-		if(!empty($userMesurementData)){
-			foreach ($userMesurementData as $umKey => $umArr) {
-				$umType = $umArr->umr_type;
-				$userMesurements[$umType][] = $umArr;
-			}
-		}
 		$this->render('profile',array(
 			'model'=>$model,
-			'orderModel'=> $orderModel,
 			'userAddressModel' => $userAddressModel,
 			'countries' => $countries,
 			'states1' => $states1,
 			'states2' => $states2,
-			'address' => $address,
-			'userMesurements' => $userMesurements		
+			'address' => $address
 		));
 	}
 
@@ -256,12 +241,13 @@ class UserController extends Controller
     }
     
     public function actionDashboard(){
-
     	$this->tabs = true;
-    	$model = User::model()->findByPk(Yii::app()->user->id);    	
-
-		$params = array('user'=>$model);
-
+    	$model = User::model()->findByPk(Yii::app()->user->id);
+    	$criteria=new CDbCriteria;
+		$criteria->order = "ex_title ASC";
+		$criteria->condition = "ex_start_date_time >= NOW()";
+		$modelExams = Exams::model()->findAll($criteria);
+		$params = array('user'=>$model,'modelExams' => $modelExams);
     	$this->render('dashboard',$params);
     }
     
@@ -370,5 +356,16 @@ class UserController extends Controller
 			$states = CHtml::listData($statesData,'st_id','st_name');
 		}
 		$this->renderPartial('_states',array('states' => $states));
+	}
+
+	public function actionExam($id){
+		if(empty($id))
+			throw new CHttpException(404,'The requested page does not exist.');
+		$criteria=new CDbCriteria;
+		$criteria->order = "qt_name ASC";
+		$criteria->condition = "qt_exam_id=:qt_exam_id";
+		$criteria->params = array(':qt_exam_id' => $id);
+		$questionData = Questions::model()->findAll($criteria);
+		$this->render('exam',array('questionData' => $questionData));
 	}
 }

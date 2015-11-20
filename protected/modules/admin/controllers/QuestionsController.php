@@ -27,6 +27,12 @@ class QuestionsController extends Controller
 							$optionModel = new QuestionsOptions;
 							$optionModel->qto_name = $optName;
 							$optionModel->qto_question_id = $model->qt_id;
+
+							if(!empty($_POST['rightansh'][$optKey]))
+								$optionModel->qto_right_ans = 1;
+							else
+								$optionModel->qto_right_ans = 0;
+
 							if($type==2){
 								if(!empty($_FILES['qfile']['name'][$optKey])){
 									$imgName = $this->imageUpload($_FILES['qfile']['name'][$optKey],$_FILES['qfile']['tmp_name'][$optKey],'qoptions');
@@ -60,8 +66,40 @@ class QuestionsController extends Controller
 		if(isset($_POST['Questions']))
 		{
 			$model->attributes=$_POST['Questions'];
-			if($model->save())
+			$type = $_POST['Questions']['qt_type'];
+			if($model->save()){
+				if(!empty($_POST['qoptions'])){
+					$criteria=new CDbCriteria;
+					$criteria->condition = "qto_question_id=:qto_question_id";
+					$criteria->params = array(':qto_question_id' => $model->qt_id);
+					QuestionsOptions::model()->deleteAll($criteria);
+					foreach ($_POST['qoptions'] as $optKey => $optName) {
+						if(!empty($optName)){
+							$optionModel = new QuestionsOptions;
+							$optionModel->qto_name = $optName;
+							$optionModel->qto_question_id = $model->qt_id;
+
+							if(!empty($_POST['rightansh'][$optKey]))
+								$optionModel->qto_right_ans = 1;
+							else
+								$optionModel->qto_right_ans = 0;
+
+							if($type==2){
+								if(!empty($_FILES['qfile']['name'][$optKey])){
+									$imgName = $this->imageUpload($_FILES['qfile']['name'][$optKey],$_FILES['qfile']['tmp_name'][$optKey],'qoptions');
+									$optionModel->qto_image = $imgName;
+								}else{
+									unset($optionModel->qto_image);
+								}
+							}
+							pr($optionModel->attributes);
+							$optionModel->save();
+						}
+					}	
+					exit;									
+				}
 				$this->redirect(array('index'));
+			}
 		}
 
 		$this->render('update',array(

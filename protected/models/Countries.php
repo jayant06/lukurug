@@ -1,21 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "{{questions_options}}".
+ * This is the model class for table "{{countries}}".
  *
- * The followings are the available columns in table '{{questions_options}}':
- * @property integer $qto_id
- * @property string $qto_name
- * @property string $qto_image
+ * The followings are the available columns in table '{{countries}}':
+ * @property integer $cnt_id
+ * @property string $cnt_name
+ * @property string $cnt_code_char2
+ * @property string $cnt_code_char3
+ * @property string $cnt_un_region
+ * @property string $cnt_un_subregion
  */
-class QuestionsOptions extends CActiveRecord
+class Countries extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{questions_options}}';
+		return '{{countries}}';
 	}
 
 	/**
@@ -26,12 +29,15 @@ class QuestionsOptions extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('qto_name, qto_question_id, qto_right_ans', 'required'),
-			array('qto_name', 'length', 'max'=>200),
+			array('cnt_id, cnt_code_char2, cnt_code_char3', 'required'),
+			array('cnt_id', 'numerical', 'integerOnly'=>true),
+			array('cnt_name', 'length', 'max'=>100),
+			array('cnt_code_char2', 'length', 'max'=>2),
+			array('cnt_code_char3', 'length', 'max'=>3),
+			array('cnt_un_region, cnt_un_subregion', 'length', 'max'=>80),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('qto_id, qto_name, qto_image, qto_question_id, qto_right_ans', 'safe'),
-			array('qto_id, qto_name, qto_image, qto_question_id, qto_right_ans', 'safe', 'on'=>'search'),
+			array('cnt_id, cnt_name, cnt_code_char2, cnt_code_char3, cnt_un_region, cnt_un_subregion', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -43,7 +49,7 @@ class QuestionsOptions extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'qoptQat'=>array(self::BELONGS_TO, 'Questions','qto_question_id'),
+			'userAddCountry'=>array(self::HAS_MANY, 'UserAddress','uad_country_id'),
 		);
 	}
 
@@ -53,9 +59,12 @@ class QuestionsOptions extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'qto_name' => 'Option',
-			'qto_image' => 'Option Image',
-			'qto_question_id' => 'Question'
+			'cnt_id' => 'Cnt',
+			'cnt_name' => 'Cnt Name',
+			'cnt_code_char2' => 'Cnt Code Char2',
+			'cnt_code_char3' => 'Cnt Code Char3',
+			'cnt_un_region' => 'Cnt Un Region',
+			'cnt_un_subregion' => 'Cnt Un Subregion',
 		);
 	}
 
@@ -77,9 +86,13 @@ class QuestionsOptions extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('qto_id',$this->qto_id);
-		$criteria->compare('qto_name',$this->qto_name,true);
-		$criteria->compare('qto_question_id',$this->qto_question_id);
+		$criteria->compare('cnt_id',$this->cnt_id);
+		$criteria->compare('cnt_name',$this->cnt_name,true);
+		$criteria->compare('cnt_code_char2',$this->cnt_code_char2,true);
+		$criteria->compare('cnt_code_char3',$this->cnt_code_char3,true);
+		$criteria->compare('cnt_un_region',$this->cnt_un_region,true);
+		$criteria->compare('cnt_un_subregion',$this->cnt_un_subregion,true);
+
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
@@ -89,7 +102,7 @@ class QuestionsOptions extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return QuestionsOptions the static model class
+	 * @return Countries the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

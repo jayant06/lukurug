@@ -45,7 +45,7 @@
 				?>
 				<div class="address">
 					<div class="left">
-						<div><b>SHIPPING ADDRESS</b></div>
+						<div><b>Present address</b></div>
 						<div>
 							<?php echo $form->hiddenField($userAddressModel, 'uad_type', array('name' => 'UserAddress[uad_type][1]','value' => 1)); ?>
 							<?php echo $form->hiddenField($userAddressModel, 'uad_type', array('name' => 'UserAddress[uad_id][1]','value' => (!empty($address[1]['uad_id'])) ? $address[1]['uad_id']:'')); ?>
@@ -60,7 +60,7 @@
 						</div>
 					</div>
 					<div class="left">
-						<div><b>BILLING ADDRESS</b></div>
+						<div><b>Permanent address</b></div>
 						<div>
 							<?php echo $form->hiddenField($userAddressModel, 'uad_type', array('name' => 'UserAddress[uad_type][2]','value' => 2)); ?>
 							<?php echo $form->hiddenField($userAddressModel, 'uad_type', array('name' => 'UserAddress[uad_id][2]','value' => (!empty($address[2]['uad_id'])) ? $address[2]['uad_id']:'')); ?>
