@@ -97,6 +97,20 @@ class Questions extends CActiveRecord
 		));
 	}
 
+	public function getquestions(){
+		$criteria=new CDbCriteria;
+		$criteria->order = "qt_name ASC";
+		$criteria->condition = "qt_exam_id=:qt_exam_id";
+		$criteria->params = array(':qt_exam_id' => $this->qt_exam_id);
+		
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'pagination' => array(
+	            'pageSize' => 1,
+	        ),
+		));
+	}
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

@@ -96,6 +96,14 @@ class Exams extends CActiveRecord
 		));
 	}
 
+	public function getexams(){
+		$criteria=new CDbCriteria;
+		$criteria->order = "ex_title ASC";
+		$criteria->condition = "ex_start_date_time >= NOW()";
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

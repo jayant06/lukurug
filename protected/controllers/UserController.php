@@ -242,12 +242,9 @@ class UserController extends Controller
     
     public function actionDashboard(){
     	$this->tabs = true;
-    	$model = User::model()->findByPk(Yii::app()->user->id);
-    	$criteria=new CDbCriteria;
-		$criteria->order = "ex_title ASC";
-		$criteria->condition = "ex_start_date_time >= NOW()";
-		$modelExams = Exams::model()->findAll($criteria);
-		$params = array('user'=>$model,'modelExams' => $modelExams);
+    	$model=new Exams;
+		$dataProvider = $model->getexams();
+		$params = array('dataProvider' => $dataProvider);
     	$this->render('dashboard',$params);
     }
     
@@ -361,11 +358,9 @@ class UserController extends Controller
 	public function actionExam($id){
 		if(empty($id))
 			throw new CHttpException(404,'The requested page does not exist.');
-		$criteria=new CDbCriteria;
-		$criteria->order = "qt_name ASC";
-		$criteria->condition = "qt_exam_id=:qt_exam_id";
-		$criteria->params = array(':qt_exam_id' => $id);
-		$questionData = Questions::model()->findAll($criteria);
-		$this->render('exam',array('questionData' => $questionData));
+		$model=new Questions;
+		$model->qt_exam_id = $id;
+		$dataProvider = $model->getquestions();
+		$this->render('exam',array('dataProvider' => $dataProvider));
 	}
 }

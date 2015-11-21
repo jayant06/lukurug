@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 20, 2015 at 08:38 AM
+-- Generation Time: Nov 21, 2015 at 08:24 AM
 -- Server version: 5.5.46-0ubuntu0.14.04.2
 -- PHP Version: 5.5.9-1ubuntu4.14
 
@@ -673,7 +673,7 @@ CREATE TABLE IF NOT EXISTS `it_questions` (
   `qt_modified` datetime NOT NULL,
   PRIMARY KEY (`qt_id`),
   UNIQUE KEY `qt_id` (`qt_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `it_questions`
@@ -681,7 +681,9 @@ CREATE TABLE IF NOT EXISTS `it_questions` (
 
 INSERT INTO `it_questions` (`qt_id`, `qt_exam_id`, `qt_name`, `qt_description`, `qt_type`, `qt_marks`, `qt_created`, `qt_modified`) VALUES
 (1, 1, 'What is the capital of india?', '', 1, 10, '2015-11-15 06:56:02', '2015-11-15 06:56:02'),
-(2, 2, 'What is correct map of india?', 'Please select correct image also.', 2, 10, '2015-11-15 06:59:28', '2015-11-19 23:13:30');
+(2, 2, 'What is correct map of india?', 'Please select correct image also.', 2, 10, '2015-11-15 06:59:28', '2015-11-19 23:13:30'),
+(3, 2, 'Question One', 'Question One', 1, 20, '2015-11-21 05:19:59', '2015-11-21 05:19:59'),
+(4, 1, 'Question Two', 'Question Two', 2, 20, '2015-11-21 05:21:40', '2015-11-21 05:21:40');
 
 -- --------------------------------------------------------
 
@@ -696,7 +698,7 @@ CREATE TABLE IF NOT EXISTS `it_questions_options` (
   `qto_question_id` int(11) NOT NULL,
   `qto_right_ans` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=wrong, 1=right',
   PRIMARY KEY (`qto_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=61 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=69 ;
 
 --
 -- Dumping data for table `it_questions_options`
@@ -705,10 +707,18 @@ CREATE TABLE IF NOT EXISTS `it_questions_options` (
 INSERT INTO `it_questions_options` (`qto_id`, `qto_name`, `qto_image`, `qto_question_id`, `qto_right_ans`) VALUES
 (1, 'India', NULL, 1, 0),
 (2, 'Delhi', NULL, 1, 0),
+(61, 'Option ONe', NULL, 3, 0),
 (60, 'A', NULL, 2, 0),
 (59, 'D', NULL, 2, 0),
 (58, 'C', NULL, 2, 1),
-(57, 'B', NULL, 2, 1);
+(57, 'B', NULL, 2, 1),
+(62, 'Option Two', NULL, 3, 0),
+(63, 'Option Three', NULL, 3, 1),
+(64, 'Option Four', NULL, 3, 0),
+(65, 'Option ONe', '564fb20c9edce.png', 4, 1),
+(66, 'Option Two', '564fb20c9f00a.png', 4, 0),
+(67, 'Option Three', '564fb20c9f1ed.png', 4, 0),
+(68, 'Option Four', '564fb20c9f3c3.png', 4, 0);
 
 -- --------------------------------------------------------
 

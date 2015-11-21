@@ -238,3 +238,18 @@ textarea{
 /*.modal-lg .modal-body{
   max-height: auto !important;
 }*/
+.exam-cnt{
+  margin: 3.5% 5% 3.5% 5%;
+  background: #EEE;
+  border:1px solid #CCC;
+  border-radius: 5px;
+  padding: 5px;
+}
+.exam-cnt-inner{
+  margin: 10px;
+}
+.totalscore{
+  float: right;
+  margin: 10px 5% 10px 0;
+  font-weight: bold;
+}
