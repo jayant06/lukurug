@@ -92,11 +92,9 @@ class QuestionsController extends Controller
 									unset($optionModel->qto_image);
 								}
 							}
-							pr($optionModel->attributes);
 							$optionModel->save();
 						}
-					}	
-					exit;									
+					}						
 				}
 				$this->redirect(array('index'));
 			}

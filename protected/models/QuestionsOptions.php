@@ -44,6 +44,7 @@ class QuestionsOptions extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'qoptQat'=>array(self::BELONGS_TO, 'Questions','qto_question_id'),
+			'uaQoptions'=>array(self::HAS_MANY, 'UserAnswers','ua_option_id'),
 		);
 	}
 

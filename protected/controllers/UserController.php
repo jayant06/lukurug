@@ -361,6 +361,53 @@ class UserController extends Controller
 		$model=new Questions;
 		$model->qt_exam_id = $id;
 		$dataProvider = $model->getquestions();
-		$this->render('exam',array('dataProvider' => $dataProvider));
+
+		$uaModel = new UserAnswers;
+		$answers = $uaModel->getAnswersQuestionWise($id);
+
+		$totalScore = $uaModel->getTotalScore($id);
+
+		$this->render('exam',array('dataProvider' => $dataProvider,'answers' => $answers,'totalScore' => $totalScore,'examId' => $id));
+	}
+
+	public function actionSaveanswer(){
+		$user_id = Yii::app()->user->id;
+		if(Yii::app()->request->isAjaxRequest){
+			$return['msg'] = 'Please select anyone answer.';
+			$return['error'] = 1;
+			$return['data'] = '';
+			if(!empty($_POST['chooseoption']) && !empty($_POST['questionid'])){
+				$chooseOption = $_POST['chooseoption'];
+				$questionId = $_POST['questionid'];
+				$qModel = Questions::model()->findByPk($questionId);
+				
+				$criteria=new CDbCriteria;
+				$criteria->condition = "qto_question_id=:qto_question_id AND qto_right_ans=:qto_right_ans";
+				$criteria->params = array(':qto_question_id' => $questionId,':qto_right_ans' => 1);
+				$opModel = QuestionsOptions::model()->find($criteria);
+
+				$isWrongAnswer = 1;
+				$rightanswer = '';
+				if($opModel){
+					if($opModel->qto_id==$chooseOption){
+						$isWrongAnswer = 0;
+					}
+					$rightanswer = $opModel->qto_id;
+				}
+				if($qModel){					
+					$model = new UserAnswers;
+					$model->ua_user_id = $user_id;
+					$model->ua_question_id = $questionId;
+					$model->ua_option_id = $chooseOption;
+					if($model->save()){
+						$return['msg'] = 'Answer saved successfully.';
+						$return['error'] = 0;
+						$return['data'] = array('isWrongAnswer' => $isWrongAnswer, 'rightanswer' => $rightanswer,'qScore' => $qModel->qt_marks);
+					}										
+				}
+			}
+			echo json_encode($return);
+			exit;
+		}
 	}
 }

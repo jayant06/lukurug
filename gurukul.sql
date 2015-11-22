@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 21, 2015 at 08:24 AM
+-- Generation Time: Nov 22, 2015 at 10:31 PM
 -- Server version: 5.5.46-0ubuntu0.14.04.2
 -- PHP Version: 5.5.9-1ubuntu4.14
 
@@ -162,6 +162,7 @@ INSERT INTO `it_authitem` (`name`, `type`, `description`, `bizrule`, `data`) VAL
 ('UserProfile', 1, '', '', 's:0:"";'),
 ('UserResetpassword', 1, '', '', 's:0:"";'),
 ('UserSaveaddress', 1, NULL, NULL, NULL),
+('UserSaveanswer', 1, NULL, NULL, NULL),
 ('UserSignup', 1, NULL, NULL, NULL),
 ('UserStates', 1, NULL, NULL, NULL);
 
@@ -277,6 +278,7 @@ INSERT INTO `it_authitemchild` (`parent`, `child`) VALUES
 ('member', 'UserProfile'),
 ('guest', 'UserResetpassword'),
 ('member', 'UserSaveaddress'),
+('member', 'UserSaveanswer'),
 ('guest', 'UserSignup'),
 ('guest', 'UserStates');
 
@@ -706,11 +708,11 @@ CREATE TABLE IF NOT EXISTS `it_questions_options` (
 
 INSERT INTO `it_questions_options` (`qto_id`, `qto_name`, `qto_image`, `qto_question_id`, `qto_right_ans`) VALUES
 (1, 'India', NULL, 1, 0),
-(2, 'Delhi', NULL, 1, 0),
+(2, 'Delhi', NULL, 1, 1),
 (61, 'Option ONe', NULL, 3, 0),
 (60, 'A', NULL, 2, 0),
 (59, 'D', NULL, 2, 0),
-(58, 'C', NULL, 2, 1),
+(58, 'C', NULL, 2, 0),
 (57, 'B', NULL, 2, 1),
 (62, 'Option Two', NULL, 3, 0),
 (63, 'Option Three', NULL, 3, 1),
@@ -5211,7 +5213,7 @@ CREATE TABLE IF NOT EXISTS `it_user` (
 
 INSERT INTO `it_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_created`, `u_modified`) VALUES
 (1, 'It', 'Gurukul', 'admin@itgurukul.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '02c00693466cf0cc34bdc26042f19677', '2015-06-03 01:26:27', '2014-12-23 02:20:00', '2015-09-07 21:06:04'),
-(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-11-20 08:11:47', '2015-06-04 02:51:57', '2015-11-20 08:11:47');
+(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-11-22 13:49:14', '2015-06-04 02:51:57', '2015-11-22 13:49:14');
 
 -- --------------------------------------------------------
 
@@ -5242,6 +5244,48 @@ CREATE TABLE IF NOT EXISTS `it_user_address` (
 INSERT INTO `it_user_address` (`uad_id`, `uad_user_id`, `uad_add1`, `uad_add2`, `uad_country_id`, `uad_state_id`, `uad_city`, `uad_zipcode`, `uad_mobile`, `uad_type`, `uad_created`, `uad_modified`) VALUES
 (1, 5, 'add1 hhhh', 'add2 lll', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2015-07-24 07:45:43', '2015-11-20 06:43:10'),
 (2, 5, 'add1 hhhh', 'add2 lll', 105, 14691, 'jodhpur', '342001', '123456789', 2, '2015-07-24 07:45:43', '2015-11-20 06:43:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `it_user_answers`
+--
+
+CREATE TABLE IF NOT EXISTS `it_user_answers` (
+  `ua_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ua_user_id` int(11) NOT NULL,
+  `ua_question_id` int(11) NOT NULL,
+  `ua_option_id` int(11) NOT NULL,
+  `ua_created` datetime NOT NULL,
+  `ua_modified` datetime NOT NULL,
+  PRIMARY KEY (`ua_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `it_user_answers`
+--
+
+INSERT INTO `it_user_answers` (`ua_id`, `ua_user_id`, `ua_question_id`, `ua_option_id`, `ua_created`, `ua_modified`) VALUES
+(1, 5, 4, 65, '2015-11-22 15:39:17', '2015-11-22 15:39:17'),
+(2, 5, 1, 2, '2015-11-22 15:40:15', '2015-11-22 15:40:15'),
+(3, 5, 3, 63, '2015-11-22 15:40:39', '2015-11-22 15:40:39'),
+(4, 5, 2, 58, '2015-11-22 15:40:54', '2015-11-22 15:40:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `it_user_exams`
+--
+
+CREATE TABLE IF NOT EXISTS `it_user_exams` (
+  `ue_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ue_user_id` int(11) NOT NULL,
+  `ue_exam_id` int(11) NOT NULL,
+  `ue_isfinished` int(2) NOT NULL DEFAULT '0' COMMENT '0=not finish, 1=finish',
+  `ue_created` datetime NOT NULL,
+  `ue_modified` datetime NOT NULL,
+  PRIMARY KEY (`ue_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

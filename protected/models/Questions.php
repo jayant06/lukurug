@@ -51,6 +51,7 @@ class Questions extends CActiveRecord
 		return array(
 			'qatExams'=>array(self::BELONGS_TO, 'Exams','qt_exam_id'),
 			'qoptQat'=>array(self::HAS_MANY, 'QuestionsOptions','qto_question_id'),
+			'uaQuestion'=>array(self::HAS_MANY, 'UserAnswers','ua_question_id'),
 		);
 	}
 
