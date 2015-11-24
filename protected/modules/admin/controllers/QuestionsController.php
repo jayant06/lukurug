@@ -89,7 +89,9 @@ class QuestionsController extends Controller
 									$imgName = $this->imageUpload($_FILES['qfile']['name'][$optKey],$_FILES['qfile']['tmp_name'][$optKey],'qoptions');
 									$optionModel->qto_image = $imgName;
 								}else{
-									unset($optionModel->qto_image);
+									if(!empty($_POST['image_name'][$optKey])){
+										$optionModel->qto_image = $_POST['image_name'][$optKey];
+									}
 								}
 							}
 							$optionModel->save();

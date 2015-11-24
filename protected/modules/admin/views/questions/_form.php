@@ -41,6 +41,7 @@
 									</div>
 									<div class="image" style="display: <?php echo $display; ?>;">
 										<input type="file" name="qfile[]">
+										<input type="hidden" name="image_name[]" value="<?php echo $optArr->qto_image; ?>">
 									</div>
 									<div style="display: <?php echo $display; ?>">
 										<img src="<?php echo Yii::app()->baseUrl; ?>/storage/qoptions/<?php echo $optArr->qto_image; ?>" height="100">
