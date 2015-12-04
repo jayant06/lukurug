@@ -84,6 +84,7 @@ class User extends CActiveRecord
 		return array(
 			'userAdd'=>array(self::HAS_MANY, 'UserAddress','uad_user_id'),
 			'uaUser'=>array(self::HAS_MANY, 'UserAnswers','ua_user_id'),
+			'ueUser'=>array(self::HAS_MANY, 'UserExams','ue_user_id'),
 		);
 	}
 
