@@ -52,6 +52,7 @@ class Exams extends CActiveRecord
 			'catExams'=>array(self::BELONGS_TO, 'Categories','ex_category_id'),
 			'qatExams'=>array(self::HAS_MANY, 'Questions','qt_exam_id'),
 			'uaExam'=>array(self::HAS_MANY, 'UserAnswers','ua_exam_id'),
+			'ueExam'=>array(self::HAS_MANY, 'UserExams','ue_exam_id'),
 		);
 	}
 
@@ -98,9 +99,26 @@ class Exams extends CActiveRecord
 	}
 
 	public function getexams(){
+		$user_id = Yii::app()->user->id;
+		$criteria1=new CDbCriteria;
+		$criteria1->condition = 'ue_user_id=:ue_user_id';
+		$criteria1->params = array(':ue_user_id'=> $user_id);
+		$userExams = UserExams::model()->findAll($criteria1);
+		$uExams = array();
+		if(!empty($userExams)){
+			foreach ($userExams as $uakey => $uaArr) {
+				$uExams[] = $uaArr->ue_exam_id;
+			}
+		}
+		
 		$criteria=new CDbCriteria;
 		$criteria->order = "ex_title ASC";
-		$criteria->condition = "ex_start_date_time >= NOW()";
+		$cond = 'NOW() between ex_start_date_time and ex_end_date_time';
+		if(!empty($uExams)){
+			$cond .= " and ex_id not in(".implode(', ',$uExams).")";
+		}
+
+		$criteria->condition = $cond;
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

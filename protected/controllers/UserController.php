@@ -242,9 +242,11 @@ class UserController extends Controller
     
     public function actionDashboard(){
     	$this->tabs = true;
-    	$model=new Exams;
-		$dataProvider = $model->getexams();
-		$params = array('dataProvider' => $dataProvider);
+    	$model=new UserExams;
+		$dataProvider = $model->search();
+		$examModel=new Exams;
+		$examDataProvider = $examModel->getexams();
+		$params = array('dataProvider' => $dataProvider,'examDataProvider' => $examDataProvider);
     	$this->render('dashboard',$params);
     }
     
@@ -356,6 +358,7 @@ class UserController extends Controller
 	}
 
 	public function actionExam($id){
+		$user_id = Yii::app()->user->id;
 		if(empty($id))
 			throw new CHttpException(404,'The requested page does not exist.');
 		$model=new Questions;
@@ -365,17 +368,29 @@ class UserController extends Controller
 		$uaModel = new UserAnswers;
 		$answers = $uaModel->getAnswersQuestionWise($id);
 
+		$criteria1=new CDbCriteria;
+		$criteria1->condition = "qt_exam_id=:qt_exam_id";
+		$criteria1->select = array('qt_id');
+		$criteria1->params = array(':qt_exam_id' => $id);
+		$questionsCount = Questions::model()->findAll($criteria1);
+		
+		$criteria2=new CDbCriteria;
+		$criteria2->condition = "ua_user_id=:ua_user_id and ua_exam_id=:ua_exam_id";
+		$criteria2->select = array('ua_id');
+		$criteria2->params = array(':ua_user_id' => $user_id,'ua_exam_id' => $id);
+		$answersCount = UserAnswers::model()->findAll($criteria2);
+		
 		$totalScore = $uaModel->getTotalScore($id);
 
-		$this->render('exam',array('dataProvider' => $dataProvider,'answers' => $answers,'totalScore' => $totalScore,'examId' => $id));
+		$this->render('exam',array('dataProvider' => $dataProvider,'answers' => $answers,'totalScore' => $totalScore,'examId' => $id,'questionsCount' => $questionsCount,'answersCount' => $answersCount));
 	}
 
 	public function actionSaveanswer(){
 		$user_id = Yii::app()->user->id;
+		$return['msg'] = 'Please select anyone answer.';
+		$return['error'] = 1;
+		$return['data'] = '';
 		if(Yii::app()->request->isAjaxRequest){
-			$return['msg'] = 'Please select anyone answer.';
-			$return['error'] = 1;
-			$return['data'] = '';
 			if(!empty($_POST['chooseoption']) && !empty($_POST['questionid'])){
 				$chooseOption = $_POST['chooseoption'];
 				$questionId = $_POST['questionid'];
@@ -399,15 +414,62 @@ class UserController extends Controller
 					$model->ua_user_id = $user_id;
 					$model->ua_question_id = $questionId;
 					$model->ua_option_id = $chooseOption;
+					$model->ua_exam_id = $qModel->qt_exam_id;
 					if($model->save()){
 						$return['msg'] = 'Answer saved successfully.';
 						$return['error'] = 0;
 						$return['data'] = array('isWrongAnswer' => $isWrongAnswer, 'rightanswer' => $rightanswer,'qScore' => $qModel->qt_marks);
 					}										
 				}
-			}
-			echo json_encode($return);
-			exit;
+			}			
 		}
+		echo json_encode($return);
+		exit;
+	}
+
+	public function actionFinishexam(){
+		$user_id = Yii::app()->user->id;
+		$return['msg'] = 'Invalid exam.';
+		$return['error'] = 1;
+		$return['data'] = '';
+		if(Yii::app()->request->isAjaxRequest){
+			if(!empty($_POST['examId'])){
+				$examId = $_POST['examId'];
+				$model = new UserExams;
+				$model->ue_user_id = $user_id;
+				$model->ue_exam_id = $examId;
+				if($model->save()){
+					$return['msg'] = 'Saved successfully.';
+					$return['error'] = 0;
+					$return['data'] = $model->ue_id;
+				}
+			}
+		}
+
+		echo json_encode($return);
+		exit;
+	}
+
+	public function actionViewexamdetail($id){
+		$user_id = Yii::app()->user->id;
+
+		if(empty($id))
+			throw new CHttpException(404,'The requested page does not exist.');
+
+		$criteria1=new CDbCriteria;
+		$criteria1->condition = "qt_exam_id=:qt_exam_id";
+		$criteria1->params = array(':qt_exam_id' => $id);
+		$questions = Questions::model()->findAll($criteria1);
+
+		$criteria2=new CDbCriteria;
+		$criteria2->condition = "ua_user_id=:ua_user_id and ua_exam_id=:ua_exam_id";
+		$criteria2->params = array(':ua_user_id' => $user_id,'ua_exam_id' => $id);
+		$answers = UserAnswers::model()->findAll($criteria2);
+
+		$examDetail = Exams::model()->findByPk($id);
+
+		$totalScore = UserAnswers::model()->getTotalScore($id);
+
+		$this->render('viewexamdetail',array('examDetail' => $examDetail, 'answers' => $answers, 'questions' => $questions, 'totalScore' => $totalScore));
 	}
 }

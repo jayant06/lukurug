@@ -30,11 +30,11 @@ class UserAnswers extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ua_user_id, ua_question_id, ua_option_id', 'required'),
+			array('ua_user_id, ua_question_id, ua_option_id, ua_exam_id', 'required'),
 			array('ua_user_id, ua_question_id, ua_option_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('ua_id, ua_user_id, ua_question_id, ua_option_id, ua_created, ua_modified', 'safe', 'on'=>'search'),
+			array('ua_id, ua_user_id, ua_question_id, ua_option_id, ua_created, ua_modified, ua_exam_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -122,8 +122,8 @@ class UserAnswers extends CActiveRecord
 	public function getAnswersQuestionWise($examId){
 		$user_id = Yii::app()->user->id;
 		$criteria=new CDbCriteria;
-		$criteria->condition = "qt_exam_id=:qt_exam_id AND ua_user_id=:ua_user_id";
-		$criteria->params = array(':qt_exam_id' => $examId,':ua_user_id' => $user_id);
+		$criteria->condition = "ua_exam_id=:ua_exam_id AND ua_user_id=:ua_user_id";
+		$criteria->params = array(':ua_exam_id' => $examId,':ua_user_id' => $user_id);
 		$model = UserAnswers::model()->with(array('uaQuestion'))->findAll($criteria);
 
 		$criteriaQ=new CDbCriteria;
@@ -150,14 +150,14 @@ class UserAnswers extends CActiveRecord
 	public function getTotalScore($examId){
 		$user_id = Yii::app()->user->id;
 		$criteria=new CDbCriteria;
-		$criteria->condition = "qt_exam_id=:qt_exam_id AND ua_user_id=:ua_user_id";
-		$criteria->params = array(':qt_exam_id' => $examId,':ua_user_id' => $user_id);
+		$criteria->condition = "ua_exam_id=:ua_exam_id AND ua_user_id=:ua_user_id";
+		$criteria->params = array(':ua_exam_id' => $examId,':ua_user_id' => $user_id);
 		$model = UserAnswers::model()->with(array('uaQuestion','uaQoptions'))->findAll($criteria);
 		$totalScore = 0;
 		if(!empty($model)){
 			foreach ($model as $uaKey => $uaArr) {
 				$qoId = $uaArr->ua_option_id;
-				if($uaArr->uaQoptions->qto_right_ans==1){
+				if(@$uaArr->uaQoptions->qto_right_ans==1){
 					$totalScore += $uaArr->uaQuestion->qt_marks;
 				}
 			}

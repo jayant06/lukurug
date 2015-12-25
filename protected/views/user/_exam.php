@@ -6,17 +6,13 @@
 	<div>
 		<?php
 		$ansSubmit = 0;
-		$submittedAns = '';
-		$rightAnswerSubmitted = '';
 		if(!empty($answers[$data->qt_id]['option'])){
-			$ansSubmit = 1;
-			$submittedAns = $answers[$data->qt_id]['option'];
-			$rightAnswerSubmitted = $answers[$data->qt_id]['rightoption'];
+			$ansSubmit = 1;			
 		}
 		if(!empty($data->qoptQat)){
 			foreach ($data->qoptQat as $qtoKey => $qtoArr) {
 				?>
-				<div class="<?php echo ($rightAnswerSubmitted==$qtoArr->qto_id) ? 'rightAnswer' : ((($rightAnswerSubmitted!='') && ($rightAnswerSubmitted!=$qtoArr->qto_id) && ($submittedAns==$qtoArr->qto_id)) ? 'wrongAnswer' : ''); ?>">
+				<div>
 					<div>
 						<input <?php echo ($ansSubmit==1) ? 'disabled' : ''; ?> type="radio" name="qtoname" value="<?php echo $qtoArr->qto_id; ?>" qid=<?php echo $data->qt_id; ?>>&nbsp;<b><?php echo $qtoArr->qto_name; ?></b>
 					</div>
@@ -54,13 +50,12 @@
 						if(data.error==1){
 							alert(data.msg);
 						}else{
+							var qattended = parseInt($('#qattended').html());
+							var qTotal = (qattended+1);
+							$('#qattended').html(qTotal);
 							if(data.data.rightanswer==chooseoption){
 								var qScore = parseInt(data.data.qScore);
 								totalscore = totalscore+qScore;
-								$('.exam-cnt-inner input[value="'+chooseoption+'"]').parent().parent().addClass('rightAnswer');
-							}
-							if(data.data.isWrongAnswer==1){
-								$('.exam-cnt-inner input[value="'+chooseoption+'"]').parent().parent().addClass('wrongAnswer');
 							}
 							$('.totalscore span#score').html(totalscore);
 							alert(data.msg);
