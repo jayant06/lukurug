@@ -14,7 +14,7 @@
 				?>
 				<div>
 					<div>
-						<input <?php echo ($ansSubmit==1) ? 'disabled' : ''; ?> type="radio" name="qtoname" value="<?php echo $qtoArr->qto_id; ?>" qid=<?php echo $data->qt_id; ?>>&nbsp;<b><?php echo $qtoArr->qto_name; ?></b>
+						<input <?php echo (@$answers[$data->qt_id]['option']==$qtoArr->qto_id) ? 'checked' : ''; ?> type="radio" name="qtoname" value="<?php echo $qtoArr->qto_id; ?>" qid=<?php echo $data->qt_id; ?>>&nbsp;<b><?php echo $qtoArr->qto_name; ?></b>
 					</div>
 					<?php
 					if($data->qt_type==2){
@@ -36,6 +36,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('.exam-cnt-inner').on('click','input[type="radio"]',function(){
+			$('#content .row-fluid').html('');
 			var chooseoption = $(this).val();
 			var questionid = $(this).attr('qid');
 			var url = '<?php echo Yii::app()->baseUrl; ?>/user/saveanswer';
@@ -58,7 +59,12 @@
 								totalscore = totalscore+qScore;
 							}
 							$('.totalscore span#score').html(totalscore);
-							alert(data.msg);
+							var html = '';
+							html += '<div class="alert alert-success">';
+						    html += '<button class="close" data-dismiss="alert" type="button">&times;</button>';                              
+						    html += data.msg;
+						    html += '</div>';
+						    $('#content .row-fluid').html(html);						    
 						}
 						$.fn.yiiListView.update("questionView");
 					}

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 04, 2015 at 07:41 PM
+-- Generation Time: Dec 27, 2015 at 10:16 AM
 -- Server version: 5.5.46-0ubuntu0.14.04.2
 -- PHP Version: 5.5.9-1ubuntu4.14
 
@@ -26,6 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `it_authassignment`
 --
 
+DROP TABLE IF EXISTS `it_authassignment`;
 CREATE TABLE IF NOT EXISTS `it_authassignment` (
   `itemname` varchar(64) NOT NULL,
   `userid` varchar(64) NOT NULL,
@@ -51,6 +52,7 @@ INSERT INTO `it_authassignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
 -- Table structure for table `it_authitem`
 --
 
+DROP TABLE IF EXISTS `it_authitem`;
 CREATE TABLE IF NOT EXISTS `it_authitem` (
   `name` varchar(64) NOT NULL,
   `type` int(11) NOT NULL COMMENT '1 for action 2 for role',
@@ -174,6 +176,7 @@ INSERT INTO `it_authitem` (`name`, `type`, `description`, `bizrule`, `data`) VAL
 -- Table structure for table `it_authitemchild`
 --
 
+DROP TABLE IF EXISTS `it_authitemchild`;
 CREATE TABLE IF NOT EXISTS `it_authitemchild` (
   `parent` varchar(64) NOT NULL,
   `child` varchar(64) NOT NULL,
@@ -292,6 +295,7 @@ INSERT INTO `it_authitemchild` (`parent`, `child`) VALUES
 -- Table structure for table `it_categories`
 --
 
+DROP TABLE IF EXISTS `it_categories`;
 CREATE TABLE IF NOT EXISTS `it_categories` (
   `cat_id` int(11) NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(255) NOT NULL,
@@ -315,6 +319,7 @@ INSERT INTO `it_categories` (`cat_id`, `cat_name`, `cat_description`, `cat_meta_
 -- Table structure for table `it_cmspage`
 --
 
+DROP TABLE IF EXISTS `it_cmspage`;
 CREATE TABLE IF NOT EXISTS `it_cmspage` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT,
   `c_pagename` varchar(100) NOT NULL,
@@ -346,6 +351,7 @@ INSERT INTO `it_cmspage` (`c_id`, `c_pagename`, `c_title`, `c_subtitle`, `c_cont
 -- Table structure for table `it_countries`
 --
 
+DROP TABLE IF EXISTS `it_countries`;
 CREATE TABLE IF NOT EXISTS `it_countries` (
   `cnt_id` smallint(3) unsigned NOT NULL,
   `cnt_name` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
@@ -618,6 +624,7 @@ INSERT INTO `it_countries` (`cnt_id`, `cnt_name`, `cnt_code_char2`, `cnt_code_ch
 -- Table structure for table `it_email_manager`
 --
 
+DROP TABLE IF EXISTS `it_email_manager`;
 CREATE TABLE IF NOT EXISTS `it_email_manager` (
   `em_id` int(11) NOT NULL AUTO_INCREMENT,
   `em_title` varchar(100) DEFAULT NULL,
@@ -642,6 +649,7 @@ INSERT INTO `it_email_manager` (`em_id`, `em_title`, `em_email_subject`, `em_ema
 -- Table structure for table `it_exams`
 --
 
+DROP TABLE IF EXISTS `it_exams`;
 CREATE TABLE IF NOT EXISTS `it_exams` (
   `ex_id` int(11) NOT NULL AUTO_INCREMENT,
   `ex_category_id` int(11) NOT NULL,
@@ -649,18 +657,20 @@ CREATE TABLE IF NOT EXISTS `it_exams` (
   `ex_details` text,
   `ex_start_date_time` datetime NOT NULL,
   `ex_end_date_time` datetime NOT NULL,
+  `ex_duration` time NOT NULL,
   `ex_created` datetime NOT NULL,
   `ex_modified` datetime NOT NULL,
   PRIMARY KEY (`ex_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `it_exams`
 --
 
-INSERT INTO `it_exams` (`ex_id`, `ex_category_id`, `ex_title`, `ex_details`, `ex_start_date_time`, `ex_end_date_time`, `ex_created`, `ex_modified`) VALUES
-(1, 10, 'JavaExams', 'JavaExams', '2015-12-01 16:00:00', '2015-12-30 01:00:00', '2015-09-30 07:14:15', '2015-09-30 07:42:54'),
-(2, 10, 'java exam 2', 'java exam 2', '2015-12-01 16:00:00', '2015-12-30 01:00:00', '2015-09-30 07:39:40', '2015-09-30 07:39:40');
+INSERT INTO `it_exams` (`ex_id`, `ex_category_id`, `ex_title`, `ex_details`, `ex_start_date_time`, `ex_end_date_time`, `ex_duration`, `ex_created`, `ex_modified`) VALUES
+(1, 10, 'JavaExams', 'JavaExams', '2015-12-01 16:00:00', '2015-12-30 01:00:00', '02:30:00', '2015-09-30 07:14:15', '2015-12-27 08:39:21'),
+(2, 10, 'java exam 2', 'java exam 2', '2015-12-01 16:00:00', '2015-12-30 01:00:00', '02:20:20', '2015-09-30 07:39:40', '2015-09-30 07:39:40'),
+(3, 10, 'java test', 'java test', '2015-12-26 21:36:00', '2016-01-26 11:30:00', '11:20:20', '2015-12-26 21:38:06', '2015-12-26 21:38:06');
 
 -- --------------------------------------------------------
 
@@ -668,6 +678,7 @@ INSERT INTO `it_exams` (`ex_id`, `ex_category_id`, `ex_title`, `ex_details`, `ex
 -- Table structure for table `it_questions`
 --
 
+DROP TABLE IF EXISTS `it_questions`;
 CREATE TABLE IF NOT EXISTS `it_questions` (
   `qt_id` int(11) NOT NULL AUTO_INCREMENT,
   `qt_exam_id` int(11) NOT NULL,
@@ -679,7 +690,7 @@ CREATE TABLE IF NOT EXISTS `it_questions` (
   `qt_modified` datetime NOT NULL,
   PRIMARY KEY (`qt_id`),
   UNIQUE KEY `qt_id` (`qt_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `it_questions`
@@ -689,7 +700,9 @@ INSERT INTO `it_questions` (`qt_id`, `qt_exam_id`, `qt_name`, `qt_description`, 
 (1, 1, 'What is the capital of india?', '', 1, 10, '2015-11-15 06:56:02', '2015-11-15 06:56:02'),
 (2, 2, 'What is correct map of india?', 'Please select correct image also.', 2, 10, '2015-11-15 06:59:28', '2015-11-19 23:13:30'),
 (3, 2, 'Question One', 'Question One', 1, 20, '2015-11-21 05:19:59', '2015-11-21 05:19:59'),
-(4, 1, 'Question Two Question Two', 'Question Two', 2, 20, '2015-11-21 05:21:40', '2015-11-24 07:31:29');
+(4, 1, 'Question Two Question Two', 'Question Two', 2, 20, '2015-11-21 05:21:40', '2015-11-24 07:31:29'),
+(5, 3, 'first question', 'first question', 1, 10, '2015-12-26 21:59:05', '2015-12-26 21:59:05'),
+(6, 3, 'second question', 'second question', 1, 20, '2015-12-26 22:00:28', '2015-12-26 22:00:28');
 
 -- --------------------------------------------------------
 
@@ -697,6 +710,7 @@ INSERT INTO `it_questions` (`qt_id`, `qt_exam_id`, `qt_name`, `qt_description`, 
 -- Table structure for table `it_questions_options`
 --
 
+DROP TABLE IF EXISTS `it_questions_options`;
 CREATE TABLE IF NOT EXISTS `it_questions_options` (
   `qto_id` int(11) NOT NULL AUTO_INCREMENT,
   `qto_name` varchar(200) NOT NULL,
@@ -704,7 +718,7 @@ CREATE TABLE IF NOT EXISTS `it_questions_options` (
   `qto_question_id` int(11) NOT NULL,
   `qto_right_ans` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=wrong, 1=right',
   PRIMARY KEY (`qto_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=84 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=92 ;
 
 --
 -- Dumping data for table `it_questions_options`
@@ -723,7 +737,15 @@ INSERT INTO `it_questions_options` (`qto_id`, `qto_name`, `qto_image`, `qto_ques
 (64, 'Option Four', NULL, 3, 0),
 (83, 'Option Two', '5653c4ce288ea.png', 4, 1),
 (82, 'Option Three', '5653c4ce2866f.png', 4, 0),
-(81, 'Option Four', '5653c4ce2833c.png', 4, 0);
+(81, 'Option Four', '5653c4ce2833c.png', 4, 0),
+(84, 'opt A', NULL, 5, 1),
+(85, 'opt B', NULL, 5, 1),
+(86, 'opt C', NULL, 5, 1),
+(87, 'opt D', NULL, 5, 1),
+(88, 'opt A', NULL, 6, 1),
+(89, 'opt B', NULL, 6, 0),
+(90, 'opt C', NULL, 6, 0),
+(91, 'opt D', NULL, 6, 0);
 
 -- --------------------------------------------------------
 
@@ -731,6 +753,7 @@ INSERT INTO `it_questions_options` (`qto_id`, `qto_name`, `qto_image`, `qto_ques
 -- Table structure for table `it_site_settings`
 --
 
+DROP TABLE IF EXISTS `it_site_settings`;
 CREATE TABLE IF NOT EXISTS `it_site_settings` (
   `sst_id` int(11) NOT NULL AUTO_INCREMENT,
   `sst_name` varchar(255) NOT NULL,
@@ -744,6 +767,7 @@ CREATE TABLE IF NOT EXISTS `it_site_settings` (
 -- Table structure for table `it_states`
 --
 
+DROP TABLE IF EXISTS `it_states`;
 CREATE TABLE IF NOT EXISTS `it_states` (
   `st_id` smallint(5) unsigned NOT NULL,
   `st_cnt_id` int(11) NOT NULL,
@@ -5192,6 +5216,7 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 -- Table structure for table `it_user`
 --
 
+DROP TABLE IF EXISTS `it_user`;
 CREATE TABLE IF NOT EXISTS `it_user` (
   `u_id` int(11) NOT NULL AUTO_INCREMENT,
   `u_first_name` varchar(200) NOT NULL,
@@ -5216,7 +5241,7 @@ CREATE TABLE IF NOT EXISTS `it_user` (
 
 INSERT INTO `it_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_created`, `u_modified`) VALUES
 (1, 'It', 'Gurukul', 'admin@itgurukul.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '02c00693466cf0cc34bdc26042f19677', '2015-06-03 01:26:27', '2014-12-23 02:20:00', '2015-09-07 21:06:04'),
-(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-12-03 07:31:45', '2015-06-04 02:51:57', '2015-12-03 07:31:45');
+(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-12-27 10:08:22', '2015-06-04 02:51:57', '2015-12-27 10:08:22');
 
 -- --------------------------------------------------------
 
@@ -5224,6 +5249,7 @@ INSERT INTO `it_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_pass
 -- Table structure for table `it_user_address`
 --
 
+DROP TABLE IF EXISTS `it_user_address`;
 CREATE TABLE IF NOT EXISTS `it_user_address` (
   `uad_id` int(11) NOT NULL AUTO_INCREMENT,
   `uad_user_id` int(11) NOT NULL,
@@ -5254,6 +5280,7 @@ INSERT INTO `it_user_address` (`uad_id`, `uad_user_id`, `uad_add1`, `uad_add2`, 
 -- Table structure for table `it_user_answers`
 --
 
+DROP TABLE IF EXISTS `it_user_answers`;
 CREATE TABLE IF NOT EXISTS `it_user_answers` (
   `ua_id` int(11) NOT NULL AUTO_INCREMENT,
   `ua_user_id` int(11) NOT NULL,
@@ -5263,7 +5290,7 @@ CREATE TABLE IF NOT EXISTS `it_user_answers` (
   `ua_created` datetime NOT NULL,
   `ua_modified` datetime NOT NULL,
   PRIMARY KEY (`ua_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `it_user_answers`
@@ -5273,7 +5300,9 @@ INSERT INTO `it_user_answers` (`ua_id`, `ua_user_id`, `ua_exam_id`, `ua_question
 (1, 5, 2, 3, 63, '2015-12-02 08:33:36', '2015-12-02 08:33:36'),
 (2, 5, 2, 2, 59, '2015-12-02 08:33:52', '2015-12-02 08:33:52'),
 (3, 5, 1, 4, 83, '2015-12-03 08:17:06', '2015-12-03 08:17:06'),
-(4, 5, 1, 1, 2, '2015-12-03 08:17:14', '2015-12-03 08:17:14');
+(4, 5, 1, 1, 2, '2015-12-03 08:17:14', '2015-12-03 08:17:14'),
+(14, 5, 3, 6, 90, '2015-12-27 10:14:06', '2015-12-27 10:14:06'),
+(13, 5, 3, 5, 85, '2015-12-27 10:13:55', '2015-12-27 10:13:55');
 
 -- --------------------------------------------------------
 
@@ -5281,6 +5310,7 @@ INSERT INTO `it_user_answers` (`ua_id`, `ua_user_id`, `ua_exam_id`, `ua_question
 -- Table structure for table `it_user_exams`
 --
 
+DROP TABLE IF EXISTS `it_user_exams`;
 CREATE TABLE IF NOT EXISTS `it_user_exams` (
   `ue_id` int(11) NOT NULL AUTO_INCREMENT,
   `ue_user_id` int(11) NOT NULL,
@@ -5288,7 +5318,7 @@ CREATE TABLE IF NOT EXISTS `it_user_exams` (
   `ue_created` datetime NOT NULL,
   `ue_modified` datetime NOT NULL,
   PRIMARY KEY (`ue_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `it_user_exams`

@@ -31,7 +31,7 @@ class Exams extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ex_category_id, ex_title, ex_start_date_time, ex_end_date_time', 'required'),
+			array('ex_category_id, ex_title, ex_start_date_time, ex_end_date_time, ex_duration', 'required'),
 			array('ex_category_id', 'numerical', 'integerOnly'=>true),
 			array('ex_title', 'length', 'max'=>200),
 			array('ex_details', 'safe'),
@@ -66,7 +66,8 @@ class Exams extends CActiveRecord
 			'ex_title' => 'Title',
 			'ex_details' => 'Details',
 			'ex_start_date_time' => 'Start Date Time',
-			'ex_end_date_time' => 'End Date Time',			
+			'ex_end_date_time' => 'End Date Time',	
+			'ex_duration' => 'Duration'		
 		);
 	}
 
@@ -92,7 +93,7 @@ class Exams extends CActiveRecord
 		$criteria->compare('ex_title',$this->ex_title,true);
 		$criteria->compare('ex_start_date_time',$this->ex_start_date_time,true);
 		$criteria->compare('ex_end_date_time',$this->ex_end_date_time,true);
-		
+		$criteria->compare('ex_duration',$this->ex_duration,true);
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

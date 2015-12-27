@@ -14,6 +14,7 @@
         Yii::app()->clientScript->registerCoreScript('jquery');
         $cs = Yii::app()->clientScript;     
         $cs->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/ckeditor/ckeditor.js',CClientScript::POS_END)
+           ->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.mask.js',CClientScript::POS_END)
            ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/ckeditor/adapters/jquery.js',CClientScript::POS_END);
         ?>
     </head>
