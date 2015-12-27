@@ -22,6 +22,7 @@ $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.simple.datetimepi
 			<?php echo $form->textAreaRow($model,'ex_details',array('rows'=>6, 'cols'=>50, 'class'=>'form-control')); ?>
 			<?php echo $form->textFieldRow($model,'ex_start_date_time',array('class'=>'form-control')); ?>
 			<?php echo $form->textFieldRow($model,'ex_end_date_time',array('class'=>'form-control')); ?>
+			<?php echo $form->textFieldRow($model,'ex_duration',array('class'=>'form-control','maxlength'=> 8,'style' => 'width:90px;')); ?>
 			<div>&nbsp;</div>
 			<div class="form-actions">
 				<?php 
@@ -50,5 +51,6 @@ $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.simple.datetimepi
 
 		$('#Exams_ex_start_date_time').appendDtpicker();
 		$('#Exams_ex_end_date_time').appendDtpicker();
+		$('#Exams_ex_duration').mask('00:00:00',{placeholder: "__:__:__"});
 	});
 </script>

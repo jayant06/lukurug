@@ -11,7 +11,9 @@
       ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/ckeditor/adapters/jquery.js',CClientScript::POS_END)
       ->registerCssFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/bootstrap-wysihtml5.css')
       ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/wysihtml5-0.3.0.js',CClientScript::POS_END)
-      ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/bootstrap-wysihtml5.js',CClientScript::POS_END);
+      ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/bootstrap-wysihtml5.js',CClientScript::POS_END)
+      ->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.countdown.js',CClientScript::POS_END);
+
       //LOAD JQUERY
   		Yii::app()->clientScript->registerCoreScript('jquery');
       //$cs = Yii::app()->clientScript;   

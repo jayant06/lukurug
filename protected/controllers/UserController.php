@@ -381,8 +381,13 @@ class UserController extends Controller
 		$answersCount = UserAnswers::model()->findAll($criteria2);
 		
 		$totalScore = $uaModel->getTotalScore($id);
+		$exams = Exams::model()->findByPk($id);
 
-		$this->render('exam',array('dataProvider' => $dataProvider,'answers' => $answers,'totalScore' => $totalScore,'examId' => $id,'questionsCount' => $questionsCount,'answersCount' => $answersCount));
+		if(!Yii::app()->session['startTime']){
+			Yii::app()->session['startTime'] = array($id => date('Y-m-d').' '.date('H:i:s',strtotime(date('H:i:s'))+strtotime($exams->ex_duration)));
+		}
+		$startTime = Yii::app()->session['startTime'];
+		$this->render('exam',array('startTime' => $startTime[$id],'exams' => $exams, 'dataProvider' => $dataProvider,'answers' => $answers,'totalScore' => $totalScore,'examId' => $id,'questionsCount' => $questionsCount,'answersCount' => $answersCount));
 	}
 
 	public function actionSaveanswer(){
@@ -409,12 +414,21 @@ class UserController extends Controller
 					}
 					$rightanswer = $opModel->qto_id;
 				}
-				if($qModel){					
+				if($qModel){				
+					$ansCriteria = new CDbCriteria;
+					$ansCriteria->condition = "ua_user_id=:ua_user_id AND ua_question_id=:ua_question_id and ua_exam_id=:ua_exam_id";
+					$ansCriteria->params = array(':ua_user_id' => $user_id,':ua_question_id' => $questionId, ':ua_exam_id' => $qModel->qt_exam_id);
+					$ansModel = UserAnswers::model()->find($ansCriteria);
+
 					$model = new UserAnswers;
 					$model->ua_user_id = $user_id;
 					$model->ua_question_id = $questionId;
 					$model->ua_option_id = $chooseOption;
 					$model->ua_exam_id = $qModel->qt_exam_id;
+					if(!empty($ansModel->ua_id)){
+						$model->ua_id = $ansModel->ua_id;
+						$model->isNewRecord = false;
+					}
 					if($model->save()){
 						$return['msg'] = 'Answer saved successfully.';
 						$return['error'] = 0;

@@ -1,20 +1,18 @@
 <div class="totalscore">
 	<div style="float:left; margin-left:10px;">
-		Total Question: <?php echo count($questionsCount); ?>
+		Total Question Pending: <?php echo count($questionsCount) - count($answersCount); ?>
 	</div>
 	<div style="float:left; margin-left:10px;">
 		Total Question Attended: <span id="qattended"><?php echo count($answersCount); ?></span>
+	</div>	
+</div>
+<div style="clear:both;"></div>
+<div style="float:right;font-weight:bold;margin-right:5%;text-align:right;">
+	<div>Total Time: <?php echo $exams->ex_duration; ?></div>
+	<div class="countdown">
+		<span>Remaining Time: </span>
+		<span id="spanCountdown" countdown="<?php echo $startTime; ?>"></span>
 	</div>
-	<div style="float:left; margin-left:10px;">
-		Total Score: 
-		<span id="score">
-			<?php 
-			echo $totalScore;
-			?>
-		</span>
-	</div>
-	&nbsp;&nbsp;&nbsp;&nbsp;
-	[<a href="<?php echo Yii::app()->baseUrl; ?>/dashboard">Back</a>]
 </div>
 <div class="exam-cnt">
 	<?php
@@ -28,9 +26,11 @@
 	?>
 </div>
 <div style="clear:both;"></div>
-<div align="center">
-	<input type="button" name="finishExam" id="finishExam" value="Finish Exam" class="finishExamBtn">
-</div>
+<?php if(!empty($dataProvider)){ ?>
+	<div align="center">
+		<input type="button" name="finishExam" id="finishExam" value="Finish Exam" class="finishExamBtn">
+	</div>
+<?php } ?>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('.finishExamBtn').click(function(){
@@ -51,6 +51,13 @@
 					}
 				}
 			});
+		});
+
+		$("#spanCountdown")
+		   .countdown($("#spanCountdown").attr('countdown'), function(event) {
+		     $(this).text(
+		       event.strftime('%H:%M:%S')
+		     );
 		});
 	});
 </script>
