@@ -16,7 +16,7 @@ $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.simple.datetimepi
 			<?php
 			$courcesData = Categories::model()->findAll();
 			$cources = CHtml::listData($courcesData,'cat_id','cat_name');
-			echo $form->dropDownListRow($model,'ex_category_id',$cources,array('class'=>'form-control','empty' => 'Select Exams')); 
+			echo $form->dropDownListRow($model,'ex_category_id',$cources,array('class'=>'form-control','empty' => 'Select Course')); 
 			?>
 			<?php echo $form->textFieldRow($model,'ex_title',array('class'=>'form-control','maxlength'=>200)); ?>
 			<?php echo $form->textAreaRow($model,'ex_details',array('rows'=>6, 'cols'=>50, 'class'=>'form-control')); ?>

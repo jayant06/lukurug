@@ -12,6 +12,7 @@
  */
 class UserExams extends CActiveRecord
 {
+	public $cat_name, $ex_title, $ex_details, $ex_start_date_time, $ex_end_date_time;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -59,7 +60,10 @@ class UserExams extends CActiveRecord
 			'ue_user_id' => 'User',
 			'ue_exam_id' => 'Exam',
 			'ex_title' => 'Exam Title',
-			'ex_details' => 'Exam Details'
+			'ex_details' => 'Exam Details',
+			'ex_start_date_time' => 'Start Date',
+			'ex_end_date_time' => 'End Date',
+			'cat_name' => 'Subject'
 		);
 	}
 
@@ -84,6 +88,13 @@ class UserExams extends CActiveRecord
 		$criteria->compare('ue_id',$this->ue_id);
 		$criteria->compare('ue_user_id',$this->ue_user_id);
 		$criteria->compare('ue_exam_id',$this->ue_exam_id);
+		//echo $this->ex_title;exit;
+		$criteria->with = array('ueExam' => array('with' => array('catExams')));
+		$criteria->compare('ex_title',$this->ex_title,true);
+		$criteria->compare('ex_details',$this->ex_details,true);
+		$criteria->compare('ex_start_date_time',$this->ex_start_date_time,true);
+		$criteria->compare('ex_end_date_time',$this->ex_end_date_time,true);
+		$criteria->compare('cat_name',$this->cat_name,true);
 		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

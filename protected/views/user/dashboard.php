@@ -5,7 +5,13 @@
 	$this->widget('zii.widgets.grid.CGridView', array(
 	    'dataProvider'=>$dataProvider,
 	    'summaryText' => '',
+	    'filter'=>$model,
 	    'columns'=>array(
+			array(
+				'name'=>'cat_name',
+				'type'=>'raw',
+				'value'=>'CHtml::encode($data->ueExam->catExams->cat_name)'
+			),
 			array(
 				'name'=>'ex_title',
 				'type'=>'raw',
@@ -15,6 +21,16 @@
 				'name'=>'ex_details',
 				'type'=>'raw',
 				'value'=>'CHtml::encode($data->ueExam->ex_details)'
+			),
+			array(
+				'name'=>'ex_start_date_time',
+				'type'=>'raw',
+				'value'=>'date("d-m-Y",strtotime($data->ueExam->ex_start_date_time))'
+			),
+			array(
+				'name'=>'ex_end_date_time',
+				'type'=>'raw',
+				'value'=>'date("d-m-Y",strtotime($data->ueExam->ex_end_date_time))'
 			),
 			array(
 				'header'=>'Action',
