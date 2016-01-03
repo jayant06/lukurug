@@ -91,7 +91,7 @@ class UserController extends Controller
 		$criteria1=new CDbCriteria;
 		$criteria1->condition = "uad_user_id=:uad_user_id";
 		$criteria1->params = array(':uad_user_id' => $user_id);
-		$userAddress = UserAddress::model()->findAll();
+		$userAddress = UserAddress::model()->findAll($criteria1);
 		$address = array();
 		if(!empty($userAddress)){
 			foreach ($userAddress as $key => $arr) {
