@@ -91,7 +91,7 @@ class UserController extends Controller
 		$criteria1=new CDbCriteria;
 		$criteria1->condition = "uad_user_id=:uad_user_id";
 		$criteria1->params = array(':uad_user_id' => $user_id);
-		$userAddress = UserAddress::model()->findAll();
+		$userAddress = UserAddress::model()->findAll($criteria1);
 		$address = array();
 		if(!empty($userAddress)){
 			foreach ($userAddress as $key => $arr) {
@@ -243,10 +243,17 @@ class UserController extends Controller
     public function actionDashboard(){
     	$this->tabs = true;
     	$model=new UserExams;
+    	if(!empty($_GET)){
+    		$model->ex_title = $_GET['UserExams']['ex_title'];
+    		$model->ex_details = $_GET['UserExams']['ex_details'];
+    		$model->ex_start_date_time = $_GET['UserExams']['ex_start_date_time'];
+    		$model->ex_end_date_time = $_GET['UserExams']['ex_end_date_time'];
+    		$model->cat_name = $_GET['UserExams']['cat_name'];
+    	}
 		$dataProvider = $model->search();
 		$examModel=new Exams;
 		$examDataProvider = $examModel->getexams();
-		$params = array('dataProvider' => $dataProvider,'examDataProvider' => $examDataProvider);
+		$params = array('dataProvider' => $dataProvider,'examDataProvider' => $examDataProvider, 'model' => $model);
     	$this->render('dashboard',$params);
     }
     

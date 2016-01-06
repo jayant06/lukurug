@@ -13,7 +13,7 @@
             <div class="panel-body"> 
               <?php
               $this->widget('bootstrap.widgets.TbGridView', array(
-                  'id'=>'maker-grid',
+                  'id'=>'userlist-grid',
                   'type'=>'bordered striped',
                   'dataProvider' => $model->userlist(),                           
                   'template'=>"{items}{summary}{pager}",
@@ -68,7 +68,7 @@
     </div>
 </div>
 <script>
-  $('.statusupdate').live('click',function(e){
+  $('#userlist-grid').on('.statusupdate','click',function(e){
     var grid = $(this).attr("gridid");
     $.ajax({
       url:$(this).attr('href'),

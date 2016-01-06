@@ -72,8 +72,29 @@ class UserController extends Controller
 		{
 			unset($model->u_password);			
 			$model->attributes=$_POST['User'];
-			
 			if($model->validate() && $model->save()){
+
+				$userAddress = $_POST['UserAddress'];
+				if(!empty($userAddress)){
+					foreach ($userAddress['uad_type'] as $ukey => $uad_type) {
+						$userAddressModel = new UserAddress;
+						$userAddressModel->uad_type = $uad_type;
+						$userAddressModel->uad_add1 = $userAddress['uad_add1'][$ukey];
+						$userAddressModel->uad_add2 = $userAddress['uad_add2'][$ukey];
+						$userAddressModel->uad_country_id = $userAddress['uad_country_id'][$ukey];
+						$userAddressModel->uad_state_id = $userAddress['uad_state_id'][$ukey];
+						$userAddressModel->uad_city = $userAddress['uad_city'][$ukey];
+						$userAddressModel->uad_zipcode = $userAddress['uad_zipcode'][$ukey];
+						$userAddressModel->uad_mobile = $userAddress['uad_mobile'][$ukey];
+						$userAddressModel->uad_user_id = $model->u_id;
+						if(!empty($userAddress['uad_id'][$ukey])){
+							$userAddressModel->uad_id = $userAddress['uad_id'][$ukey];
+							$userAddressModel->isNewRecord = false;
+						}
+						$userAddressModel->save();						
+					}
+				}
+
 				Yii::app()->user->setFlash('success','User updated successfully.');	
 				$this->redirect(array('userlist'));
 			}else{
@@ -86,8 +107,55 @@ class UserController extends Controller
 				}
 		}
 		
+		$criteria=new CDbCriteria;
+		$criteria->order = 'cnt_name ASC';
+		$userAddressModel = new UserAddress;
+
+		$countriesData = Countries::model()->findAll($criteria);
+		$countries = CHtml::listData($countriesData,'cnt_id','cnt_name');
+		$states1 = array();
+		$states2 = array();
+
+		$criteria1=new CDbCriteria;
+		$criteria1->condition = "uad_user_id=:uad_user_id";
+		$criteria1->params = array(':uad_user_id' => $id);
+		$userAddress = UserAddress::model()->findAll($criteria1);
+		$address = array();
+		if(!empty($userAddress)){
+			foreach ($userAddress as $key => $arr) {
+				$uad_type = $arr->uad_type;
+				$address[$uad_type]['uad_id'] = $arr->uad_id;
+				$address[$uad_type]['uad_add1'] = $arr->uad_add1;
+				$address[$uad_type]['uad_add2'] = $arr->uad_add2;
+				$address[$uad_type]['uad_country_id'] = $arr->uad_country_id;
+				$address[$uad_type]['uad_state_id'] = $arr->uad_state_id;
+				$address[$uad_type]['uad_city'] = $arr->uad_city;
+				$address[$uad_type]['uad_zipcode'] = $arr->uad_zipcode;
+				$address[$uad_type]['uad_mobile'] = $arr->uad_mobile;
+			}
+		}
+
+		$criteria=new CDbCriteria;
+		$criteria->order = "st_name ASC";
+		$criteria->condition = "st_cnt_id=:st_cnt_id";
+		if(!empty($address[1]['uad_country_id'])){
+			$criteria->params = array(':st_cnt_id' => $address[1]['uad_country_id']);					
+			$statesData = States::model()->findAll($criteria);
+			$states1 = CHtml::listData($statesData,'st_id','st_name');
+		}
+		if(!empty($address[2]['uad_country_id'])){
+			$criteria->params = array(':st_cnt_id' => $address[2]['uad_country_id']);					
+			$statesData = States::model()->findAll($criteria);
+			$states2 = CHtml::listData($statesData,'st_id','st_name');
+		}
+
 		$this->render('edit',array(
 			'model'=>$model,
+			'userAddressModel' => $userAddressModel,
+			'countries' => $countries,
+			'states1' => $states1,
+			'states2' => $states2,
+			'address' => $address
 		));
 	
 	}
@@ -99,9 +167,27 @@ class UserController extends Controller
 		{
 			$salt = md5(uniqid(rand(), true));
 			$_POST['User']['u_verkey'] = $salt;
-			$model->attributes=$_POST['User'];			
+			$model->attributes=$_POST['User'];	
+			$model->u_status=1;
 			if($model->validate() && $model->save()){
 				$username = $model->u_username;
+				$userAddress = $_POST['UserAddress'];
+				if(!empty($userAddress)){
+					foreach ($userAddress['uad_type'] as $ukey => $uad_type) {
+						$userAddressModel = new UserAddress;
+						$userAddressModel->uad_type = $uad_type;
+						$userAddressModel->uad_add1 = $userAddress['uad_add1'][$ukey];
+						$userAddressModel->uad_add2 = $userAddress['uad_add2'][$ukey];
+						$userAddressModel->uad_country_id = $userAddress['uad_country_id'][$ukey];
+						$userAddressModel->uad_state_id = $userAddress['uad_state_id'][$ukey];
+						$userAddressModel->uad_city = $userAddress['uad_city'][$ukey];
+						$userAddressModel->uad_zipcode = $userAddress['uad_zipcode'][$ukey];
+						$userAddressModel->uad_mobile = $userAddress['uad_mobile'][$ukey];
+						$userAddressModel->uad_user_id = $model->u_id;
+						$userAddressModel->save();						
+					}
+				}
+
 				$request = 	array('{verification_link}'=>$salt,'{username}'=>$username);
 				if($this->sendEmail(1,$model->u_email,$request)){
 					Yii::app()->user->setFlash('success','A verification link has been sent to '.$model->u_email.' for verification of account.');					
@@ -119,8 +205,22 @@ class UserController extends Controller
 				}
 			}
 		}
+
+		$criteria=new CDbCriteria;
+		$criteria->order = 'cnt_name ASC';
+		$userAddressModel = new UserAddress;
+
+		$countriesData = Countries::model()->findAll($criteria);
+		$countries = CHtml::listData($countriesData,'cnt_id','cnt_name');
+		$states1 = array();
+		$states2 = array();
+
 		$this->render('add',array(
-			'model'=>$model,			
+			'model'=>$model,	
+			'userAddressModel' => $userAddressModel,
+			'countries' => $countries,
+			'states1' => $states1,
+			'states2' => $states2		
 		));
 	}
 	/**

@@ -36,7 +36,7 @@ class UserAddress extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('uad_user_id, uad_add1, uad_country_id, uad_state_id, uad_city, uad_zipcode, uad_mobile', 'required'),
-			array('uad_user_id, uad_country_id, uad_state_id, uad_city, uad_type', 'numerical', 'integerOnly'=>true),
+			array('uad_user_id, uad_country_id, uad_state_id, uad_type', 'numerical', 'integerOnly'=>true),
 			array('uad_add1, uad_add2', 'length', 'max'=>255),
 			array('uad_zipcode, uad_mobile', 'length', 'max'=>200),
 			// The following rule is used by search().
