@@ -114,12 +114,12 @@ class Exams extends CActiveRecord
 		
 		$criteria=new CDbCriteria;
 		$criteria->order = "ex_title ASC";
-		$cond = 'NOW() between ex_start_date_time and ex_end_date_time';
+		/*$cond = 'NOW() between ex_start_date_time and ex_end_date_time';
 		if(!empty($uExams)){
 			$cond .= " and ex_id not in(".implode(', ',$uExams).")";
 		}
 
-		$criteria->condition = $cond;
+		$criteria->condition = $cond;*/
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

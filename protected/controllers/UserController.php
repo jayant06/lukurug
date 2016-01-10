@@ -398,7 +398,7 @@ class UserController extends Controller
 		$totalScore = $uaModel->getTotalScore($id);
 		$exams = Exams::model()->findByPk($id);
 
-		if(!Yii::app()->session['startTime']){
+		if(empty(Yii::app()->session['startTime'][$id])){
 			Yii::app()->session['startTime'] = array($id => date('Y-m-d').' '.date('H:i:s',strtotime(date('H:i:s'))+strtotime($exams->ex_duration)));
 		}
 		$startTime = Yii::app()->session['startTime'];
@@ -497,7 +497,7 @@ class UserController extends Controller
 
 		$examDetail = Exams::model()->findByPk($id);
 
-		$totalScore = UserAnswers::model()->getTotalScore($id);
+		$totalScore = UserAnswers::model()->getCountRightAns($id);
 
 		$this->render('viewexamdetail',array('examDetail' => $examDetail, 'answers' => $answers, 'questions' => $questions, 'totalScore' => $totalScore));
 	}

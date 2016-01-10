@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 27, 2015 at 10:16 AM
+-- Generation Time: Jan 10, 2016 at 10:32 PM
 -- Server version: 5.5.46-0ubuntu0.14.04.2
 -- PHP Version: 5.5.9-1ubuntu4.14
 
@@ -26,7 +26,6 @@ SET time_zone = "+00:00";
 -- Table structure for table `it_authassignment`
 --
 
-DROP TABLE IF EXISTS `it_authassignment`;
 CREATE TABLE IF NOT EXISTS `it_authassignment` (
   `itemname` varchar(64) NOT NULL,
   `userid` varchar(64) NOT NULL,
@@ -41,10 +40,31 @@ CREATE TABLE IF NOT EXISTS `it_authassignment` (
 
 INSERT INTO `it_authassignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
 ('admin', '1', NULL, NULL),
+('member', '10', NULL, 'N;'),
+('member', '11', NULL, 'N;'),
+('member', '12', NULL, 'N;'),
+('member', '13', NULL, 'N;'),
+('member', '14', NULL, 'N;'),
+('member', '15', NULL, 'N;'),
+('member', '16', NULL, 'N;'),
+('member', '17', NULL, 'N;'),
+('member', '18', NULL, 'N;'),
+('member', '19', NULL, 'N;'),
 ('member', '2', NULL, NULL),
+('member', '20', NULL, 'N;'),
+('member', '21', NULL, 'N;'),
+('member', '22', NULL, 'N;'),
+('member', '23', NULL, 'N;'),
+('member', '24', NULL, 'N;'),
+('member', '25', NULL, 'N;'),
+('member', '26', NULL, 'N;'),
 ('member', '3', NULL, 'N;'),
 ('member', '4', NULL, 'N;'),
-('member', '5', NULL, 'N;');
+('member', '5', NULL, 'N;'),
+('member', '6', NULL, 'N;'),
+('member', '7', NULL, 'N;'),
+('member', '8', NULL, 'N;'),
+('member', '9', NULL, 'N;');
 
 -- --------------------------------------------------------
 
@@ -52,7 +72,6 @@ INSERT INTO `it_authassignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
 -- Table structure for table `it_authitem`
 --
 
-DROP TABLE IF EXISTS `it_authitem`;
 CREATE TABLE IF NOT EXISTS `it_authitem` (
   `name` varchar(64) NOT NULL,
   `type` int(11) NOT NULL COMMENT '1 for action 2 for role',
@@ -176,7 +195,6 @@ INSERT INTO `it_authitem` (`name`, `type`, `description`, `bizrule`, `data`) VAL
 -- Table structure for table `it_authitemchild`
 --
 
-DROP TABLE IF EXISTS `it_authitemchild`;
 CREATE TABLE IF NOT EXISTS `it_authitemchild` (
   `parent` varchar(64) NOT NULL,
   `child` varchar(64) NOT NULL,
@@ -295,7 +313,6 @@ INSERT INTO `it_authitemchild` (`parent`, `child`) VALUES
 -- Table structure for table `it_categories`
 --
 
-DROP TABLE IF EXISTS `it_categories`;
 CREATE TABLE IF NOT EXISTS `it_categories` (
   `cat_id` int(11) NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(255) NOT NULL,
@@ -304,14 +321,16 @@ CREATE TABLE IF NOT EXISTS `it_categories` (
   `cat_meta_keyword` text,
   `cat_meta_description` text,
   PRIMARY KEY (`cat_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `it_categories`
 --
 
 INSERT INTO `it_categories` (`cat_id`, `cat_name`, `cat_description`, `cat_meta_title`, `cat_meta_keyword`, `cat_meta_description`) VALUES
-(10, 'Java in 5 Days', 'It''s crash course.', '', '', '');
+(10, 'Java in 5 Days', 'It''s crash course.', '', '', ''),
+(11, 'Railway Exams', 'Railway Exams', NULL, NULL, NULL),
+(12, 'SSC Exams', 'SSC Exams', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -319,7 +338,6 @@ INSERT INTO `it_categories` (`cat_id`, `cat_name`, `cat_description`, `cat_meta_
 -- Table structure for table `it_cmspage`
 --
 
-DROP TABLE IF EXISTS `it_cmspage`;
 CREATE TABLE IF NOT EXISTS `it_cmspage` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT,
   `c_pagename` varchar(100) NOT NULL,
@@ -351,7 +369,6 @@ INSERT INTO `it_cmspage` (`c_id`, `c_pagename`, `c_title`, `c_subtitle`, `c_cont
 -- Table structure for table `it_countries`
 --
 
-DROP TABLE IF EXISTS `it_countries`;
 CREATE TABLE IF NOT EXISTS `it_countries` (
   `cnt_id` smallint(3) unsigned NOT NULL,
   `cnt_name` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
@@ -624,7 +641,6 @@ INSERT INTO `it_countries` (`cnt_id`, `cnt_name`, `cnt_code_char2`, `cnt_code_ch
 -- Table structure for table `it_email_manager`
 --
 
-DROP TABLE IF EXISTS `it_email_manager`;
 CREATE TABLE IF NOT EXISTS `it_email_manager` (
   `em_id` int(11) NOT NULL AUTO_INCREMENT,
   `em_title` varchar(100) DEFAULT NULL,
@@ -649,7 +665,6 @@ INSERT INTO `it_email_manager` (`em_id`, `em_title`, `em_email_subject`, `em_ema
 -- Table structure for table `it_exams`
 --
 
-DROP TABLE IF EXISTS `it_exams`;
 CREATE TABLE IF NOT EXISTS `it_exams` (
   `ex_id` int(11) NOT NULL AUTO_INCREMENT,
   `ex_category_id` int(11) NOT NULL,
@@ -678,7 +693,6 @@ INSERT INTO `it_exams` (`ex_id`, `ex_category_id`, `ex_title`, `ex_details`, `ex
 -- Table structure for table `it_questions`
 --
 
-DROP TABLE IF EXISTS `it_questions`;
 CREATE TABLE IF NOT EXISTS `it_questions` (
   `qt_id` int(11) NOT NULL AUTO_INCREMENT,
   `qt_exam_id` int(11) NOT NULL,
@@ -690,7 +704,7 @@ CREATE TABLE IF NOT EXISTS `it_questions` (
   `qt_modified` datetime NOT NULL,
   PRIMARY KEY (`qt_id`),
   UNIQUE KEY `qt_id` (`qt_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `it_questions`
@@ -702,7 +716,13 @@ INSERT INTO `it_questions` (`qt_id`, `qt_exam_id`, `qt_name`, `qt_description`, 
 (3, 2, 'Question One', 'Question One', 1, 20, '2015-11-21 05:19:59', '2015-11-21 05:19:59'),
 (4, 1, 'Question Two Question Two', 'Question Two', 2, 20, '2015-11-21 05:21:40', '2015-11-24 07:31:29'),
 (5, 3, 'first question', 'first question', 1, 10, '2015-12-26 21:59:05', '2015-12-26 21:59:05'),
-(6, 3, 'second question', 'second question', 1, 20, '2015-12-26 22:00:28', '2015-12-26 22:00:28');
+(6, 3, 'second question', 'second question', 1, 20, '2015-12-26 22:00:28', '2015-12-26 22:00:28'),
+(7, 1, 'test options', 'test options', 1, 1, '2016-01-08 05:45:15', '2016-01-08 05:45:15'),
+(8, 2, 'test options oooo', 'test options oooo', 2, 10, '2016-01-08 05:48:42', '2016-01-08 05:48:42'),
+(9, 1, 'Question1', 'Question1', 1, 1, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
+(10, 1, 'Question2', 'Question2', 1, 1, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
+(11, 1, 'Question3', 'Question3', 1, 1, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
+(12, 1, 'Question4', 'Question4', 1, 1, '2016-01-09 08:36:03', '2016-01-09 08:36:03');
 
 -- --------------------------------------------------------
 
@@ -710,7 +730,6 @@ INSERT INTO `it_questions` (`qt_id`, `qt_exam_id`, `qt_name`, `qt_description`, 
 -- Table structure for table `it_questions_options`
 --
 
-DROP TABLE IF EXISTS `it_questions_options`;
 CREATE TABLE IF NOT EXISTS `it_questions_options` (
   `qto_id` int(11) NOT NULL AUTO_INCREMENT,
   `qto_name` varchar(200) NOT NULL,
@@ -718,7 +737,7 @@ CREATE TABLE IF NOT EXISTS `it_questions_options` (
   `qto_question_id` int(11) NOT NULL,
   `qto_right_ans` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=wrong, 1=right',
   PRIMARY KEY (`qto_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=92 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=116 ;
 
 --
 -- Dumping data for table `it_questions_options`
@@ -745,7 +764,31 @@ INSERT INTO `it_questions_options` (`qto_id`, `qto_name`, `qto_image`, `qto_ques
 (88, 'opt A', NULL, 6, 1),
 (89, 'opt B', NULL, 6, 0),
 (90, 'opt C', NULL, 6, 0),
-(91, 'opt D', NULL, 6, 0);
+(91, 'opt D', NULL, 6, 0),
+(92, 'option a', NULL, 7, 0),
+(93, 'option b', NULL, 7, 0),
+(94, 'option c', NULL, 7, 1),
+(95, 'option d', NULL, 7, 0),
+(96, 'option a', '568f006244664.png', 8, 0),
+(97, 'option b', '568f006244911.png', 8, 0),
+(98, 'option c', '568f006244bd1.png', 8, 1),
+(99, 'option d', '568f006244e62.png', 8, 0),
+(100, 'A', NULL, 9, 0),
+(101, 'B', NULL, 9, 1),
+(102, 'C', NULL, 9, 0),
+(103, 'D', NULL, 9, 0),
+(104, 'A', NULL, 10, 0),
+(105, 'B', NULL, 10, 0),
+(106, 'C', NULL, 10, 1),
+(107, 'D', NULL, 10, 0),
+(108, 'A', NULL, 11, 1),
+(109, 'B', NULL, 11, 0),
+(110, 'C', NULL, 11, 0),
+(111, 'D', NULL, 11, 0),
+(112, 'A', NULL, 12, 0),
+(113, 'B', NULL, 12, 0),
+(114, 'C', NULL, 12, 0),
+(115, 'D', NULL, 12, 1);
 
 -- --------------------------------------------------------
 
@@ -753,7 +796,6 @@ INSERT INTO `it_questions_options` (`qto_id`, `qto_name`, `qto_image`, `qto_ques
 -- Table structure for table `it_site_settings`
 --
 
-DROP TABLE IF EXISTS `it_site_settings`;
 CREATE TABLE IF NOT EXISTS `it_site_settings` (
   `sst_id` int(11) NOT NULL AUTO_INCREMENT,
   `sst_name` varchar(255) NOT NULL,
@@ -767,7 +809,6 @@ CREATE TABLE IF NOT EXISTS `it_site_settings` (
 -- Table structure for table `it_states`
 --
 
-DROP TABLE IF EXISTS `it_states`;
 CREATE TABLE IF NOT EXISTS `it_states` (
   `st_id` smallint(5) unsigned NOT NULL,
   `st_cnt_id` int(11) NOT NULL,
@@ -5216,7 +5257,6 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 -- Table structure for table `it_user`
 --
 
-DROP TABLE IF EXISTS `it_user`;
 CREATE TABLE IF NOT EXISTS `it_user` (
   `u_id` int(11) NOT NULL AUTO_INCREMENT,
   `u_first_name` varchar(200) NOT NULL,
@@ -5230,18 +5270,40 @@ CREATE TABLE IF NOT EXISTS `it_user` (
   `u_verkey` varchar(250) DEFAULT NULL COMMENT 'Account verification Key',
   `u_scrkey` varchar(250) DEFAULT NULL COMMENT 'Forgot password link ',
   `u_last_login_date` datetime DEFAULT NULL,
+  `u_addmission_date` date DEFAULT NULL,
   `u_created` datetime NOT NULL,
   `u_modified` datetime NOT NULL,
   PRIMARY KEY (`u_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
 -- Dumping data for table `it_user`
 --
 
-INSERT INTO `it_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_created`, `u_modified`) VALUES
-(1, 'It', 'Gurukul', 'admin@itgurukul.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '02c00693466cf0cc34bdc26042f19677', '2015-06-03 01:26:27', '2014-12-23 02:20:00', '2015-09-07 21:06:04'),
-(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2015-12-27 10:08:22', '2015-06-04 02:51:57', '2015-12-27 10:08:22');
+INSERT INTO `it_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_addmission_date`, `u_created`, `u_modified`) VALUES
+(1, 'It', 'Gurukul', 'admin@itgurukul.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '02c00693466cf0cc34bdc26042f19677', '2015-06-03 01:26:27', NULL, '2014-12-23 02:20:00', '2015-09-07 21:06:04'),
+(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2016-01-10 22:22:51', '2016-01-10', '2015-06-04 02:51:57', '2016-01-10 22:22:51'),
+(6, 'asdasdsd', 'dfsdf', 'asdasd@gmail.com', '$2a$13$p5sOHpLUGx68C3ci/zE9zOz.qk4Ha6xp6HU0gLCFYWgZEpxTqvVEK', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, '2016-01-02 20:38:56', '2016-01-10 10:45:10'),
+(7, 'erewrwerwerwer', 'dfsdf', 'erewrwerwerwer@gmail.com', '$2a$13$jUuhjDP/4A07DJo9fiYw7u.ie1EZTMq.rRZofsXDRRsy975qdiQoi', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, '2016-01-02 20:40:26', '2016-01-03 07:11:13'),
+(8, 'sdjlfjdsf', 'fljljfd', 'lkfldfjgl@gmail.com', '$2a$13$lBKmQASHZZv.5pFL6ywoJOyIu9NKpLc5h5tmk0PM1T6DmtrFcxR0u', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, '2016-01-02 20:51:15', '2016-01-03 07:11:32'),
+(9, 'eiruowueoru', ';lwokeqwe', 'sadasd@gmail.com', '$2a$13$sVXnA19utoSez7Xis2Y1O.IaBqH4YIg8lmBaQ.1yO2BJ54A4ne0mG', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, '2016-01-02 20:53:24', '2016-01-03 07:11:39'),
+(10, 'name1', 'A', 'name1@gmail.com', '$2a$13$6kJnUiefvwCa0vEs/hKNk.kzDOSXe21/swO6w4hY5iKTSne3lMnM2', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, '2016-01-10 00:01:27', '2016-01-10 00:01:27'),
+(11, 'name2', 'A', 'name2@gmail.com', '$2a$13$POyTzv8MQvbGkoOkqNRxDezRJ1n9jewy6YyhYZ1rESIaxSlAUflRO', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, '2016-01-10 00:01:29', '2016-01-10 00:01:29'),
+(12, 'name3', 'A', 'name3@gmail.com', '$2a$13$t/UJxUsXpkQxlMHI0wvRleEGy5p2L15MwTWfrWykBO1J4l0ehgZCS', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, '2016-01-10 00:01:30', '2016-01-10 00:01:30'),
+(13, 'name4', 'A', 'name4@gmail.com', '$2a$13$M04r1CmGsLFmpBS9musGdOcSQvFcIKMsP8AARTd0RtxHuTbv0JmOa', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, '2016-01-10 00:01:31', '2016-01-10 00:01:31'),
+(14, 'name5', 'A', 'name5@gmail.com', '$2a$13$iUsYc9ccfBskJdSxCIr8zum59nSFhB64bmmzZ6LpENueUv0QNyQvy', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, '2016-01-10 00:05:03', '2016-01-10 00:05:03'),
+(15, 'name6', 'A', 'name6@gmail.com', '$2a$13$bReokKX5TuVJif9kMlnFz.3qOQKi1YRj7M9r/XZOYj4hDNqSutcCa', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, '2016-01-10 00:05:04', '2016-01-10 00:05:04'),
+(16, 'name7', 'A', 'name7@gmail.com', '$2a$13$Qh.ET5GHZzn0DIW3MGftbO8dUKahaZTr1yRx/nhO5drzpotV3/H2G', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, '2016-01-10 00:05:05', '2016-01-10 00:05:05'),
+(17, 'name8', 'A', 'name8@gmail.com', '$2a$13$3REzxdXm5xxErxt9Wa6UVeH3kundUF/Og5zwqrPSds1bjH9JyipRq', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, '2016-01-10 00:05:06', '2016-01-10 00:05:06'),
+(18, 'hhhh', 'ggg', 'ggg@gmail.com', '$2a$13$NXD.y4Q/d8RuX6IBe4EJIu8XuhOZgYmOXLP4OdhxQSTz23.kuAmeS', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, '2016-01-10 10:58:47', '2016-01-10 10:58:47'),
+(19, 'kkkkkkk', 'lllllll', 'lllllll@gmail.com', '$2a$13$.BN1HYhmsWla4npGbbg/yuKUVXvXxGm95A//cuALnM5Uq52Ye7tFC', 'member', 1, 1, 1, NULL, NULL, '2016-01-10 11:05:56', NULL, '2016-01-10 11:05:29', '2016-01-10 11:05:56'),
+(20, 'jsaddashdk', 'saldjlasldjsal', 'jsaddashdk@gmail.com', '$2a$13$b2XXsgDsNRtyCTdcno63SeOZGYZk7NlcbDlDziFgApO5Td0tWwMTu', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', '2016-01-10 11:28:11', '2016-01-10 11:28:11'),
+(21, 'dssdsds', 'dssdsds', 'dssdsds@gmail.com', '$2a$13$RBJgmSUZrmjFypr3U/FM/ubR0J4lnYDD9M3046dSyvTrHYOjmEO4G', 'member', 1, 1, 1, NULL, NULL, '1970-01-01 00:00:00', '2016-01-10', '2016-01-10 11:30:58', '2016-01-10 11:36:54'),
+(22, 'sdfsdfsdf', 'fgdfgdfgdf', 'dsfsdfsdfs@gmail.com', '$2a$13$w68sOTrzqgUezr9fjwTwqeUWZEXb1W4K0kzZuEZY1LM5agMLVhpiC', 'member', 1, 1, 1, NULL, NULL, NULL, '2016-01-10', '2016-01-10 11:38:07', '2016-01-10 11:38:07'),
+(23, 'name9', 'A', 'name9@gmail.com', '$2a$13$9F3ZRnFIUP5sAvcbig.tL.RXvDwTdxSLtNS3KQ.a5CY1OcuoNRmfO', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', '2016-01-10 11:42:10', '2016-01-10 11:42:10'),
+(24, 'name10', 'A', 'name10@gmail.com', '$2a$13$ZBgpSGGxqMsHXb4T63g7ieondzHXtpqFafsIHKoC5hZcU1VFN69dy', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', '2016-01-10 11:42:12', '2016-01-10 11:42:12'),
+(25, 'name11', 'A', 'name11@gmail.com', '$2a$13$oMB0ZbyW82NSuG5asA3LfOdgdzQ.L0anA4jSjVS8Z9lWQQGoZ39EG', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', '2016-01-10 11:42:14', '2016-01-10 11:42:14'),
+(26, 'name12', 'A', 'name12@gmail.com', '$2a$13$m57QBUC5LRI2oLP/uWS1H.wtxWdsS.5ApHEdJ0H/LWTsrhvXFwP2C', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', '2016-01-10 11:42:15', '2016-01-10 11:42:15');
 
 -- --------------------------------------------------------
 
@@ -5249,7 +5311,6 @@ INSERT INTO `it_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_pass
 -- Table structure for table `it_user_address`
 --
 
-DROP TABLE IF EXISTS `it_user_address`;
 CREATE TABLE IF NOT EXISTS `it_user_address` (
   `uad_id` int(11) NOT NULL AUTO_INCREMENT,
   `uad_user_id` int(11) NOT NULL,
@@ -5264,15 +5325,41 @@ CREATE TABLE IF NOT EXISTS `it_user_address` (
   `uad_created` datetime NOT NULL,
   `uad_modified` datetime NOT NULL,
   PRIMARY KEY (`uad_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
 
 --
 -- Dumping data for table `it_user_address`
 --
 
 INSERT INTO `it_user_address` (`uad_id`, `uad_user_id`, `uad_add1`, `uad_add2`, `uad_country_id`, `uad_state_id`, `uad_city`, `uad_zipcode`, `uad_mobile`, `uad_type`, `uad_created`, `uad_modified`) VALUES
-(1, 5, 'add1 hhhh', 'add2 lll', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2015-07-24 07:45:43', '2015-11-20 06:43:10'),
-(2, 5, 'add1 hhhh', 'add2 lll', 105, 14691, 'jodhpur', '342001', '123456789', 2, '2015-07-24 07:45:43', '2015-11-20 06:43:10');
+(1, 5, 'add1 hhhh', 'add2 lll', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2015-07-24 07:45:43', '2016-01-10 11:37:09'),
+(2, 5, 'add1 hhhh', 'add2 lll', 105, 14691, 'jodhpur', '342001', '123456789', 2, '2015-07-24 07:45:43', '2016-01-10 11:37:09'),
+(3, 9, 'asd', 'asdas', 15, 12471, 'jodhpur', '342001', '9660303635', 1, '2016-01-02 20:53:24', '2016-01-03 07:11:39'),
+(4, 9, 'asd', 'asdas', 15, 12471, 'jodhpur', '342001', '9660303635', 2, '2016-01-02 20:53:24', '2016-01-03 07:11:39'),
+(5, 6, 'asdasasdasd', 'dfsdfdfdfsdf', 105, 14691, 'jaipur', '342001', '123456789', 1, '2016-01-03 07:26:48', '2016-01-10 10:45:10'),
+(6, 6, 'asdasasdasd', 'dfsdfdfdfsdf', 105, 14691, 'jaipur', '342001', '123456789', 2, '2016-01-03 07:26:48', '2016-01-10 10:45:10'),
+(7, 10, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 00:01:28', '2016-01-10 00:01:28'),
+(8, 11, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 00:01:29', '2016-01-10 00:01:29'),
+(9, 12, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 00:01:30', '2016-01-10 00:01:30'),
+(10, 13, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 00:01:31', '2016-01-10 00:01:31'),
+(11, 14, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 00:05:03', '2016-01-10 00:05:03'),
+(12, 15, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 00:05:04', '2016-01-10 00:05:04'),
+(13, 16, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 00:05:05', '2016-01-10 00:05:05'),
+(14, 17, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 00:05:06', '2016-01-10 00:05:06'),
+(15, 18, 'add1', 'add2', 105, 14691, 'jodhpur', '3422001', '123456789', 1, '2016-01-10 10:58:47', '2016-01-10 10:58:47'),
+(16, 18, 'add1', 'add2', 105, 14691, 'jodhpur', '3422001', '123456789', 2, '2016-01-10 10:58:47', '2016-01-10 10:58:47'),
+(17, 19, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 11:05:29', '2016-01-10 11:05:29'),
+(18, 19, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 2, '2016-01-10 11:05:29', '2016-01-10 11:05:29'),
+(19, 20, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 11:28:11', '2016-01-10 11:28:11'),
+(20, 20, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 2, '2016-01-10 11:28:11', '2016-01-10 11:28:11'),
+(21, 21, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 11:30:58', '2016-01-10 11:36:54'),
+(22, 21, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 2, '2016-01-10 11:30:58', '2016-01-10 11:36:54'),
+(23, 22, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 11:38:07', '2016-01-10 11:38:07'),
+(24, 22, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 2, '2016-01-10 11:38:07', '2016-01-10 11:38:07'),
+(25, 23, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 11:42:12', '2016-01-10 11:42:12'),
+(26, 24, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 11:42:13', '2016-01-10 11:42:13'),
+(27, 25, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 11:42:14', '2016-01-10 11:42:14'),
+(28, 26, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-10 11:42:15', '2016-01-10 11:42:15');
 
 -- --------------------------------------------------------
 
@@ -5280,7 +5367,6 @@ INSERT INTO `it_user_address` (`uad_id`, `uad_user_id`, `uad_add1`, `uad_add2`, 
 -- Table structure for table `it_user_answers`
 --
 
-DROP TABLE IF EXISTS `it_user_answers`;
 CREATE TABLE IF NOT EXISTS `it_user_answers` (
   `ua_id` int(11) NOT NULL AUTO_INCREMENT,
   `ua_user_id` int(11) NOT NULL,
@@ -5302,7 +5388,37 @@ INSERT INTO `it_user_answers` (`ua_id`, `ua_user_id`, `ua_exam_id`, `ua_question
 (3, 5, 1, 4, 83, '2015-12-03 08:17:06', '2015-12-03 08:17:06'),
 (4, 5, 1, 1, 2, '2015-12-03 08:17:14', '2015-12-03 08:17:14'),
 (14, 5, 3, 6, 90, '2015-12-27 10:14:06', '2015-12-27 10:14:06'),
-(13, 5, 3, 5, 85, '2015-12-27 10:13:55', '2015-12-27 10:13:55');
+(13, 5, 3, 5, 86, '2015-12-27 10:13:55', '2016-01-10 21:09:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `it_user_courses`
+--
+
+CREATE TABLE IF NOT EXISTS `it_user_courses` (
+  `cr_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cr_user_id` int(11) NOT NULL,
+  `cr_category_id` int(11) NOT NULL,
+  PRIMARY KEY (`cr_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+
+--
+-- Dumping data for table `it_user_courses`
+--
+
+INSERT INTO `it_user_courses` (`cr_id`, `cr_user_id`, `cr_category_id`) VALUES
+(17, 5, 11),
+(16, 5, 10),
+(5, 6, 11),
+(6, 18, 11),
+(7, 19, 12),
+(8, 20, 11),
+(9, 20, 12),
+(15, 21, 12),
+(14, 21, 11),
+(13, 21, 10),
+(18, 22, 10);
 
 -- --------------------------------------------------------
 
@@ -5310,7 +5426,6 @@ INSERT INTO `it_user_answers` (`ua_id`, `ua_user_id`, `ua_exam_id`, `ua_question
 -- Table structure for table `it_user_exams`
 --
 
-DROP TABLE IF EXISTS `it_user_exams`;
 CREATE TABLE IF NOT EXISTS `it_user_exams` (
   `ue_id` int(11) NOT NULL AUTO_INCREMENT,
   `ue_user_id` int(11) NOT NULL,
@@ -5318,7 +5433,7 @@ CREATE TABLE IF NOT EXISTS `it_user_exams` (
   `ue_created` datetime NOT NULL,
   `ue_modified` datetime NOT NULL,
   PRIMARY KEY (`ue_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `it_user_exams`
@@ -5326,7 +5441,8 @@ CREATE TABLE IF NOT EXISTS `it_user_exams` (
 
 INSERT INTO `it_user_exams` (`ue_id`, `ue_user_id`, `ue_exam_id`, `ue_created`, `ue_modified`) VALUES
 (1, 5, 2, '2015-12-02 08:33:57', '2015-12-02 08:33:57'),
-(2, 5, 1, '2015-12-03 08:17:19', '2015-12-03 08:17:19');
+(2, 5, 1, '2015-12-03 08:17:19', '2015-12-03 08:17:19'),
+(4, 5, 2, '2016-01-10 18:34:27', '2016-01-10 18:34:27');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

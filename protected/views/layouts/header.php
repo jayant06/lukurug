@@ -32,21 +32,12 @@ $this->widget('bootstrap.widgets.TbNavbar', array(
             'class'=>'bootstrap.widgets.TbMenu',
             'htmlOptions'=>array('class'=>'pull-right'),
             'items'=>array(        
-                /*$productMenues,
-                array('label' => 'Customize', 'url' => '#','items' => array(
-                    array('label'=>'Shirt', 'url'=>array('fabrics/index/1')),
-                    array('label'=>'Trouser', 'url'=>array('fabrics/index/2')),                    
-                    array('label'=>'Blazer', 'url'=>array('/fabrics/index/3')),
-                )),
-                array('label'=>'My Cart Item(s)', 'url'=>'javascript:void(0);','itemOptions' => array('href' => Yii::app()->baseUrl.'/cartitems','data-toggle' => 'modal' ,'data-target' => '#cartModal')),*/
-                
-                array('label'=>'Signin', 'visible'=>Yii::app()->user->isGuest,'url'=>array('site/login')),
+               array('label'=>'Signin', 'visible'=>Yii::app()->user->isGuest,'url'=>array('site/login')),
                 array('label'=>'Signup', 'visible'=>Yii::app()->user->isGuest,'url'=>array('user/signup')),
                 array('label'=>$this->loggedusername, 'visible'=>Yii::app()->user->checkAccess('member'), 'url'=>'#', 'items'=>array(
                     array('label'=>'Dashboard', 'url'=>array('user/dashboard')),
                     array('label'=>'Profile', 'url'=>array('user/profile')),                    
-                    //array('label'=>'Editor', 'url'=>array('/editor')),
-                	array('label'=>'Change Password', 'url'=>array('user/changepassword')),
+                    array('label'=>'Change Password', 'url'=>array('user/changepassword')),
                     '---',
                     array('label'=>'Logout', 'url'=>array('site/logout')),
                 )),
@@ -55,28 +46,10 @@ $this->widget('bootstrap.widgets.TbNavbar', array(
     ),
 
 )); ?>
-<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Items in your cart</h4>
-      </div>
-      <div class="modal-body">
-          
-      </div>       
-    </div>
-  </div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div style="margin:0 2% 0 2%;font-weight: bold;color: red;" align="right">
+    <marquee direction="left"> Contact: 9829198118</marquee >
 </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("a[data-target=#cartModal]").click(function(ev) {
-            ev.preventDefault();
-            var target = $(this).attr("href");
-            // load the url and show modal on success
-            $("#cartModal .modal-body").load(target, function() { 
-                 $("#cartModal").modal("show"); 
-            });
-        });
-    });
-</script>
+<div>&nbsp;</div>

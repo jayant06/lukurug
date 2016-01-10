@@ -1,3 +1,6 @@
+<div align="center">
+	<h2>Exam: <?php echo $exams->ex_title; ?></h2>
+</div>
 <div class="totalscore">
 	<div style="float:left; margin-left:10px;">
 		Total Question Pending: <?php echo count($questionsCount) - count($answersCount); ?>
@@ -53,8 +56,9 @@
 			});
 		});
 
+		var countDownVal = $("#spanCountdown").attr('countdown');
 		$("#spanCountdown")
-		   .countdown($("#spanCountdown").attr('countdown'), function(event) {
+		   .countdown(countDownVal, function(event) {
 		     $(this).text(
 		       event.strftime('%H:%M:%S')
 		     );
