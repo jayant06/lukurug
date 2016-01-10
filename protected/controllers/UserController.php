@@ -71,6 +71,20 @@ class UserController extends Controller
 			unset($model->u_created);
 			if($model->save())
 			{
+				if(!empty($_POST['user_cources'])){
+					$criteria=new CDbCriteria;	
+					$criteria->condition = 'cr_user_id=:cr_user_id';
+					$criteria->params = array(':cr_user_id' => $model->u_id);
+					UserCourses::model()->deleteAll($criteria);
+				
+					foreach ($_POST['user_cources'] as $ckey => $cid) {
+						$usModel = new UserCourses;
+						$usModel->cr_user_id = $model->u_id;
+						$usModel->cr_category_id = $cid;
+						$usModel->save();
+					}
+				}
+
 				Yii::app()->user->setFlash('success','Profile updated successfully.');
 				$this->refresh();
 			}else{
@@ -99,7 +113,7 @@ class UserController extends Controller
 				$address[$uad_type]['uad_id'] = $arr->uad_id;
 				$address[$uad_type]['uad_add1'] = $arr->uad_add1;
 				$address[$uad_type]['uad_add2'] = $arr->uad_add2;
-				$address[$uad_type]['uad_country_id'] = $arr->uad_country_id;
+				$address[$uad_type]['uad_country_id'] = 105;
 				$address[$uad_type]['uad_state_id'] = $arr->uad_state_id;
 				$address[$uad_type]['uad_city'] = $arr->uad_city;
 				$address[$uad_type]['uad_zipcode'] = $arr->uad_zipcode;
@@ -110,16 +124,10 @@ class UserController extends Controller
 		$criteria=new CDbCriteria;
 		$criteria->order = "st_name ASC";
 		$criteria->condition = "st_cnt_id=:st_cnt_id";
-		if(!empty($address[1]['uad_country_id'])){
-			$criteria->params = array(':st_cnt_id' => $address[1]['uad_country_id']);					
-			$statesData = States::model()->findAll($criteria);
-			$states1 = CHtml::listData($statesData,'st_id','st_name');
-		}
-		if(!empty($address[2]['uad_country_id'])){
-			$criteria->params = array(':st_cnt_id' => $address[2]['uad_country_id']);					
-			$statesData = States::model()->findAll($criteria);
-			$states2 = CHtml::listData($statesData,'st_id','st_name');
-		}
+		$criteria->params = array(':st_cnt_id' => 105);					
+		$statesData = States::model()->findAll($criteria);
+		$states1 = CHtml::listData($statesData,'st_id','st_name');
+		$states2 = CHtml::listData($statesData,'st_id','st_name');
 
 		$this->render('profile',array(
 			'model'=>$model,

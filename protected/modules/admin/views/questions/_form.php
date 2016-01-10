@@ -18,7 +18,7 @@
 			$types = array(1 => 'Objective', 2 => 'Objective with image');
 			echo $form->dropDownListRow($model,'qt_type',$types,array('class'=>'form-control')); 
 			?>
-			<?php echo $form->textFieldRow($model,'qt_marks',array('class'=>'form-control')); ?>
+			<?php echo $form->textFieldRow($model,'qt_marks',array('class'=>'form-control','value' => (!empty($model->qt_marks)) ? $model->qt_marks : 1)); ?>
 			<div>
 				<label>Add options</label>
 			</div>
@@ -53,36 +53,41 @@
 									<input type="hidden" name="rightansh[]" value="<?php echo ($optArr->qto_right_ans==1) ? 1 : 0; ?>">
 								</div>
 								<div class="clear">&nbsp;</div>
-							</div>
-							<div class="col-md-2"><a href="javascript:void(0);" class="removeOption" qtid='<?php echo $optArr->qto_id; ?>'><b><i class="glyphicon glyphicon-remove"></i></b></a></div>
-							<div class="clear">&nbsp;</div>
+							</div>							
 						</div>
 						<?php
 					}					
+				}else{
+					?>
+					<div>
+						<?php 
+						for($i=1;$i<=4;$i++){ 
+							?>
+							<div class="col-md-12">
+								<div class="optionCnt col-md-10">
+									<div class="col-md-8">
+										<div>
+											<input type="text" name="qoptions[]" placeholder="Option 1">
+										</div>
+										<div class="image" style="display: <?php echo $display; ?>">
+											<input type="file" name="qfile[]">
+										</div>
+									</div>
+									<div class="col-md-4" align="center">
+										Right Ans<br>
+										<input type="radio" name="rightans[]" value="1">
+										<input type="hidden" name="rightansh[]">
+									</div>
+									<div class="clear">&nbsp;</div>
+								</div>						
+							</div>
+							<?php 
+						} 
+						?>
+					</div>
+					<?php
 				}
 				?>
-				<div>
-					<div class="col-md-12">
-						<div class="optionCnt col-md-10">
-							<div class="col-md-8">
-								<div>
-									<input type="text" name="qoptions[]" placeholder="Option 1">
-								</div>
-								<div class="image" style="display: <?php echo $display; ?>">
-									<input type="file" name="qfile[]">
-								</div>
-							</div>
-							<div class="col-md-4" align="center">
-								Right Ans<br>
-								<input type="radio" name="rightans[]" value="1">
-								<input type="hidden" name="rightansh[]">
-							</div>
-							<div class="clear">&nbsp;</div>
-						</div>
-						<div class="col-md-2"><a href="javascript:void(0);" class="addMoreOptions"><b><i class="glyphicon glyphicon-plus"></i></b></a></div>
-						<div class="clear">&nbsp;</div>
-					</div>
-				</div>
 			</div>
 			<div>&nbsp;</div>
 			<div class="form-actions">

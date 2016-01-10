@@ -8,7 +8,39 @@
                   echo CHtml::link('Add User',array('/admin/user/add'),array('class' => 'btn btn-primary'));
                   ?>
                 </div>
+                <div style="float:right;padding-right:10px;">
+                  <?php
+                  echo CHtml::link('Import Questions','javascript:void(0);',array('class' => 'btn btn-primary showImportCnt'));
+                  ?>
+                </div>
+                <div style="float:right;padding-right:10px;">
+                  <?php
+                  echo CHtml::link('Download sample excel',array('/storage/excel/sampleuser.xls'),array('class' => 'btn btn-primary'));
+                  ?>
+                </div>
                 <div style="clear:both;"></div>
+                <div class="excelImportCnt">                  
+                  <?php
+                  $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+                    'id'=>'uploadExcelFile',
+                  'enableAjaxValidation'=>false,
+                    'htmlOptions' => array('enctype' => 'multipart/form-data'), 
+                  ));
+                  ?>
+                  <div style="float:left;margin-right:5%;">
+                    <div>Upload excel file</div>
+                    <div>
+                      <input type="file" name="importexcel" id="importexcel">
+                    </div>
+                  </div>
+                  <div style="float:left;">
+                    <input type="submit" name="importquestion" value="Import" class="btn btn-primary">
+                  </div>
+                  <div style="clear:both;"></div>
+                  <?php
+                  $this->endWidget();
+                  ?>
+                </div>
             </div>
             <div class="panel-body"> 
               <?php
@@ -68,14 +100,23 @@
     </div>
 </div>
 <script>
-  $('#userlist-grid').on('.statusupdate','click',function(e){
-    var grid = $(this).attr("gridid");
-    $.ajax({
-      url:$(this).attr('href'),
-      success:function(){
-        $.fn.yiiGridView.update(grid);
-      },      
+  $(document).ready(function(){
+    $('#userlist-grid').on('.statusupdate','click',function(e){
+      var grid = $(this).attr("gridid");
+      $.ajax({
+        url:$(this).attr('href'),
+        success:function(){
+          $.fn.yiiGridView.update(grid);
+        },      
+      });
+      return false;
     });
-    return false;
+    $('.showImportCnt').click(function(){
+      if($('.excelImportCnt').is(':hidden')==true){
+        $('.excelImportCnt').slideDown('fast');
+      }else{
+        $('.excelImportCnt').slideUp('fast');
+      }
+    });
   });
 </script>

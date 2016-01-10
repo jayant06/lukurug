@@ -30,6 +30,33 @@
 					} 
 				?>
 				<?php echo $form->radioButtonListInlineRow($model, 'u_gender', array(1 => 'Male',2 =>'Female')); ?>
+				<div class="col-lg-12">
+					<div class="control-group ">
+						<label for="user_cources" class="control-label required">Assign Cources</label>
+						<div class="controls">
+							<?php
+							$courcesData = Categories::model()->findAll();
+							$cources = CHtml::listData($courcesData,'cat_id','cat_name');
+							$cids = array();
+							if(!empty($model->uCources)){
+								foreach ($model->uCources as $ckey => $cArr) {
+									$cids[$cArr->cr_category_id] = $cArr->cr_category_id;	
+								}
+							}
+							?>
+							<select name="user_cources[]" id="user_cources" multiple="multiple" style="width:250px;">	
+								<?php
+								foreach ($cources as $cid => $cname) {
+									?>
+									<option value="<?php echo $cid; ?>" <?php echo (!empty($cids[$cid])) ? 'selected' : ''; ?>><?php echo $cname; ?></option>
+									<?php
+								}
+								?>
+							</select>	
+						</div>
+					</div>							
+				</div>	
+				<div style="clear:both;">&nbsp;</div>
 				<div class="form-actions">
 				    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Update')); ?>
 				    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Reset')); ?>
@@ -51,7 +78,9 @@
 							<?php echo $form->hiddenField($userAddressModel, 'uad_type', array('name' => 'UserAddress[uad_id][1]','value' => (!empty($address[1]['uad_id'])) ? $address[1]['uad_id']:'')); ?>
 							<?php echo $form->textFieldRow($userAddressModel, 'uad_add1', array('value' => (!empty($address[1]['uad_add1'])) ? $address[1]['uad_add1']:'','name' => 'UserAddress[uad_add1][1]')); ?>
 							<?php echo $form->textFieldRow($userAddressModel, 'uad_add2', array('value' => (!empty($address[1]['uad_add2'])) ? $address[1]['uad_add2']:'','name' => 'UserAddress[uad_add2][1]')); ?>
-							<?php echo $form->dropDownListRow($userAddressModel,'uad_country_id', $countries,array('options' => array((!empty($address[1]['uad_country_id'])) ? $address[1]['uad_country_id']:''=>array('selected'=>true)),'empty' => 'Select County','name' => 'UserAddress[uad_country_id][1]')); ?>
+							<div style="display:none;">
+								<?php echo $form->dropDownListRow($userAddressModel,'uad_country_id', $countries,array('options' => array((!empty($address[1]['uad_country_id'])) ? $address[1]['uad_country_id']:''=>array('selected'=>true)),'empty' => 'Select County','name' => 'UserAddress[uad_country_id][1]')); ?>
+							</div>
 							<?php echo $form->dropDownListRow($userAddressModel, 'uad_state_id', $states1,array('options' => array((!empty($address[1]['uad_state_id'])) ? $address[1]['uad_state_id']:''=>array('selected'=>true)),'empty' => 'Select State','name' => 'UserAddress[uad_state_id][1]')); ?>
 							<?php echo $form->textFieldRow($userAddressModel, 'uad_city', array('value' => (!empty($address[1]['uad_city'])) ? $address[1]['uad_city']:'','name' => 'UserAddress[uad_city][1]')); ?>
 							<?php echo $form->textFieldRow($userAddressModel, 'uad_zipcode', array('value' => (!empty($address[1]['uad_zipcode'])) ? $address[1]['uad_zipcode']:'','name' => 'UserAddress[uad_zipcode][1]')); ?>
@@ -66,7 +95,9 @@
 							<?php echo $form->hiddenField($userAddressModel, 'uad_type', array('name' => 'UserAddress[uad_id][2]','value' => (!empty($address[2]['uad_id'])) ? $address[2]['uad_id']:'')); ?>
 							<?php echo $form->textFieldRow($userAddressModel, 'uad_add1', array('value' => (!empty($address[2]['uad_add1'])) ? $address[2]['uad_add1']:'','name' => 'UserAddress[uad_add1][2]')); ?>
 							<?php echo $form->textFieldRow($userAddressModel, 'uad_add2', array('value' => (!empty($address[2]['uad_add2'])) ? $address[2]['uad_add2']:'','name' => 'UserAddress[uad_add2][2]')); ?>
-							<?php echo $form->dropDownListRow($userAddressModel, 'uad_country_id', $countries, array('options' => array((!empty($address[2]['uad_country_id'])) ? $address[2]['uad_country_id']:''=>array('selected'=>true)),'empty' => 'Select County','name' => 'UserAddress[uad_country_id][2]')); ?>
+							<div style="display:none;">
+								<?php echo $form->dropDownListRow($userAddressModel, 'uad_country_id', $countries, array('options' => array((!empty($address[2]['uad_country_id'])) ? $address[2]['uad_country_id']:''=>array('selected'=>true)),'empty' => 'Select County','name' => 'UserAddress[uad_country_id][2]')); ?>
+							</div>
 							<?php echo $form->dropDownListRow($userAddressModel, 'uad_state_id', $states2, array('options' => array((!empty($address[2]['uad_state_id'])) ? $address[2]['uad_state_id']:''=>array('selected'=>true)),'empty' => 'Select State','name' => 'UserAddress[uad_state_id][2]')); ?>
 							<?php echo $form->textFieldRow($userAddressModel, 'uad_city', array('value' => (!empty($address[2]['uad_city'])) ? $address[2]['uad_city']:'','name' => 'UserAddress[uad_city][2]')); ?>
 							<?php echo $form->textFieldRow($userAddressModel, 'uad_zipcode', array('value' => (!empty($address[2]['uad_zipcode'])) ? $address[2]['uad_zipcode']:'','name' => 'UserAddress[uad_zipcode][2]')); ?>
@@ -74,7 +105,7 @@
 						</div>
 					</div>
 				</div>
-				<div style="clear:both;"></div>
+				<div style="clear:both;">&nbsp;</div>				
 				<div class="form-actions">
 				    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Update')); ?>
 				    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Reset')); ?>

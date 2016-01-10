@@ -68,7 +68,7 @@ class User extends CActiveRecord
 			array('old_password','verifyPassword','on'=>'changepassword'),
 			array('old_password, new_password, new_repeat_password', 'length', 'min'=>6, 'max'=>32,'on'=>'changepassword'),
 			array('new_repeat_password','compare','compareAttribute'=>'new_password','on'=>'changepassword'),
-			array('u_email, u_first_name, u_last_name, u_password, u_repeat_password, u_gender, terms_conditions, old_password, new_password, new_repeat_password', 'safe'),
+			array('u_email, u_first_name, u_last_name, u_password, u_repeat_password, u_gender, terms_conditions, old_password, new_password, new_repeat_password, u_addmission_date', 'safe'),
 		);
 		
 		return $rules;
@@ -85,6 +85,7 @@ class User extends CActiveRecord
 			'userAdd'=>array(self::HAS_MANY, 'UserAddress','uad_user_id'),
 			'uaUser'=>array(self::HAS_MANY, 'UserAnswers','ua_user_id'),
 			'ueUser'=>array(self::HAS_MANY, 'UserExams','ue_user_id'),
+			'uCources'=>array(self::HAS_MANY, 'UserCourses','cr_user_id'),
 		);
 	}
 
@@ -107,7 +108,8 @@ class User extends CActiveRecord
 			'new_password'=>'New Password',
 			'new_repeat_password'=>'Repeat New Password',
 			'u_status'=>'Status',
-			'u_username' => 'Username'
+			'u_username' => 'Username',
+			'u_addmission_date' => 'Admission Date'
 		);
 	}
 
