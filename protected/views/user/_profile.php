@@ -29,6 +29,44 @@
 						$model->u_gender = 1;	
 					} 
 				?>
+				<div class="control-group ">
+		            <label for="User_u_image" class="control-label">Image</label>
+		            <div class="controls">
+		                <?php
+		                $this->widget('ext.EAjaxUpload.EAjaxUpload',
+		                    array(
+		                        'id'=>'uploadFile',
+		                        'config'=>array(
+		                            'action'=>Yii::app()->createUrl('user/upload'),
+		                            'allowedExtensions'=>array("jpg","jpeg","gif",'png'),
+		                            'sizeLimit'=>2*1024*1024,// maximum file size in bytes
+		                            'minSizeLimit'=>10*1024,// minimum file size in bytes
+		                            'onComplete'=>"js:function(id, fileName, responseJSON){ 
+		                                $('#uploadedimage').parent().show();
+		                                $('#uploadedimage').html('<img src=\'".Yii::app()->baseUrl."/storage/users/temp/'+fileName+'\' width=\'100\'><input type=\'hidden\' name=\'User[u_image]\' value=\''+fileName+'\'>');
+		                            }",
+		                            'messages'=>array(
+		                                'typeError'=>"{file} has invalid extension. Only {extensions} are allowed.",
+		                                'sizeError'=>"{file} is too large, maximum file size is {sizeLimit}.",
+		                                'minSizeError'=>"{file} is too small, minimum file size is {minSizeLimit}.",
+		                                'emptyError'=>"{file} is empty, please select files again without it.",
+		                                'onLeave'=>"The files are being uploaded, if you leave now the upload will be cancelled."
+		                            ),
+		                            'showMessage'=>"js:function(message){ 
+		                                alert(message); 
+		                            }"
+		                        )
+		                    )
+		                );
+		                ?>
+		            </div>
+		        </div>
+		        <div class="control-group" style="display:<?php echo (empty($model->u_image)) ? 'none' : 'block'; ?>;">
+		            <label class="control-label">&nbsp;</label>
+		            <div class="controls" id="uploadedimage">
+		            	<img src="<?php echo Yii::app()->baseUrl; ?>/storage/users/<?php echo $model->u_image; ?>" width="100">
+		            </div>
+		        </div>
 				<?php echo $form->radioButtonListInlineRow($model, 'u_gender', array(1 => 'Male',2 =>'Female')); ?>
 				<div class="col-lg-12">
 					<div class="control-group ">

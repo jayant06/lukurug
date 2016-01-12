@@ -283,3 +283,6 @@ textarea{
 .viewExams{
   border:1px solid #999;background:#FFF;padding:10px;border-radius:5px;margin-bottom:10px;
 }
+.qq-upload-list{
+  display:none !important;
+}

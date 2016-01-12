@@ -76,9 +76,22 @@ class UserController extends Controller
 				$_POST['User']['u_addmission_date'] = $aDate[2]."-".$aDate[1]."-".$aDate[0];
 			}
 			$model->attributes=$_POST['User'];
+			if(!empty($_POST['User']['u_image'])){
+				$name = $_POST['User']['u_image'];
+				$extension = pathinfo($name)['extension'];
+				$file_name = uniqid().".".$extension;
+				$dir_name 	= Yii::getPathOfAlias('webroot').'/storage/users/';
+				$file_path 	= $dir_name.$file_name;
+				$model->u_image = $file_name;
+			}
 			$model->u_mail_verify = 1;
 			if($model->validate() && $model->save()){
-
+				if(!empty($_POST['User']['u_image'])){
+					if(copy($dir_name."temp/".$_POST['User']['u_image'], $file_path)){
+						unlink($dir_name."temp/".$_POST['User']['u_image']);
+					}
+				}
+				
 				$userAddress = $_POST['UserAddress'];
 				if(!empty($userAddress)){
 					foreach ($userAddress['uad_type'] as $ukey => $uad_type) {
@@ -188,9 +201,22 @@ class UserController extends Controller
 				$_POST['User']['u_addmission_date'] = $aDate[2]."-".$aDate[1]."-".$aDate[0];
 			}
 			$model->attributes=$_POST['User'];	
+			if(!empty($_POST['User']['u_image'])){
+				$name = $_POST['User']['u_image'];
+				$extension = pathinfo($name)['extension'];
+				$file_name = uniqid().".".$extension;
+				$dir_name 	= Yii::getPathOfAlias('webroot').'/storage/users/';
+				$file_path 	= $dir_name.$file_name;
+				$model->u_image = $file_name;
+			}
 			$model->u_status=1;
 			$model->u_mail_verify = 1;
 			if($model->validate() && $model->save()){
+				if(!empty($_POST['User']['u_image'])){
+					if(copy($dir_name."temp/".$_POST['User']['u_image'], $file_path)){
+						unlink($dir_name."temp/".$_POST['User']['u_image']);
+					}
+				}
 				$username = $model->u_username;
 				$userAddress = $_POST['UserAddress'];
 				if(!empty($userAddress)){

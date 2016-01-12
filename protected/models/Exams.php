@@ -34,7 +34,7 @@ class Exams extends CActiveRecord
 			array('ex_category_id, ex_title, ex_start_date_time, ex_end_date_time, ex_duration', 'required'),
 			array('ex_category_id', 'numerical', 'integerOnly'=>true),
 			array('ex_title', 'length', 'max'=>200),
-			array('ex_details', 'safe'),
+			array('ex_details, ex_is_practical', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('ex_id, ex_category_id, ex_title, ex_details, ex_start_date_time, ex_end_date_time, ex_created, ex_modified', 'safe', 'on'=>'search'),
@@ -67,7 +67,8 @@ class Exams extends CActiveRecord
 			'ex_details' => 'Details',
 			'ex_start_date_time' => 'Start Date Time',
 			'ex_end_date_time' => 'End Date Time',	
-			'ex_duration' => 'Duration'		
+			'ex_duration' => 'Duration',
+			'ex_is_practical' => 'Is Practice Test?'	
 		);
 	}
 

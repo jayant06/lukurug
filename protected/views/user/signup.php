@@ -22,6 +22,42 @@
         <?php echo $form->radioButtonListInlineRow($model, 'u_gender', array(1 => 'Male',2 =>'Female')); ?>
         <?php echo $form->passwordFieldRow($model, 'u_password', array('placeholder'=>'Password','class'=>'span3 music_signup_textfield')); ?>
         <?php echo $form->passwordFieldRow($model, 'u_repeat_password', array('placeholder'=>'Confirm Password','class'=>'span3 music_signup_textfield')); ?>
+        <div class="control-group ">
+            <label for="User_u_image" class="control-label">Image</label>
+            <div class="controls">
+                <?php
+                $this->widget('ext.EAjaxUpload.EAjaxUpload',
+                    array(
+                        'id'=>'uploadFile',
+                        'config'=>array(
+                            'action'=>Yii::app()->createUrl('user/upload'),
+                            'allowedExtensions'=>array("jpg","jpeg","gif",'png'),
+                            'sizeLimit'=>2*1024*1024,// maximum file size in bytes
+                            'minSizeLimit'=>10*1024,// minimum file size in bytes
+                            'onComplete'=>"js:function(id, fileName, responseJSON){ 
+                                $('#uploadedimage').parent().show();
+                                $('#uploadedimage').html('<img src=\'".Yii::app()->baseUrl."/storage/users/temp/'+fileName+'\' width=\'100\'><input type=\'hidden\' name=\'User[u_image]\' value=\''+fileName+'\'>');
+                            }",
+                            'messages'=>array(
+                                'typeError'=>"{file} has invalid extension. Only {extensions} are allowed.",
+                                'sizeError'=>"{file} is too large, maximum file size is {sizeLimit}.",
+                                'minSizeError'=>"{file} is too small, minimum file size is {minSizeLimit}.",
+                                'emptyError'=>"{file} is empty, please select files again without it.",
+                                'onLeave'=>"The files are being uploaded, if you leave now the upload will be cancelled."
+                            ),
+                            'showMessage'=>"js:function(message){ 
+                                alert(message); 
+                            }"
+                        )
+                    )
+                );
+                ?>
+            </div>
+        </div>
+        <div class="control-group" style="display:none;">
+            <label class="control-label">&nbsp;</label>
+            <div class="controls" id="uploadedimage"></div>
+        </div>
         <div class="control-group">
             <div class="controls">
                 <?php echo $form->checkbox($model,'terms_conditions',array('uncheckValue'=>''));?>
@@ -29,12 +65,9 @@
                 <span><?php echo CHtml::link('Terms and Conditions',array('/terms'));?></span>
                 <div><?php echo $form->error($model,'terms_conditions');?></div>    
             </div>
-        </div>
-        
-       </div>       
-        
-        </fieldset>
-
+        </div>        
+       </div> 
+    </fieldset>
 	<div class="form-actions music_signup_action_">
 	    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Sign Up', 'htmlOptions'=>array('class'=>'music_login_btn'))); ?>	    
 	</div>
