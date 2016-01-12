@@ -154,11 +154,31 @@ class UserAnswers extends CActiveRecord
 		$criteria->params = array(':ua_exam_id' => $examId,':ua_user_id' => $user_id);
 		$model = UserAnswers::model()->with(array('uaQuestion','uaQoptions'))->findAll($criteria);
 		$totalScore = 0;
+
 		if(!empty($model)){
 			foreach ($model as $uaKey => $uaArr) {
 				$qoId = $uaArr->ua_option_id;
 				if(@$uaArr->uaQoptions->qto_right_ans==1){
 					$totalScore += $uaArr->uaQuestion->qt_marks;
+				}
+			}
+		}
+
+		return $totalScore;		
+	}
+
+	public function getCountRightAns($examId){
+		$user_id = Yii::app()->user->id;
+		$criteria=new CDbCriteria;
+		$criteria->condition = "ua_exam_id=:ua_exam_id AND ua_user_id=:ua_user_id";
+		$criteria->params = array(':ua_exam_id' => $examId,':ua_user_id' => $user_id);
+		$model = UserAnswers::model()->with(array('uaQuestion','uaQoptions'))->findAll($criteria);
+		$totalScore = 0;		
+		if(!empty($model)){
+			foreach ($model as $uaKey => $uaArr) {
+				$qoId = $uaArr->ua_option_id;
+				if(@$uaArr->uaQoptions->qto_right_ans==1){
+					$totalScore += 1;
 				}
 			}
 		}

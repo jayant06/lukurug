@@ -47,6 +47,7 @@ class Categories extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'catExams'=>array(self::HAS_MANY, 'Exams','ex_category_id'),
+			'uCourcesCategory'=>array(self::HAS_MANY, 'UserCourses','cr_category_id'),
 		);
 	}
 

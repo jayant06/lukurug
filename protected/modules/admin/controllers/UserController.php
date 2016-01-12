@@ -71,9 +71,27 @@ class UserController extends Controller
 		if(isset($_POST['User']))
 		{
 			unset($model->u_password);			
+			if(!empty($_POST['User']['u_addmission_date'])){
+				$aDate = explode('/',$_POST['User']['u_addmission_date']);
+				$_POST['User']['u_addmission_date'] = $aDate[2]."-".$aDate[1]."-".$aDate[0];
+			}
 			$model->attributes=$_POST['User'];
+			if(!empty($_POST['User']['u_image'])){
+				$name = $_POST['User']['u_image'];
+				$extension = pathinfo($name)['extension'];
+				$file_name = uniqid().".".$extension;
+				$dir_name 	= Yii::getPathOfAlias('webroot').'/storage/users/';
+				$file_path 	= $dir_name.$file_name;
+				$model->u_image = $file_name;
+			}
+			$model->u_mail_verify = 1;
 			if($model->validate() && $model->save()){
-
+				if(!empty($_POST['User']['u_image'])){
+					if(copy($dir_name."temp/".$_POST['User']['u_image'], $file_path)){
+						unlink($dir_name."temp/".$_POST['User']['u_image']);
+					}
+				}
+				
 				$userAddress = $_POST['UserAddress'];
 				if(!empty($userAddress)){
 					foreach ($userAddress['uad_type'] as $ukey => $uad_type) {
@@ -81,7 +99,7 @@ class UserController extends Controller
 						$userAddressModel->uad_type = $uad_type;
 						$userAddressModel->uad_add1 = $userAddress['uad_add1'][$ukey];
 						$userAddressModel->uad_add2 = $userAddress['uad_add2'][$ukey];
-						$userAddressModel->uad_country_id = $userAddress['uad_country_id'][$ukey];
+						$userAddressModel->uad_country_id = 105;
 						$userAddressModel->uad_state_id = $userAddress['uad_state_id'][$ukey];
 						$userAddressModel->uad_city = $userAddress['uad_city'][$ukey];
 						$userAddressModel->uad_zipcode = $userAddress['uad_zipcode'][$ukey];
@@ -95,6 +113,19 @@ class UserController extends Controller
 					}
 				}
 
+				if(!empty($_POST['user_cources'])){
+					$criteria=new CDbCriteria;	
+					$criteria->condition = 'cr_user_id=:cr_user_id';
+					$criteria->params = array(':cr_user_id' => $model->u_id);
+					UserCourses::model()->deleteAll($criteria);
+
+					foreach ($_POST['user_cources'] as $ckey => $cid) {
+						$usModel = new UserCourses;
+						$usModel->cr_user_id = $model->u_id;
+						$usModel->cr_category_id = $cid;
+						$usModel->save();
+					}
+				}
 				Yii::app()->user->setFlash('success','User updated successfully.');	
 				$this->redirect(array('userlist'));
 			}else{
@@ -127,7 +158,7 @@ class UserController extends Controller
 				$address[$uad_type]['uad_id'] = $arr->uad_id;
 				$address[$uad_type]['uad_add1'] = $arr->uad_add1;
 				$address[$uad_type]['uad_add2'] = $arr->uad_add2;
-				$address[$uad_type]['uad_country_id'] = $arr->uad_country_id;
+				$address[$uad_type]['uad_country_id'] = 105;
 				$address[$uad_type]['uad_state_id'] = $arr->uad_state_id;
 				$address[$uad_type]['uad_city'] = $arr->uad_city;
 				$address[$uad_type]['uad_zipcode'] = $arr->uad_zipcode;
@@ -138,15 +169,13 @@ class UserController extends Controller
 		$criteria=new CDbCriteria;
 		$criteria->order = "st_name ASC";
 		$criteria->condition = "st_cnt_id=:st_cnt_id";
-		if(!empty($address[1]['uad_country_id'])){
-			$criteria->params = array(':st_cnt_id' => $address[1]['uad_country_id']);					
-			$statesData = States::model()->findAll($criteria);
-			$states1 = CHtml::listData($statesData,'st_id','st_name');
-		}
-		if(!empty($address[2]['uad_country_id'])){
-			$criteria->params = array(':st_cnt_id' => $address[2]['uad_country_id']);					
-			$statesData = States::model()->findAll($criteria);
-			$states2 = CHtml::listData($statesData,'st_id','st_name');
+		$criteria->params = array(':st_cnt_id' => 105);					
+		$statesData = States::model()->findAll($criteria);
+		$states1 = CHtml::listData($statesData,'st_id','st_name');
+		$states2 = CHtml::listData($statesData,'st_id','st_name');
+		if(!empty($model->u_addmission_date)){
+			$aDate = explode('-',$model->u_addmission_date);
+			$model->u_addmission_date = $aDate[2]."-".$aDate[1]."-".$aDate[0];
 		}
 
 		$this->render('edit',array(
@@ -167,9 +196,27 @@ class UserController extends Controller
 		{
 			$salt = md5(uniqid(rand(), true));
 			$_POST['User']['u_verkey'] = $salt;
+			if(!empty($_POST['User']['u_addmission_date'])){
+				$aDate = explode('/',$_POST['User']['u_addmission_date']);
+				$_POST['User']['u_addmission_date'] = $aDate[2]."-".$aDate[1]."-".$aDate[0];
+			}
 			$model->attributes=$_POST['User'];	
+			if(!empty($_POST['User']['u_image'])){
+				$name = $_POST['User']['u_image'];
+				$extension = pathinfo($name)['extension'];
+				$file_name = uniqid().".".$extension;
+				$dir_name 	= Yii::getPathOfAlias('webroot').'/storage/users/';
+				$file_path 	= $dir_name.$file_name;
+				$model->u_image = $file_name;
+			}
 			$model->u_status=1;
+			$model->u_mail_verify = 1;
 			if($model->validate() && $model->save()){
+				if(!empty($_POST['User']['u_image'])){
+					if(copy($dir_name."temp/".$_POST['User']['u_image'], $file_path)){
+						unlink($dir_name."temp/".$_POST['User']['u_image']);
+					}
+				}
 				$username = $model->u_username;
 				$userAddress = $_POST['UserAddress'];
 				if(!empty($userAddress)){
@@ -178,7 +225,7 @@ class UserController extends Controller
 						$userAddressModel->uad_type = $uad_type;
 						$userAddressModel->uad_add1 = $userAddress['uad_add1'][$ukey];
 						$userAddressModel->uad_add2 = $userAddress['uad_add2'][$ukey];
-						$userAddressModel->uad_country_id = $userAddress['uad_country_id'][$ukey];
+						$userAddressModel->uad_country_id = 105;
 						$userAddressModel->uad_state_id = $userAddress['uad_state_id'][$ukey];
 						$userAddressModel->uad_city = $userAddress['uad_city'][$ukey];
 						$userAddressModel->uad_zipcode = $userAddress['uad_zipcode'][$ukey];
@@ -187,13 +234,15 @@ class UserController extends Controller
 						$userAddressModel->save();						
 					}
 				}
-
-				$request = 	array('{verification_link}'=>$salt,'{username}'=>$username);
-				if($this->sendEmail(1,$model->u_email,$request)){
-					Yii::app()->user->setFlash('success','A verification link has been sent to '.$model->u_email.' for verification of account.');					
-				}else{
-					Yii::app()->user->setFlash('error','Error sending verification mail to user.');					
+				if(!empty($_POST['user_cources'])){
+					foreach ($_POST['user_cources'] as $ckey => $cid) {
+						$usModel = new UserCourses;
+						$usModel->cr_user_id = $model->u_id;
+						$usModel->cr_category_id = $cid;
+						$usModel->save();
+					}
 				}
+				Yii::app()->user->setFlash('success','User added successfully.');					
 				$this->redirect(array('userlist'));
 			}else{
 				$t = $model->getErrors();	
@@ -208,12 +257,19 @@ class UserController extends Controller
 
 		$criteria=new CDbCriteria;
 		$criteria->order = 'cnt_name ASC';
+
 		$userAddressModel = new UserAddress;
 
 		$countriesData = Countries::model()->findAll($criteria);
 		$countries = CHtml::listData($countriesData,'cnt_id','cnt_name');
-		$states1 = array();
-		$states2 = array();
+		$criteria=new CDbCriteria;
+		$criteria->order = "st_name ASC";
+		$criteria->condition = "st_cnt_id=:st_cnt_id";
+		$criteria->params = array(':st_cnt_id' => 105);					
+		$statesData = States::model()->findAll($criteria);
+		$states1 = CHtml::listData($statesData,'st_id','st_name');
+		$states2 = CHtml::listData($statesData,'st_id','st_name');
+
 
 		$this->render('add',array(
 			'model'=>$model,	
@@ -251,9 +307,70 @@ class UserController extends Controller
 		$model = new User('userlist');
 		if(isset($_GET['User'])) {
 	        $model->attributes =$_GET['User'];
-	        //prd($model->attributes);
 	   	}
 	   	
+	   	Yii::import('ext.phpexcelreader.JPhpExcelReader');
+		if(!empty($_POST)){
+			if(!empty($_FILES['importexcel']['name'])){
+				$name = $_FILES['importexcel']['name'];
+				$tmp_name = $_FILES['importexcel']['tmp_name'];
+				$extension = pathinfo($name)['extension'];
+				if($extension=='xls'){
+					$file_name = uniqid().'.'.$extension;
+					$dir_name 	= Yii::getPathOfAlias('webroot').'/storage/excel/';
+					$file_path 	= $dir_name.$file_name;
+					if(move_uploaded_file($tmp_name, $file_path)){
+						$data=new JPhpExcelReader($file_path);
+						prd($data->sheets[0]['cells']);
+						if(!empty($data->sheets[0]['cells'])){
+							foreach ($data->sheets[0]['cells'] as $key => $columnArr) {
+								if($key>1){
+									$uModel = new User;
+									$uModel->u_first_name = $columnArr[1];
+									$uModel->u_last_name = $columnArr[2];
+									$uModel->u_email = $columnArr[3];
+									$uModel->u_password = $columnArr[4];
+									$uModel->u_repeat_password = $columnArr[4];
+									$uModel->u_status = 1;
+									$uModel->u_gender = $columnArr[11];
+									$uModel->u_mail_verify = 1;
+									$uModel->isNewRecord = true;
+									$uModel->terms_conditions = 1;
+									$errors = $uModel->getErrors();
+									if(!empty($columnArr[12])){
+										$aDate = explode('/',$columnArr[12]);
+										$uModel->u_addmission_date = $aDate[2]."-".$aDate[1]."-".$aDate[0];
+									}
+									if($uModel->save()){
+										$userAddressModel = new UserAddress;
+										$userAddressModel->uad_type = 1;
+										$userAddressModel->uad_add1 = $columnArr[5];;
+										$userAddressModel->uad_add2 = $columnArr[6];
+										$userAddressModel->uad_country_id = 105;
+										$userAddressModel->uad_state_id = $columnArr[7];	;
+										$userAddressModel->uad_city = $columnArr[8];
+										$userAddressModel->uad_zipcode = $columnArr[9];
+										$userAddressModel->uad_mobile = $columnArr[10];
+										$userAddressModel->uad_user_id = $uModel->u_id;
+										$userAddressModel->save();						
+									}
+								}
+							}
+							Yii::app()->user->setFlash('success','Imported successfully.');	
+							unlink($file_path);					
+						}else{
+							Yii::app()->user->setFlash('error','Invalid excel file.');						
+						}
+					}
+				}else{
+					Yii::app()->user->setFlash('error','Invalid excel file.');						
+				}
+			}else{
+				Yii::app()->user->setFlash('error','Invalid excel file.');					
+			}
+			$this->redirect(array('userlist'));	
+		}
+
 	   	$params =array('model'=>$model);
 		
 		 if(!isset($_GET['ajax'])) {

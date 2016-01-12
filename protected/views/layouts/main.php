@@ -12,7 +12,7 @@
       ->registerCssFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/bootstrap-wysihtml5.css')
       ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/wysihtml5-0.3.0.js',CClientScript::POS_END)
       ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/bootstrap-wysihtml5.js',CClientScript::POS_END)
-      ->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.countdown.js',CClientScript::POS_END);
+      ->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.countdown.js',CClientScript::POS_HEAD);
 
       //LOAD JQUERY
   		Yii::app()->clientScript->registerCoreScript('jquery');
@@ -27,14 +27,8 @@
     $this->beginContent('/layouts/header');
     $this->endContent();                
 ?>
-<div class="container-fluid" style="margin-top:45px;">
+<div class="container-fluid">
   <div class="row-fluid">
-      <!-- <div class="span3" id="sidebar">
-          <?php  
-              //$this->beginContent('/layouts/left_menu');
-              //$this->endContent();                
-          ?>
-      </div> -->
       <div class="span12" id="content">
           <div class="row-fluid">
             <?php if(Yii::app()->user->hasFlash('success')):?>
@@ -62,12 +56,7 @@
 </html>
 <script>
   $(document).ready(function(){
-  	/*$.scribitz.init({
-			'baseUrl' 	: '<?php echo Yii::app()->request->baseUrl.'/'; ?>',			
-			'TimeOffSet' :'<?php echo Yii::app()->session['TimeOffSet']; ?>',
-			'admin':false
-	  });*/ 	
-    <?php if(Yii::app()->user->hasFlash('popupmsg')){?>
+  	<?php if(Yii::app()->user->hasFlash('popupmsg')){?>
         $.jGrowl("<?php echo Yii::app()->user->getFlash('popupmsg'); ?>",{sticky:true,position:'top-right',closer:false});       
     <?php }?>
   });        	

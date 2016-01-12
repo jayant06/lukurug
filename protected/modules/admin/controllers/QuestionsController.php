@@ -132,6 +132,101 @@ class QuestionsController extends Controller
 	 */
 	public function actionIndex()
 	{
+		Yii::import('ext.phpexcelreader.JPhpExcelReader');
+		if(!empty($_POST)){
+			if(empty($_POST['exam_select'])){
+				Yii::app()->user->setFlash('error','Invalid exam name.');						
+			}
+			if(!empty($_FILES['importexcel']['name'])){
+				$name = $_FILES['importexcel']['name'];
+				$tmp_name = $_FILES['importexcel']['tmp_name'];
+				$extension = pathinfo($name)['extension'];
+				if($extension=='xls'){
+					$file_name = uniqid().'.'.$extension;
+					$dir_name 	= Yii::getPathOfAlias('webroot').'/storage/excel/';
+					$file_path 	= $dir_name.$file_name;
+					if(move_uploaded_file($tmp_name, $file_path)){
+						$data=new JPhpExcelReader($file_path);
+						if(!empty($data->sheets[0]['cells'])){
+							foreach ($data->sheets[0]['cells'] as $key => $columnArr) {
+								if($key>1){
+									if(!empty($columnArr)){
+										$question = $columnArr[1];
+										$option1 = $columnArr[2];
+										$option2 = $columnArr[3];
+										$option3 = $columnArr[4];
+										$option4 = $columnArr[5];
+										$rightans = $columnArr[6];
+										$totalmarks = $columnArr[7];
+
+										$qModel=new Questions;
+										$qModel->qt_name = $question;
+										$qModel->qt_exam_id = $_POST['exam_select'];
+										$qModel->qt_type = 1;
+										$qModel->qt_marks = $totalmarks;
+										$qModel->qt_description = $question;
+										if($qModel->save()){
+											//First Option
+											/***********************************/
+											$optionModel = new QuestionsOptions;
+											$optionModel->qto_name = $option1;
+											$optionModel->qto_question_id = $qModel->qt_id;
+											if($rightans==$option1)
+												$optionModel->qto_right_ans = 1;
+											else
+												$optionModel->qto_right_ans = 0;
+											$optionModel->save();
+
+											//Second Option
+											/***********************************/
+											$optionModel = new QuestionsOptions;
+											$optionModel->qto_name = $option2;
+											$optionModel->qto_question_id = $qModel->qt_id;
+											if($rightans==$option2)
+												$optionModel->qto_right_ans = 1;
+											else
+												$optionModel->qto_right_ans = 0;
+											$optionModel->save();
+
+											//Third Option
+											/***********************************/
+											$optionModel = new QuestionsOptions;
+											$optionModel->qto_name = $option3;
+											$optionModel->qto_question_id = $qModel->qt_id;
+											if($rightans==$option3)
+												$optionModel->qto_right_ans = 1;
+											else
+												$optionModel->qto_right_ans = 0;
+											$optionModel->save();
+
+											//Fourth Option
+											/***********************************/
+											$optionModel = new QuestionsOptions;
+											$optionModel->qto_name = $option4;
+											$optionModel->qto_question_id = $qModel->qt_id;
+											if($rightans==$option4)
+												$optionModel->qto_right_ans = 1;
+											else
+												$optionModel->qto_right_ans = 0;
+											$optionModel->save();
+										}
+									}
+								}
+							}
+							Yii::app()->user->setFlash('success','Imported successfully.');	
+							unlink($file_path);										
+						}else{
+							Yii::app()->user->setFlash('error','Invalid excel file.');						
+						}
+					}
+				}else{
+					Yii::app()->user->setFlash('error','Invalid excel file.');						
+				}
+			}else{
+				Yii::app()->user->setFlash('error','Invalid excel file.');					
+			}
+			$this->redirect(array('index'));	
+		}
 		$model = new Questions;
 		$this->render('index',array(
 			'model'=>$model,

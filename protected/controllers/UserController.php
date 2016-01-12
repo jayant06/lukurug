@@ -27,7 +27,20 @@ class UserController extends Controller
 				$_POST['User']['u_verkey'] = $salt;
 				$model->attributes=$_POST['User'];
 				$model->u_status = 1;	
+				if(!empty($_POST['User']['u_image'])){
+					$name = $_POST['User']['u_image'];
+					$extension = pathinfo($name)['extension'];
+					$file_name = uniqid().".".$extension;
+					$dir_name 	= Yii::getPathOfAlias('webroot').'/storage/users/';
+					$file_path 	= $dir_name.$file_name;
+					$model->u_image = $file_name;
+				}
 				if($model->save()){
+					if(!empty($_POST['User']['u_image'])){
+						if(copy($dir_name."temp/".$_POST['User']['u_image'], $file_path)){
+							unlink($dir_name."temp/".$_POST['User']['u_image']);
+						}
+					}
 					$username = $model->u_first_name.' '.$model->u_last_name;
 					$request = 	array('{verification_link}'=>$salt,'{username}'=>$username);
 					if($this->sendEmail(1,$model->u_email,$request)){
@@ -63,6 +76,14 @@ class UserController extends Controller
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
+			if(!empty($_POST['User']['u_image'])){
+				$name = $_POST['User']['u_image'];
+				$extension = pathinfo($name)['extension'];
+				$file_name = uniqid().".".$extension;
+				$dir_name 	= Yii::getPathOfAlias('webroot').'/storage/users/';
+				$file_path 	= $dir_name.$file_name;
+				$model->u_image = $file_name;
+			}
 			if(isset($_POST['user_image']) && !empty($_POST['user_image'])){
 				$oldimage = ($model->u_image!='')?$model->u_image:NULL;
 				$model->u_image = $this->UploadImage($_POST['user_image'],'user',$oldimage);					
@@ -71,6 +92,26 @@ class UserController extends Controller
 			unset($model->u_created);
 			if($model->save())
 			{
+				if(!empty($_POST['User']['u_image'])){
+					if(copy($dir_name."temp/".$_POST['User']['u_image'], $file_path)){
+						unlink($dir_name."temp/".$_POST['User']['u_image']);
+					}
+				}
+				
+				if(!empty($_POST['user_cources'])){
+					$criteria=new CDbCriteria;	
+					$criteria->condition = 'cr_user_id=:cr_user_id';
+					$criteria->params = array(':cr_user_id' => $model->u_id);
+					UserCourses::model()->deleteAll($criteria);
+				
+					foreach ($_POST['user_cources'] as $ckey => $cid) {
+						$usModel = new UserCourses;
+						$usModel->cr_user_id = $model->u_id;
+						$usModel->cr_category_id = $cid;
+						$usModel->save();
+					}
+				}
+
 				Yii::app()->user->setFlash('success','Profile updated successfully.');
 				$this->refresh();
 			}else{
@@ -99,7 +140,7 @@ class UserController extends Controller
 				$address[$uad_type]['uad_id'] = $arr->uad_id;
 				$address[$uad_type]['uad_add1'] = $arr->uad_add1;
 				$address[$uad_type]['uad_add2'] = $arr->uad_add2;
-				$address[$uad_type]['uad_country_id'] = $arr->uad_country_id;
+				$address[$uad_type]['uad_country_id'] = 105;
 				$address[$uad_type]['uad_state_id'] = $arr->uad_state_id;
 				$address[$uad_type]['uad_city'] = $arr->uad_city;
 				$address[$uad_type]['uad_zipcode'] = $arr->uad_zipcode;
@@ -110,16 +151,10 @@ class UserController extends Controller
 		$criteria=new CDbCriteria;
 		$criteria->order = "st_name ASC";
 		$criteria->condition = "st_cnt_id=:st_cnt_id";
-		if(!empty($address[1]['uad_country_id'])){
-			$criteria->params = array(':st_cnt_id' => $address[1]['uad_country_id']);					
-			$statesData = States::model()->findAll($criteria);
-			$states1 = CHtml::listData($statesData,'st_id','st_name');
-		}
-		if(!empty($address[2]['uad_country_id'])){
-			$criteria->params = array(':st_cnt_id' => $address[2]['uad_country_id']);					
-			$statesData = States::model()->findAll($criteria);
-			$states2 = CHtml::listData($statesData,'st_id','st_name');
-		}
+		$criteria->params = array(':st_cnt_id' => 105);					
+		$statesData = States::model()->findAll($criteria);
+		$states1 = CHtml::listData($statesData,'st_id','st_name');
+		$states2 = CHtml::listData($statesData,'st_id','st_name');
 
 		$this->render('profile',array(
 			'model'=>$model,
@@ -390,7 +425,7 @@ class UserController extends Controller
 		$totalScore = $uaModel->getTotalScore($id);
 		$exams = Exams::model()->findByPk($id);
 
-		if(!Yii::app()->session['startTime']){
+		if(empty(Yii::app()->session['startTime'][$id])){
 			Yii::app()->session['startTime'] = array($id => date('Y-m-d').' '.date('H:i:s',strtotime(date('H:i:s'))+strtotime($exams->ex_duration)));
 		}
 		$startTime = Yii::app()->session['startTime'];
@@ -489,8 +524,23 @@ class UserController extends Controller
 
 		$examDetail = Exams::model()->findByPk($id);
 
-		$totalScore = UserAnswers::model()->getTotalScore($id);
+		$totalScore = UserAnswers::model()->getCountRightAns($id);
 
 		$this->render('viewexamdetail',array('examDetail' => $examDetail, 'answers' => $answers, 'questions' => $questions, 'totalScore' => $totalScore));
+	}
+
+	public function actionUpload()
+	{
+        Yii::import("ext.EAjaxUpload.qqFileUploader");
+ 
+        $folder=Yii::getPathOfAlias('webroot').'/storage/users/temp/';
+        $allowedExtensions = array("jpg","jpeg","gif","png");
+        $sizeLimit = 2 * 1024 * 1024;
+        $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+        $result = $uploader->handleUpload($folder);
+        $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+ 		$fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
+        $fileName=$result['filename'];//GETTING FILE NAME 
+        echo $return;// it's array
 	}
 }

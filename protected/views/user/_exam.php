@@ -1,7 +1,4 @@
 <div class="exam-cnt-inner">
-	<div>
-		<h2>Exam: <?php echo $data->qatExams->ex_title; ?></h2>
-	</div>
 	<div><h3><?php echo $data->qt_name; ?></h3></div>
 	<div>
 		<?php

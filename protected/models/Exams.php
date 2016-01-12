@@ -34,7 +34,7 @@ class Exams extends CActiveRecord
 			array('ex_category_id, ex_title, ex_start_date_time, ex_end_date_time, ex_duration', 'required'),
 			array('ex_category_id', 'numerical', 'integerOnly'=>true),
 			array('ex_title', 'length', 'max'=>200),
-			array('ex_details', 'safe'),
+			array('ex_details, ex_is_practical', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('ex_id, ex_category_id, ex_title, ex_details, ex_start_date_time, ex_end_date_time, ex_created, ex_modified', 'safe', 'on'=>'search'),
@@ -67,7 +67,8 @@ class Exams extends CActiveRecord
 			'ex_details' => 'Details',
 			'ex_start_date_time' => 'Start Date Time',
 			'ex_end_date_time' => 'End Date Time',	
-			'ex_duration' => 'Duration'		
+			'ex_duration' => 'Duration',
+			'ex_is_practical' => 'Is Practice Test?'	
 		);
 	}
 
@@ -114,12 +115,12 @@ class Exams extends CActiveRecord
 		
 		$criteria=new CDbCriteria;
 		$criteria->order = "ex_title ASC";
-		$cond = 'NOW() between ex_start_date_time and ex_end_date_time';
+		/*$cond = 'NOW() between ex_start_date_time and ex_end_date_time';
 		if(!empty($uExams)){
 			$cond .= " and ex_id not in(".implode(', ',$uExams).")";
 		}
 
-		$criteria->condition = $cond;
+		$criteria->condition = $cond;*/
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
