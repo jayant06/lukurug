@@ -32,7 +32,8 @@ class UserExams extends CActiveRecord
 			array('ue_user_id, ue_exam_id', 'required'),
 			array('ue_user_id, ue_exam_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
+			// @todo Please remove those attributes that should not be searched. 
+			array('ue_id, ue_user_id, ue_exam_id, ue_created, ue_modified, ue_exam_start', 'safe'),
 			array('ue_id, ue_user_id, ue_exam_id, ue_created, ue_modified', 'safe', 'on'=>'search'),
 		);
 	}
@@ -63,7 +64,8 @@ class UserExams extends CActiveRecord
 			'ex_details' => 'Exam Details',
 			'ex_start_date_time' => 'Start Date',
 			'ex_end_date_time' => 'End Date',
-			'cat_name' => 'Subject'
+			'cat_name' => 'Subject',
+			'ue_exam_start' => 'Exam Attempt Date'
 		);
 	}
 

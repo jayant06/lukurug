@@ -36,7 +36,7 @@ class Questions extends CActiveRecord
 			array('qt_name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('qt_id, qt_exam_id, qt_name, qt_description, qt_type, qt_marks, qt_created, qt_modified', 'safe'),
+			array('qt_id, qt_exam_id, qt_name, qt_description, qt_type, qt_marks, qt_created, qt_modified, qt_image', 'safe'),
 			array('qt_id, qt_exam_id, qt_name, qt_description, qt_type, qt_marks, qt_created, qt_modified', 'safe', 'on'=>'search'),
 		);
 	}
@@ -65,7 +65,8 @@ class Questions extends CActiveRecord
 			'qt_name' => 'Question',
 			'qt_description' => 'Description',
 			'qt_type' => 'Question Type',
-			'qt_marks' => 'Total Marks'
+			'qt_marks' => 'Total Marks',
+			'qt_image' => 'Question Image'
 		);
 	}
 
