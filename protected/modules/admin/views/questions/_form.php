@@ -4,9 +4,20 @@
 			'id'=>'questions-form',
 			'enableAjaxValidation'=>false,
 			'htmlOptions' => array('enctype' => 'multipart/form-data'),	
-		)); ?>
+		)); 
+		$display = 'none';
+		if(!empty($model->qt_type)){
+			if($model->qt_type==2){
+				$display = 'block';	
+			}
+		}
+		?>
 			<p class="help-block">Fields with <span class="required">*</span> are required.</p>
 			<?php echo $form->errorSummary($model); ?>
+			<?php 
+			$types = array(1 => 'Text', 2 => 'Text and Image');
+			echo $form->dropDownListRow($model,'qt_type',$types,array('class'=>'form-control')); 
+			?>
 			<?php 
 			$examsData = Exams::model()->findAll();
 			$exams = CHtml::listData($examsData,'ex_id','ex_title');
@@ -14,22 +25,26 @@
 			?>
 			<?php echo $form->textFieldRow($model,'qt_name',array('class'=>'form-control','maxlength'=>255)); ?>
 			<?php echo $form->textAreaRow($model,'qt_description',array('rows'=>6, 'cols'=>50, 'class'=>'form-control')); ?>
-			<?php 
-			$types = array(1 => 'Objective', 2 => 'Objective with image');
-			echo $form->dropDownListRow($model,'qt_type',$types,array('class'=>'form-control')); 
-			?>
 			<?php echo $form->textFieldRow($model,'qt_marks',array('class'=>'form-control','value' => (!empty($model->qt_marks)) ? $model->qt_marks : 1)); ?>
+			<div style="display:<?php echo $display; ?>;">
+				<?php 
+				echo $form->fileFieldRow($model,'qt_image',array('class'=>'form-control')); 
+				?>
+				<div style="clear:both;">&nbsp;</div>
+				<?php
+				if(!empty($model->qt_image)){
+					?>
+					<img src="<?php echo Yii::app()->baseUrl; ?>/storage/questions/<?php echo $model->qt_image; ?>" width="100">
+					<?php
+				}
+				?>
+			</div>
+        	<div class="clear">&nbsp;</div>
 			<div>
 				<label>Add options</label>
 			</div>
 			<div class="question_options">
 				<?php
-				$display = 'none';
-				if(!empty($model->qt_type)){
-					if($model->qt_type==2){
-						$display = 'block';	
-					}
-				}
 				if(!empty($model->qoptQat)){
 					foreach ($model->qoptQat as $optKey => $optArr) {
 						?>
@@ -43,9 +58,15 @@
 										<input type="file" name="qfile[]">
 										<input type="hidden" name="image_name[]" value="<?php echo $optArr->qto_image; ?>">
 									</div>
-									<div style="display: <?php echo $display; ?>">
-										<img src="<?php echo Yii::app()->baseUrl; ?>/storage/qoptions/<?php echo $optArr->qto_image; ?>" height="100">
-									</div>
+									<?php 
+									if(!empty($optArr->qto_image)){ 
+										?>
+										<div style="display: <?php echo $display; ?>" class="viewimage">
+											<img src="<?php echo Yii::app()->baseUrl; ?>/storage/qoptions/<?php echo $optArr->qto_image; ?>" height="100">
+										</div>
+										<?php 
+									} 
+									?>
 								</div>
 								<div class="col-md-4" align="center">
 									Right Ans<br>
@@ -119,9 +140,15 @@
 			var val = $(this).val();
 			if(val==1){
 				$('.question_options .image').addClass('hide');
+				$('.question_options .viewimage').addClass('hide');
+				$('#Questions_qt_image').parent().hide();
 			}else if(val==2){
 				$('.question_options .image').removeClass('hide');
 				$('.question_options .image').removeAttr('style');
+				$('.question_options .viewimage').removeClass('hide');
+				$('.question_options .viewimage').removeAttr('style');
+				$('#Questions_qt_image').parent().removeAttr('style');
+				$('#Questions_qt_image').parent().removeClass('hide');
 			}
 		});
 

@@ -19,6 +19,10 @@ class QuestionsController extends Controller
 		if(isset($_POST['Questions']))
 		{
 			$model->attributes=$_POST['Questions'];
+			if(!empty($_FILES['Questions']['name']['qt_image'])){
+				$imgName = $this->imageUpload($_FILES['Questions']['name']['qt_image'],$_FILES['Questions']['tmp_name']['qt_image'],'questions');
+				$model->qt_image = $imgName;
+			}
 			$type = $_POST['Questions']['qt_type'];
 			if($model->save()){
 				if(!empty($_POST['qoptions'])){
@@ -67,6 +71,10 @@ class QuestionsController extends Controller
 		{
 			$model->attributes=$_POST['Questions'];
 			$type = $_POST['Questions']['qt_type'];
+			if(!empty($_FILES['Questions']['name']['qt_image'])){
+				$imgName = $this->imageUpload($_FILES['Questions']['name']['qt_image'],$_FILES['Questions']['tmp_name']['qt_image'],'questions');
+				$model->qt_image = $imgName;
+			}
 			if($model->save()){
 				if(!empty($_POST['qoptions'])){
 					$criteria=new CDbCriteria;

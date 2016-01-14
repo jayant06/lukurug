@@ -33,6 +33,11 @@
 				'value'=>'date("d-m-Y",strtotime($data->ueExam->ex_end_date_time))'
 			),
 			array(
+				'name'=>'ue_exam_start',
+				'type'=>'raw',
+				'value'=>'date("d-m-Y h:i a",strtotime($data->ue_exam_start))'
+			),
+			array(
 				'header'=>'Action',
 				'class'=>'CButtonColumn',																		
 				'template'=>'{view}',

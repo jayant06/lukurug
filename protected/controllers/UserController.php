@@ -491,13 +491,17 @@ class UserController extends Controller
 		if(Yii::app()->request->isAjaxRequest){
 			if(!empty($_POST['examId'])){
 				$examId = $_POST['examId'];
-				$model = new UserExams;
-				$model->ue_user_id = $user_id;
-				$model->ue_exam_id = $examId;
-				if($model->save()){
-					$return['msg'] = 'Saved successfully.';
-					$return['error'] = 0;
-					$return['data'] = $model->ue_id;
+				if(!empty(Yii::app()->session['startTime'][$examId])){
+					$startDate = Yii::app()->session['startTime'][$examId];
+					$model = new UserExams;
+					$model->ue_user_id = $user_id;
+					$model->ue_exam_id = $examId;
+					$model->ue_exam_start = date('Y-m-d H:i:s',strtotime($startDate));
+					if($model->save()){
+						$return['msg'] = 'Saved successfully.';
+						$return['error'] = 0;
+						$return['data'] = $model->ue_id;
+					}
 				}
 			}
 		}
