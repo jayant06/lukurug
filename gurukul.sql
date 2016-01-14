@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 12, 2016 at 08:03 AM
+-- Generation Time: Jan 14, 2016 at 07:55 PM
 -- Server version: 5.5.46-0ubuntu0.14.04.2
 -- PHP Version: 5.5.9-1ubuntu4.14
 
@@ -705,29 +705,31 @@ CREATE TABLE IF NOT EXISTS `it_questions` (
   `qt_description` text,
   `qt_type` int(2) NOT NULL,
   `qt_marks` int(11) NOT NULL,
+  `qt_image` varchar(255) DEFAULT NULL,
   `qt_created` datetime NOT NULL,
   `qt_modified` datetime NOT NULL,
   PRIMARY KEY (`qt_id`),
   UNIQUE KEY `qt_id` (`qt_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `it_questions`
 --
 
-INSERT INTO `it_questions` (`qt_id`, `qt_exam_id`, `qt_name`, `qt_description`, `qt_type`, `qt_marks`, `qt_created`, `qt_modified`) VALUES
-(1, 1, 'What is the capital of india?', '', 1, 10, '2015-11-15 06:56:02', '2015-11-15 06:56:02'),
-(2, 2, 'What is correct map of india?', 'Please select correct image also.', 2, 10, '2015-11-15 06:59:28', '2015-11-19 23:13:30'),
-(3, 2, 'Question One', 'Question One', 1, 20, '2015-11-21 05:19:59', '2015-11-21 05:19:59'),
-(4, 1, 'Question Two Question Two', 'Question Two', 2, 20, '2015-11-21 05:21:40', '2015-11-24 07:31:29'),
-(5, 3, 'first question', 'first question', 1, 10, '2015-12-26 21:59:05', '2015-12-26 21:59:05'),
-(6, 3, 'second question', 'second question', 1, 20, '2015-12-26 22:00:28', '2015-12-26 22:00:28'),
-(7, 1, 'test options', 'test options', 1, 1, '2016-01-08 05:45:15', '2016-01-08 05:45:15'),
-(8, 2, 'test options oooo', 'test options oooo', 2, 10, '2016-01-08 05:48:42', '2016-01-08 05:48:42'),
-(9, 1, 'Question1', 'Question1', 1, 1, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
-(10, 1, 'Question2', 'Question2', 1, 1, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
-(11, 1, 'Question3', 'Question3', 1, 1, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
-(12, 1, 'Question4', 'Question4', 1, 1, '2016-01-09 08:36:03', '2016-01-09 08:36:03');
+INSERT INTO `it_questions` (`qt_id`, `qt_exam_id`, `qt_name`, `qt_description`, `qt_type`, `qt_marks`, `qt_image`, `qt_created`, `qt_modified`) VALUES
+(1, 1, 'What is the capital of india?', '', 1, 10, NULL, '2015-11-15 06:56:02', '2015-11-15 06:56:02'),
+(2, 2, 'What is correct map of india?', 'Please select correct image also.', 2, 10, NULL, '2015-11-15 06:59:28', '2015-11-19 23:13:30'),
+(3, 2, 'Question One', 'Question One', 1, 20, NULL, '2015-11-21 05:19:59', '2015-11-21 05:19:59'),
+(4, 1, 'Question Two Question Two', 'Question Two', 2, 20, NULL, '2015-11-21 05:21:40', '2015-11-24 07:31:29'),
+(5, 3, 'first question', 'first question', 1, 10, NULL, '2015-12-26 21:59:05', '2015-12-26 21:59:05'),
+(6, 3, 'second question', 'second question', 1, 20, NULL, '2015-12-26 22:00:28', '2015-12-26 22:00:28'),
+(7, 1, 'test options', 'test options', 1, 1, NULL, '2016-01-08 05:45:15', '2016-01-08 05:45:15'),
+(8, 2, 'test options oooo', 'test options oooo', 2, 10, NULL, '2016-01-08 05:48:42', '2016-01-08 05:48:42'),
+(9, 1, 'Question1', 'Question1', 1, 1, NULL, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
+(10, 1, 'Question2', 'Question2', 1, 1, NULL, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
+(11, 1, 'Question3', 'Question3', 1, 1, NULL, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
+(12, 1, 'Question4', 'Question4', 1, 1, NULL, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
+(13, 1, 'ggggggt', 'lkjljljljlkj', 2, 1, '5695b7be6fbf2.png', '2016-01-13 07:39:01', '2016-01-13 08:04:38');
 
 -- --------------------------------------------------------
 
@@ -742,7 +744,7 @@ CREATE TABLE IF NOT EXISTS `it_questions_options` (
   `qto_question_id` int(11) NOT NULL,
   `qto_right_ans` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=wrong, 1=right',
   PRIMARY KEY (`qto_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=116 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=132 ;
 
 --
 -- Dumping data for table `it_questions_options`
@@ -793,7 +795,11 @@ INSERT INTO `it_questions_options` (`qto_id`, `qto_name`, `qto_image`, `qto_ques
 (112, 'A', NULL, 12, 0),
 (113, 'B', NULL, 12, 0),
 (114, 'C', NULL, 12, 0),
-(115, 'D', NULL, 12, 1);
+(115, 'D', NULL, 12, 1),
+(131, 'd', '5695b65fed0ab.png', 13, 0),
+(130, 'c', '5695b65fed32d.png', 13, 0),
+(129, 'b', '5695b65fed523.png', 13, 1),
+(128, 'a', '5695b65fed70b.png', 13, 0);
 
 -- --------------------------------------------------------
 
@@ -5288,7 +5294,7 @@ CREATE TABLE IF NOT EXISTS `it_user` (
 
 INSERT INTO `it_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_addmission_date`, `u_image`, `u_created`, `u_modified`) VALUES
 (1, 'It', 'Gurukul', 'admin@itgurukul.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '02c00693466cf0cc34bdc26042f19677', '2015-06-03 01:26:27', NULL, NULL, '2014-12-23 02:20:00', '2015-09-07 21:06:04'),
-(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2016-01-12 06:55:01', '2016-01-10', '56945a854994a.png', '2015-06-04 02:51:57', '2016-01-12 07:14:37'),
+(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2016-01-12 22:27:46', '2016-01-10', '56945a854994a.png', '2015-06-04 02:51:57', '2016-01-12 22:27:46'),
 (6, 'asdasdsd', 'dfsdf', 'asdasd@gmail.com', '$2a$13$p5sOHpLUGx68C3ci/zE9zOz.qk4Ha6xp6HU0gLCFYWgZEpxTqvVEK', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-02 20:38:56', '2016-01-10 10:45:10'),
 (7, 'erewrwerwerwer', 'dfsdf', 'erewrwerwerwer@gmail.com', '$2a$13$jUuhjDP/4A07DJo9fiYw7u.ie1EZTMq.rRZofsXDRRsy975qdiQoi', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-02 20:40:26', '2016-01-03 07:11:13'),
 (8, 'sdjlfjdsf', 'fljljfd', 'lkfldfjgl@gmail.com', '$2a$13$lBKmQASHZZv.5pFL6ywoJOyIu9NKpLc5h5tmk0PM1T6DmtrFcxR0u', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-02 20:51:15', '2016-01-03 07:11:32'),
@@ -5386,19 +5392,17 @@ CREATE TABLE IF NOT EXISTS `it_user_answers` (
   `ua_created` datetime NOT NULL,
   `ua_modified` datetime NOT NULL,
   PRIMARY KEY (`ua_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `it_user_answers`
 --
 
 INSERT INTO `it_user_answers` (`ua_id`, `ua_user_id`, `ua_exam_id`, `ua_question_id`, `ua_option_id`, `ua_created`, `ua_modified`) VALUES
-(1, 5, 2, 3, 63, '2015-12-02 08:33:36', '2015-12-02 08:33:36'),
-(2, 5, 2, 2, 59, '2015-12-02 08:33:52', '2015-12-02 08:33:52'),
-(3, 5, 1, 4, 83, '2015-12-03 08:17:06', '2015-12-03 08:17:06'),
-(4, 5, 1, 1, 2, '2015-12-03 08:17:14', '2015-12-03 08:17:14'),
-(14, 5, 3, 6, 90, '2015-12-27 10:14:06', '2015-12-27 10:14:06'),
-(13, 5, 3, 5, 86, '2015-12-27 10:13:55', '2016-01-10 21:09:00');
+(1, 5, 2, 3, 63, '2016-01-12 23:04:56', '2016-01-12 23:04:56'),
+(2, 5, 2, 8, 97, '2016-01-12 23:05:01', '2016-01-12 23:05:01'),
+(3, 5, 2, 2, 58, '2016-01-12 23:05:07', '2016-01-12 23:05:07'),
+(4, 5, 3, 5, 86, '2016-01-13 08:23:00', '2016-01-13 08:23:00');
 
 -- --------------------------------------------------------
 
@@ -5442,19 +5446,19 @@ CREATE TABLE IF NOT EXISTS `it_user_exams` (
   `ue_id` int(11) NOT NULL AUTO_INCREMENT,
   `ue_user_id` int(11) NOT NULL,
   `ue_exam_id` int(11) NOT NULL,
+  `ue_exam_start` datetime DEFAULT NULL,
   `ue_created` datetime NOT NULL,
   `ue_modified` datetime NOT NULL,
   PRIMARY KEY (`ue_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `it_user_exams`
 --
 
-INSERT INTO `it_user_exams` (`ue_id`, `ue_user_id`, `ue_exam_id`, `ue_created`, `ue_modified`) VALUES
-(1, 5, 2, '2015-12-02 08:33:57', '2015-12-02 08:33:57'),
-(2, 5, 1, '2015-12-03 08:17:19', '2015-12-03 08:17:19'),
-(4, 5, 2, '2016-01-10 18:34:27', '2016-01-10 18:34:27');
+INSERT INTO `it_user_exams` (`ue_id`, `ue_user_id`, `ue_exam_id`, `ue_exam_start`, `ue_created`, `ue_modified`) VALUES
+(1, 5, 2, '2016-01-12 19:55:13', '2016-01-12 23:05:10', '2016-01-12 23:05:10'),
+(2, 5, 3, '2016-01-13 14:13:17', '2016-01-13 08:23:02', '2016-01-13 08:23:02');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
