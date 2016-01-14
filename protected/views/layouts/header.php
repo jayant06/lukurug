@@ -33,7 +33,7 @@ $this->widget('bootstrap.widgets.TbNavbar', array(
             'htmlOptions'=>array('class'=>'pull-right'),
             'items'=>array(        
                array('label'=>'Signin', 'visible'=>Yii::app()->user->isGuest,'url'=>array('site/login')),
-                array('label'=>'Signup', 'visible'=>Yii::app()->user->isGuest,'url'=>array('user/signup')),
+                // array('label'=>'Signup', 'visible'=>Yii::app()->user->isGuest,'url'=>array('user/signup')),
                 array('label'=>$this->loggedusername, 'visible'=>Yii::app()->user->checkAccess('member'), 'url'=>'#', 'items'=>array(
                     array('label'=>'Dashboard', 'url'=>array('user/dashboard')),
                     array('label'=>'Profile', 'url'=>array('user/profile')),                    
