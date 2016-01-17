@@ -236,6 +236,9 @@ class QuestionsController extends Controller
 			$this->redirect(array('index'));	
 		}
 		$model = new Questions;
+		if(isset($_GET['Questions'])) {
+	        $model->attributes =$_GET['Questions'];
+	   	}
 		$this->render('index',array(
 			'model'=>$model,
 		));

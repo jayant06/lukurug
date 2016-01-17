@@ -24,8 +24,6 @@
 			echo $form->dropDownListRow($model,'qt_exam_id',$exams,array('class'=>'form-control','empty' => 'Select Exam')); 
 			?>
 			<?php echo $form->textFieldRow($model,'qt_name',array('class'=>'form-control','maxlength'=>255)); ?>
-			<?php echo $form->textAreaRow($model,'qt_description',array('rows'=>6, 'cols'=>50, 'class'=>'form-control')); ?>
-			<?php echo $form->textFieldRow($model,'qt_marks',array('class'=>'form-control','value' => (!empty($model->qt_marks)) ? $model->qt_marks : 1)); ?>
 			<div style="display:<?php echo $display; ?>;">
 				<?php 
 				echo $form->fileFieldRow($model,'qt_image',array('class'=>'form-control')); 
@@ -39,7 +37,9 @@
 				}
 				?>
 			</div>
-        	<div class="clear">&nbsp;</div>
+			<?php echo $form->textAreaRow($model,'qt_description',array('rows'=>6, 'cols'=>50, 'class'=>'form-control')); ?>
+			<?php echo $form->textFieldRow($model,'qt_marks',array('class'=>'form-control','value' => (!empty($model->qt_marks)) ? $model->qt_marks : 1)); ?>
+			<div class="clear">&nbsp;</div>
 			<div>
 				<label>Add options</label>
 			</div>
