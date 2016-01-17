@@ -29,9 +29,9 @@ class Categories extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('cat_name', 'required'),
+			array('cat_name, cat_code', 'required'),
 			array('cat_name', 'length', 'max'=>255),
-			array('cat_description, cat_meta_title, cat_meta_keyword, cat_meta_description', 'safe'),
+			array('cat_description, cat_meta_title, cat_meta_keyword, cat_meta_description, cat_parent_id', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('cat_id, cat_name, cat_description, cat_meta_title, cat_meta_keyword, cat_meta_description', 'safe', 'on'=>'search'),
@@ -48,6 +48,7 @@ class Categories extends CActiveRecord
 		return array(
 			'catExams'=>array(self::HAS_MANY, 'Exams','ex_category_id'),
 			'uCourcesCategory'=>array(self::HAS_MANY, 'UserCourses','cr_category_id'),
+			'courseParent'=>array(self::BELONGS_TO, 'Categories','cat_parent_id'),
 		);
 	}
 
@@ -62,6 +63,8 @@ class Categories extends CActiveRecord
 			'cat_meta_title' => 'Course Meta Title',
 			'cat_meta_keyword' => 'Course Meta Keyword',
 			'cat_meta_description' => 'Course Meta Description',
+			'cat_code' => 'Course Code',
+			'cat_parent_id' => 'Parent Course'
 		);
 	}
 
@@ -89,6 +92,7 @@ class Categories extends CActiveRecord
 		$criteria->compare('cat_meta_title',$this->cat_meta_title,true);
 		$criteria->compare('cat_meta_keyword',$this->cat_meta_keyword,true);
 		$criteria->compare('cat_meta_description',$this->cat_meta_description,true);
+		$criteria->compare('cat_code',$this->cat_code,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -105,4 +109,20 @@ class Categories extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+	function generateCatCode()
+	{
+	    $cCode = 1;
+	    $codeAlphabet = "C00";
+	    $criteria=new CDbCriteria;
+	    $criteria->order = 'cat_code desc';
+	    $criteria->limit = 1;
+	    $catCodeData = Categories::model()->find($criteria);
+	    if(!empty($catCodeData)){
+	    	$catcode = str_replace('C00','',$catCodeData->cat_code);
+	    	if(!empty($catcode))
+	    		$cCode = ($catcode+1);
+	    }
+	    return $codeAlphabet.$cCode;
+	}	
 }

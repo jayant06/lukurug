@@ -12,6 +12,7 @@ $subcategories = '';
 $userlist = '';
 $exams = '';
 $questions = '';
+$states = '';
 if($page=='UserIndex')
     $dashboard = 'active-menu';
 else if($page=='UserUserlist' || $page=='UserAdd' || $page=='UserEdit')
@@ -30,6 +31,8 @@ else if($page=='SubcategoriesIndex' || $page=='SubcategoriesCreate' || $page=='S
     $subcategories = 'active-menu';
 else if($page=='UserSitesettings')
     $sitesetting = 'active-menu';
+else if($page=='StatesIndex')
+    $states = 'active-menu';
 ?>
 <nav class="navbar-default navbar-side" role="navigation">
     <div class="sidebar-collapse">
@@ -47,6 +50,11 @@ else if($page=='UserSitesettings')
             <li>
                 <?php
                 echo CHtml::link('<i class="fa fa-sitemap"></i> Courses',array('/admin/categories/index'),array('class' => $categories));
+                ?>
+            </li>
+            <li>
+                <?php
+                echo CHtml::link('<i class="fa fa-sitemap"></i> States',array('/admin/states/index'),array('class' => $states));
                 ?>
             </li>
             <li>

@@ -108,15 +108,32 @@
 								<label for="user_cources" class="control-label required">Assign Cources</label>
 								<div class="controls">
 									<?php
-									$courcesData = Categories::model()->findAll();
+									$criteria=new CDbCriteria;
+									$criteria->condition = 'cat_parent_id=0';
+									$courcesData = Categories::model()->findAll($criteria);
 									$cources = CHtml::listData($courcesData,'cat_id','cat_name');
+
+									$scriteria=new CDbCriteria;
+									$scriteria->condition = 'cat_parent_id!=0';
+									$scourcesData = Categories::model()->findAll($scriteria);
+									$scources = array();
+									foreach ($scourcesData as $pkey => $pArr) {
+										$scources[$pArr->cat_parent_id][$pArr->cat_id]  = $pArr->cat_name;
+									}
 									?>
-									<select name="user_cources[]" id="user_cources" multiple="multiple" style="width:250px;">	
+									<select name="user_cources[]" id="user_cources" multiple="multiple" style="width:250px;height:200px;">	
 										<?php
 										foreach ($cources as $cid => $cname) {
-											?>
-											<option value="<?php echo $cid; ?>"><?php echo $cname; ?></option>
-											<?php
+											if(!empty($scources[$cid])){
+												?>
+												<optgroup label="<?php echo $cname; ?>"></optgroup>
+												<?php
+												foreach ($scources[$cid] as $scid => $scname) {
+													?>
+													<option value="<?php echo $scid; ?>" <?php echo (!empty($cids[$scid])) ? 'selected' : ''; ?>><?php echo $scname; ?></option>
+													<?php
+												}												
+											}
 										}
 										?>
 									</select>	

@@ -62,14 +62,9 @@ class States extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'st_id' => 'St',
-			'st_cnt_id' => 'St Cnt',
-			'st_cnt_code_char2' => 'St Cnt Code Char2',
-			'st_cnt_code_char3' => 'St Cnt Code Char3',
-			'st_name' => 'St Name',
-			'st_alternate_name' => 'St Alternate Name',
-			'st_primary_level_name' => 'St Primary Level Name',
-			'st_code' => 'St Code',
+			'st_cnt_id' => 'Country',
+			'st_name' => 'State Name',
+			'st_code' => 'State Code',
 		);
 	}
 
@@ -90,7 +85,7 @@ class States extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+		$criteria->order = 'st_name ASC';
 		$criteria->compare('st_id',$this->st_id);
 		$criteria->compare('st_cnt_id',$this->st_cnt_id);
 		$criteria->compare('st_cnt_code_char2',$this->st_cnt_code_char2,true);

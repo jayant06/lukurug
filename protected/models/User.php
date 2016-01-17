@@ -213,6 +213,8 @@ class User extends CActiveRecord
 		
 		$criteria=new CDbCriteria;		
 		$criteria->compare('u_email',$this->u_email,true);
+		$criteria->compare('u_first_name',$this->u_first_name,true);
+		$criteria->compare('u_last_name',$this->u_last_name,true);
 		$criteria->addCondition("u_role <> 'admin'",'AND');
 		
 		return new CActiveDataProvider($this, array(

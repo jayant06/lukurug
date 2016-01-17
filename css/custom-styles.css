@@ -444,3 +444,6 @@ font-size: 19px;
 .qq-upload-list{
   display:none !important;
 }
+.yiiPager li{
+  display: inline-block;
+}

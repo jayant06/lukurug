@@ -18,10 +18,21 @@
 	                'template'=>"{summary}{items}{pager}",
 	                'filter'=>$model,
 	                'columns'=>array(
+	                	array(
+							'name'=>'cat_code',
+							'type'=>'raw',
+							'value'=>'CHtml::encode($data->cat_code)'
+						),
 						array(
 							'name'=>'cat_name',
 							'type'=>'raw',
 							'value'=>'CHtml::encode($data->cat_name)'
+						),
+						array(
+							'name'=>'cat_parent_id',
+							'type'=>'raw',
+							'filter' => false,
+							'value'=>'(!empty($data->courseParent->cat_name)) ? CHtml::encode($data->courseParent->cat_name) : "----"'
 						),
 						array(
 							'header'=>'Action',

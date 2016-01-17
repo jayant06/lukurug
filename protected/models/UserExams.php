@@ -84,8 +84,10 @@ class UserExams extends CActiveRecord
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
-
+		$user_id = Yii::app()->user->id;
 		$criteria=new CDbCriteria;
+		$criteria->condition = 'ue_user_id=:ue_user_id';
+		$criteria->params = array(':ue_user_id' => $user_id);
 
 		$criteria->compare('ue_id',$this->ue_id);
 		$criteria->compare('ue_user_id',$this->ue_user_id);

@@ -14,7 +14,7 @@ class CategoriesController extends Controller
 	public function actionCreate()
 	{
 		$model=new Categories;
-
+		$model->cat_code = $model->generateCatCode();
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -38,6 +38,8 @@ class CategoriesController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+		if(empty($model->cat_code))
+			$model->cat_code = $model->generateCatCode();
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -80,6 +82,9 @@ class CategoriesController extends Controller
 	public function actionIndex()
 	{
 		$model = new Categories;
+		if(isset($_GET['Categories'])) {
+	        $model->attributes =$_GET['Categories'];
+	   	}
 		$this->render('index',array(
 			'model'=>$model,
 		));

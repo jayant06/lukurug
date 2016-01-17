@@ -24,43 +24,6 @@ class UserController extends Controller
 	}
 	
 	/**
-	 * @return array action filters
-	 */
-	/*public function filters()
-	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
-		);
-	}*/
-
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	/*public function accessRules()
-	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','findstate'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('signup','update'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
-	}*/
-
-	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */	
@@ -309,6 +272,14 @@ class UserController extends Controller
 	        $model->attributes =$_GET['User'];
 	   	}
 	   	
+	   	$stCriteria=new CDbCriteria;
+	   	$stCriteria->condition = 'st_cnt_id=105';
+	   	$stateData = States::model()->findAll($stCriteria);
+	   	$states = array();
+	   	foreach ($stateData as $key => $stateArr) {
+	   		$states[$stateArr->st_code] = $stateArr->st_id; 
+	   	}
+
 	   	Yii::import('ext.phpexcelreader.JPhpExcelReader');
 		if(!empty($_POST)){
 			if(!empty($_FILES['importexcel']['name'])){
@@ -321,7 +292,6 @@ class UserController extends Controller
 					$file_path 	= $dir_name.$file_name;
 					if(move_uploaded_file($tmp_name, $file_path)){
 						$data=new JPhpExcelReader($file_path);
-						prd($data->sheets[0]['cells']);
 						if(!empty($data->sheets[0]['cells'])){
 							foreach ($data->sheets[0]['cells'] as $key => $columnArr) {
 								if($key>1){
@@ -337,17 +307,14 @@ class UserController extends Controller
 									$uModel->isNewRecord = true;
 									$uModel->terms_conditions = 1;
 									$errors = $uModel->getErrors();
-									if(!empty($columnArr[12])){
-										$aDate = explode('/',$columnArr[12]);
-										$uModel->u_addmission_date = $aDate[2]."-".$aDate[1]."-".$aDate[0];
-									}
+									$uModel->u_addmission_date = date('Y-m-d');
 									if($uModel->save()){
 										$userAddressModel = new UserAddress;
 										$userAddressModel->uad_type = 1;
 										$userAddressModel->uad_add1 = $columnArr[5];;
 										$userAddressModel->uad_add2 = $columnArr[6];
 										$userAddressModel->uad_country_id = 105;
-										$userAddressModel->uad_state_id = $columnArr[7];	;
+										$userAddressModel->uad_state_id = !empty($states[$columnArr[7]]) ? $states[$columnArr[7]] : 14691; //by default Rajasthan
 										$userAddressModel->uad_city = $columnArr[8];
 										$userAddressModel->uad_zipcode = $columnArr[9];
 										$userAddressModel->uad_mobile = $columnArr[10];

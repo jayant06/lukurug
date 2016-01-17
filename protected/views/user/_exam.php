@@ -1,6 +1,16 @@
 <div class="exam-cnt-inner">
 	<div><h3><?php echo $data->qt_name; ?></h3></div>
 	<div>
+		<?php 
+		if(!empty($data->qt_image)){
+			?>
+			<img src="<?php echo Yii::app()->baseUrl; ?>/storage/questions/<?php echo $data->qt_image; ?>" width="200">
+			<?php
+		}
+		?>
+	</div>
+	<div>&nbsp;</div>
+	<div>
 		<?php
 		$ansSubmit = 0;
 		if(!empty($answers[$data->qt_id]['option'])){

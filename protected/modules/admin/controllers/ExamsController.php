@@ -80,6 +80,9 @@ class ExamsController extends Controller
 	public function actionIndex()
 	{
 		$model = new Exams;
+		if(isset($_GET['Exams'])) {
+	        $model->attributes =$_GET['Exams'];
+	   	}
 		$this->render('index',array(
 			'model'=>$model,
 		));
