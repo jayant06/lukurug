@@ -123,7 +123,7 @@
 							<?php echo $form->textFieldRow($userAddressModel, 'uad_city', array('value' => (!empty($address[1]['uad_city'])) ? $address[1]['uad_city']:'','name' => 'UserAddress[uad_city][1]')); ?>
 							<?php echo $form->textFieldRow($userAddressModel, 'uad_zipcode', array('value' => (!empty($address[1]['uad_zipcode'])) ? $address[1]['uad_zipcode']:'','name' => 'UserAddress[uad_zipcode][1]')); ?>
 							<?php echo $form->textFieldRow($userAddressModel, 'uad_mobile', array('value' => (!empty($address[1]['uad_mobile'])) ? $address[1]['uad_mobile']:'','name' => 'UserAddress[uad_mobile][1]')); ?>
-							<input type="checkbox" name="shippingChk" id="shippingChk">&nbsp;Billing Address same as Shipping Address
+							<input type="checkbox" name="shippingChk" id="shippingChk">&nbsp;Parmanent address is same as present address.
 						</div>
 					</div>
 					<div class="left">
