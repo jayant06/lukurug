@@ -1,55 +1,61 @@
-<?php 
-$categories = Categories::model()->findAll();
-$productMenues = array();
-$index = 0;
-if(!empty($categories)){
-    foreach ($categories as $key => $catObj) {
-        $i = 0;
-        $productMenues['label']              = $catObj->cat_name;
-        $productMenues['url']                = '#'; 
-        $productMenues['items'][$i]['label'] = 'All Products';   
-        $productMenues['items'][$i]['url']   = array('products/');    
-        if(!empty($catObj->catSubcats)){
-            foreach ($catObj->catSubcats as $key2 => $subcatObj) {
-                $i++;
-                $productMenues['items'][$i]['label'] = $subcatObj->sub_cat_name;   
-                $productMenues['items'][$i]['url']   = array('products/index/'.$subcatObj->sub_id);                   
-            }            
-        }
-        $index++;
-    }    
-}
-//prd($productMenues);
-/*<a data-toggle="modal" href="remote.html" data-target="#modal">Click me</a>*/
-$this->widget('bootstrap.widgets.TbNavbar', array(    
-    //'type'=>'inverse', // null or 'inverse'
-    'brand'=> Yii::app()->params['title'],
-    'brandUrl'=>array('/'),
-    'collapse'=>true, // requires bootstrap-responsive.css
-    'fluid'=>true,    
-    'items'=>array(        
-        array(
-            'class'=>'bootstrap.widgets.TbMenu',
-            'htmlOptions'=>array('class'=>'pull-right'),
-            'items'=>array(        
-               array('label'=>'Signin', 'visible'=>Yii::app()->user->isGuest,'url'=>array('site/login')),
-                // array('label'=>'Signup', 'visible'=>Yii::app()->user->isGuest,'url'=>array('user/signup')),
-                array('label'=>$this->loggedusername, 'visible'=>Yii::app()->user->checkAccess('member'), 'url'=>'#', 'items'=>array(
-                    array('label'=>'Dashboard', 'url'=>array('user/dashboard')),
-                    array('label'=>'Profile', 'url'=>array('user/profile')),                    
-                    array('label'=>'Change Password', 'url'=>array('user/changepassword')),
-                    '---',
-                    array('label'=>'Logout', 'url'=>array('site/logout')),
-                )),
-            ),
-        ),
-    ),
+<div style="height:122px; padding-top:5px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div style="float:left;"><?php echo CHtml::link(CHtml::image(Yii::app()->baseUrl.'/images/logo-adarsh-gurukul.png','Gurukul',array('width'=>150)),array('/')); ?></div>
+                <div style="float:left;"><?php echo CHtml::link(CHtml::image(Yii::app()->baseUrl.'/images/aadarsh-gurukul.png','Gurukul',array('width'=>350)),array('/')); ?></div>
+                <div style="float:right;"><?php echo CHtml::link(CHtml::image(Yii::app()->baseUrl.'/images/glob.jpg','Gurukul',array('width'=>70)),array('/')); ?></div>
 
-)); ?>
-<div>&nbsp;</div>
-<div>&nbsp;</div>
-<div>&nbsp;</div>
-<div style="margin:0 2% 0 2%;font-weight: bold;color: red;" align="right">
-    <marquee direction="left"> Contact: 9829198118</marquee >
+                <div style="font-weight: bold;color: red;" align="right">
+                    <marquee direction="left"> Contact: 9829198118</marquee >
+                </div>
+            </div>
+        </div>    
+    </div>
 </div>
-<div>&nbsp;</div>
+
+<nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <!-- <a class="navbar-brand" href="#"><?php echo Yii::app()->params['title'];?></a> -->
+        <?php echo CHtml::link(Yii::app()->params['title'],array('/'),array('class'=>'navbar-brand')); ?>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <!-- <li class="active"><?php //echo CHtml::link('Home',array('/')); ?></li>
+            <li><?php //echo CHtml::link('About',array('/'));?></li>
+            <li><?php //echo CHtml::link('Contact',array('/'));?></li> -->
+            <?php if(!Yii::app()->user->isGuest){ ?>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Exam/Test <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><?php echo CHtml::link('Attempted Exam',array('/exam/attempted')); ?></li>
+                        <li><?php echo CHtml::link('Upcoming Exam',array('/exam/upcoming')); ?></li>
+                    </ul>
+                </li>
+            <?php }?>
+            <?php if(Yii::app()->user->isGuest){ ?>
+                <li><?php echo CHtml::link('Sign In',array('site/login'));?></li>
+            <?php }else {?>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo ucwords($this->loggedusername);?> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <!-- <li><?php //echo CHtml::link('Dashboard',array('/user/dashboard')); ?></li> -->
+                        <li><?php echo CHtml::link('Profile',array('/user/profile')); ?></li>
+                        <li><?php echo CHtml::link('Change Password',array('/user/changepassword')); ?></li>
+                        <li role="separator" class="divider"></li>
+                        <!-- <li class="dropdown-header">Nav header</li> -->
+                        <li><?php echo CHtml::link('Logout',array('/site/logout')); ?></li>
+                    </ul>
+                </li>
+            <?php }?>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+</nav>
