@@ -447,3 +447,10 @@ font-size: 19px;
 .yiiPager li{
   display: inline-block;
 }
+.courceMenus{
+  display:inline-block;width:100%; list-style: circle;
+}
+.courceMenus a{
+  color:#FFF;
+  background: none;
+}

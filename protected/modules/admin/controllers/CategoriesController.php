@@ -14,15 +14,23 @@ class CategoriesController extends Controller
 	public function actionCreate()
 	{
 		$model=new Categories;
-		$model->cat_code = $model->generateCatCode();
+		if(!empty($_REQUEST['type'])){
+			$model->categoryType = $_REQUEST['type'];
+			if($_REQUEST['type']==2)
+	   			$model->cat_parent_type = 2;
+		}
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Categories']))
 		{
 			$model->attributes=$_POST['Categories'];
-			if($model->save())
-				$this->redirect(array('index'));
+			if($model->save()){
+				$model->cat_code = 'C00'.$model->cat_id;
+				$model->isNewRecord = false;
+				$model->save();
+				$this->redirect(array('index','type' => $_REQUEST['type']));
+			}
 		}
 
 		$this->render('create',array(
@@ -40,7 +48,11 @@ class CategoriesController extends Controller
 		$model=$this->loadModel($id);
 		if(empty($model->cat_code))
 			$model->cat_code = $model->generateCatCode();
-
+		if(!empty($_REQUEST['type'])){
+			$model->categoryType = $_REQUEST['type'];
+			if($_REQUEST['type']==2)
+	   			$model->cat_parent_type = 2;
+		}
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -48,7 +60,7 @@ class CategoriesController extends Controller
 		{
 			$model->attributes=$_POST['Categories'];
 			if($model->save())
-				$this->redirect(array('index'));
+				$this->redirect(array('index','type' => $_REQUEST['type']));
 		}
 
 		$this->render('update',array(
@@ -85,7 +97,9 @@ class CategoriesController extends Controller
 		if(isset($_GET['Categories'])) {
 	        $model->attributes =$_GET['Categories'];
 	   	}
-		$this->render('index',array(
+	   	if(!empty($_REQUEST['type']))
+	   		$model->categoryType = $_REQUEST['type'];
+	   	$this->render('index',array(
 			'model'=>$model,
 		));
 	}
@@ -114,5 +128,24 @@ class CategoriesController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+	public function actionSubcategories(){
+		$subcatIds = array();
+		if(!empty($_POST['maincatid'])){
+			$criteria=new CDbCriteria;
+			$criteria->condition = "cat_parent_id='".$_POST['maincatid']."'";
+			$categories = Categories::model()->findAll($criteria);
+			if(!empty($categories)){
+				$i = 0;
+				foreach ($categories as $key => $catArr) {
+					$subcatIds[$i]['id'] = $catArr->cat_id;
+					$subcatIds[$i]['name'] = $catArr->cat_name;					
+					$i++;
+				}
+			}
+		}
+		echo json_encode($subcatIds);
+		Yii::app()->end();
 	}
 }

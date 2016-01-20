@@ -2,10 +2,21 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-                <div style="float:left;">Courses</div>
+                <div style="float:left;">
+                	<?php 
+                	if(!empty($model->categoryType)){
+                		if($model->categoryType==1)
+                			echo 'Main Courses';
+                		else if($model->categoryType==2)
+                			echo 'Sub Courses';
+                		else
+                			echo 'Courses';
+                	}
+                	?>
+                </div>
                 <div style="float:right">
                 	<?php
-                	echo CHtml::link('Add Course',array('/admin/categories/create'),array('class' => 'btn btn-primary'));
+                	echo CHtml::link('Add Course',array('/admin/categories/create','type' => $model->categoryType),array('class' => 'btn btn-primary'));
                 	?>
                 </div>
                 <div style="clear:both;"></div>
@@ -42,12 +53,12 @@
 								'update'=>array(
 									'label'=>'Edit',								            
 									'imageUrl'=>false,
-									'url'=>'Yii::app()->createUrl("/admin/categories/update", array("id"=>$data->cat_id))',
+									'url'=>'Yii::app()->createUrl("/admin/categories/update", array("id"=>$data->cat_id,"type"=>'.$model->categoryType.'))',
 								),
 								'delete'=>array(
 									'label'=>'Delete',								            
 									'imageUrl'=>false,
-									'url'=>'Yii::app()->createUrl("/admin/categories/delete", array("id"=>$data->cat_id))',
+									'url'=>'Yii::app()->createUrl("/admin/categories/delete", array("id"=>$data->cat_id,"type"=>'.$model->categoryType.'))',
 								)
 							)
 						)
