@@ -99,9 +99,17 @@ class CategoriesController extends Controller
 	   	}
 	   	if(!empty($_REQUEST['type']))
 	   		$model->categoryType = $_REQUEST['type'];
-	   	$this->render('index',array(
-			'model'=>$model,
-		));
+
+	   	if(isset($_GET['course_id'])) {
+	   		$model->cat_parent_id = $_GET['course_id'];
+	        $this->renderPartial('index',array(
+				'model'=>$model,
+			));
+	   	}else{
+	   		$this->render('index',array(
+				'model'=>$model,
+			));
+	   	}	   	
 	}
 
 	/**

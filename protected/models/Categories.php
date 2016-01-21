@@ -96,6 +96,10 @@ class Categories extends CActiveRecord
 			else //for childs
 				$conditions = 'cat_parent_id!=0 AND cat_parent_type=0';
 		}
+
+		if(!empty($this->cat_parent_id))
+			$conditions .= ' AND cat_parent_id="'.$this->cat_parent_id.'"';
+		
 		if(!empty($conditions))
 			$criteria->condition = $conditions;
 
