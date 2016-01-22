@@ -286,4 +286,27 @@ class QuestionsController extends Controller
 		echo $deleted;
 		Yii::app()->end();
 	}
+
+	public function actionDeleteall(){
+		if(!empty($_POST['selectedIds'])){
+			foreach ($_POST['selectedIds'] as $key => $qid) {
+				$qModel=Questions::model()->findByPk($qid);
+				if($qModel->delete()){
+					$criteria=new CDbCriteria;
+					$criteria->condition = "qto_question_id=:qto_question_id";
+					$criteria->params = array(':qto_question_id' => $qid);
+					QuestionsOptions::model()->deleteAll($criteria);
+
+					$criteria1=new CDbCriteria;
+					$criteria1->condition = "ua_question_id=:ua_question_id";
+					$criteria1->params = array(':ua_question_id' => $qid);
+					UserAnswers::model()->deleteAll($criteria1);
+				}				
+			}
+			Yii::app()->user->setFlash('success','Deleted successfully selected questions.');						
+		}else{
+			Yii::app()->user->setFlash('error','Please select atleast any one question for deletion.');						
+		}
+		$this->redirect(array('index'));	
+	}
 }

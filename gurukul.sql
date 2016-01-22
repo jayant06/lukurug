@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 21, 2016 at 08:24 AM
+-- Generation Time: Jan 22, 2016 at 08:08 AM
 -- Server version: 5.5.46-0ubuntu0.14.04.2
 -- PHP Version: 5.5.9-1ubuntu4.14
 
@@ -136,6 +136,7 @@ INSERT INTO `it_authitem` (`name`, `type`, `description`, `bizrule`, `data`) VAL
 ('AdminProductsView', 1, '', '', 's:0:"";'),
 ('AdminQuestionsCreate', 1, NULL, NULL, NULL),
 ('AdminQuestionsDelete', 1, NULL, NULL, NULL),
+('AdminQuestionsDeleteall', 1, NULL, NULL, NULL),
 ('AdminQuestionsDeleteoption', 1, NULL, NULL, NULL),
 ('AdminQuestionsIndex', 1, NULL, NULL, NULL),
 ('AdminQuestionsUpdate', 1, NULL, NULL, NULL),
@@ -259,6 +260,7 @@ INSERT INTO `it_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminProductsView'),
 ('admin', 'AdminQuestionsCreate'),
 ('admin', 'AdminQuestionsDelete'),
+('admin', 'AdminQuestionsDeleteall'),
 ('admin', 'AdminQuestionsDeleteoption'),
 ('admin', 'AdminQuestionsIndex'),
 ('admin', 'AdminQuestionsUpdate'),
@@ -725,14 +727,18 @@ CREATE TABLE IF NOT EXISTS `it_questions` (
   `qt_modified` datetime NOT NULL,
   PRIMARY KEY (`qt_id`),
   UNIQUE KEY `qt_id` (`qt_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `it_questions`
 --
 
 INSERT INTO `it_questions` (`qt_id`, `qt_exam_id`, `qt_name`, `qt_description`, `qt_type`, `qt_marks`, `qt_image`, `qt_created`, `qt_modified`) VALUES
-(1, 1, 'सामान्य ज्ञान q 1', 'सामान्य ज्ञान q 1', 1, 1, '', '2016-01-20 07:53:34', '2016-01-20 07:53:34');
+(1, 1, 'सामान्य ज्ञान q 1', 'सामान्य ज्ञान q 1', 1, 1, '', '2016-01-20 07:53:34', '2016-01-20 07:53:34'),
+(9, 1, 'Question4', 'Question4', 1, 1, NULL, '2016-01-22 07:27:31', '2016-01-22 07:27:31'),
+(8, 1, 'Question3', 'Question3', 1, 1, NULL, '2016-01-22 07:27:31', '2016-01-22 07:27:31'),
+(7, 1, 'Question2', 'Question2', 1, 1, NULL, '2016-01-22 07:27:31', '2016-01-22 07:27:31'),
+(6, 1, 'Question1', 'Question1', 1, 1, NULL, '2016-01-22 07:27:31', '2016-01-22 07:27:31');
 
 -- --------------------------------------------------------
 
@@ -747,7 +753,7 @@ CREATE TABLE IF NOT EXISTS `it_questions_options` (
   `qto_question_id` int(11) NOT NULL,
   `qto_right_ans` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=wrong, 1=right',
   PRIMARY KEY (`qto_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
 
 --
 -- Dumping data for table `it_questions_options`
@@ -757,7 +763,23 @@ INSERT INTO `it_questions_options` (`qto_id`, `qto_name`, `qto_image`, `qto_ques
 (1, 'सामान्य ज्ञान A', NULL, 1, 0),
 (2, 'सामान्य ज्ञान B', NULL, 1, 1),
 (3, 'सामान्य ज्ञान C', NULL, 1, 0),
-(4, 'सामान्य ज्ञान D', NULL, 1, 0);
+(4, 'सामान्य ज्ञान D', NULL, 1, 0),
+(36, 'D', NULL, 9, 1),
+(35, 'C', NULL, 9, 0),
+(34, 'B', NULL, 9, 0),
+(33, 'A', NULL, 9, 0),
+(32, 'D', NULL, 8, 0),
+(31, 'C', NULL, 8, 0),
+(30, 'B', NULL, 8, 0),
+(29, 'A', NULL, 8, 1),
+(28, 'D', NULL, 7, 0),
+(27, 'C', NULL, 7, 1),
+(26, 'B', NULL, 7, 0),
+(25, 'A', NULL, 7, 0),
+(24, 'D', NULL, 6, 0),
+(23, 'C', NULL, 6, 0),
+(22, 'B', NULL, 6, 1),
+(21, 'A', NULL, 6, 0);
 
 -- --------------------------------------------------------
 
