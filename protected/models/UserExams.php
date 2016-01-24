@@ -126,4 +126,43 @@ class UserExams extends CActiveRecord
 			)
 		);
 	}
+
+	public function getStatistics($ue_id=0){
+		$result = Yii::app()->db->createCommand()
+				    ->select('ue.*,ex.ex_title')
+				    ->from('{{user_exams}} ue')
+				    ->join('{{exams}} ex', 'ex.ex_id = ue.ue_exam_id')
+				    ->where('ue_id=:ue_id' , array(':ue_id' =>$ue_id))
+				    ->queryRow(); // this will be returned as an array of arrays
+				    // ->query();
+		return $result;
+	}
+
+	public function getUserExamEntry($user_id=0,$exam_id=0){
+		$criteria =new CDbCriteria;
+		$criteria->condition = "ue_user_id=:ue_user_id and ue_exam_id=:ue_exam_id";
+		$criteria->select = array('ue_id');
+		$criteria->params = array(':ue_user_id' => $user_id,'ue_exam_id' => $exam_id);
+		$this->find($criteria);
+	}
+	public function putUserExamEntry($user_id=0,$exam_id=0){
+		$this->isNewRecord = true;
+		$this->ue_user_id = $user_id;
+		$this->ue_exam_id = $exam_id;
+		$this->ue_exam_start = date('Y-m-d H:m:s');
+		$this->save();
+		return $this;
+	}
+	public function getExamDetail($user_id=0,$exam_id=0){
+		$result = Yii::app()->db->createCommand()
+				    ->select('ue.*,ex.*')
+				    ->from('{{user_exams}} ue')
+				    ->join('{{exams}} ex', 'ex.ex_id = ue.ue_exam_id')
+				    ->where('ue_id=:ue_id AND ue_user_id=:ue_user_id' , array(':ue_id' =>$exam_id, ':ue_user_id' =>$user_id))
+				    // ->andWhere('i.item_id = :value2' , array('value2' => $value2))
+				    // ->group('t.ref_id')
+				    ->queryRow(); // this will be returned as an array of arrays
+		return $result;
+		// return $this->findByPk($exam_id);
+	}
 }

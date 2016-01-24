@@ -103,8 +103,8 @@ class Exams extends CActiveRecord
 	public function getexams(){
 		$user_id = Yii::app()->user->id;
 		$criteria1=new CDbCriteria;
-		$criteria1->condition = 'ue_user_id=:ue_user_id';
-		$criteria1->params = array(':ue_user_id'=> $user_id);
+		$criteria1->condition = 'ue_user_id=:ue_user_id AND ue_is_finished=:ue_is_finished';
+		$criteria1->params = array(':ue_user_id'=> $user_id,':ue_is_finished'=>1);
 		$userExams = UserExams::model()->findAll($criteria1);
 		$uExams = array();
 		if(!empty($userExams)){

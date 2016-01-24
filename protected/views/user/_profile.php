@@ -1,6 +1,6 @@
-<div class="col-sm-12">
+<div class="col-sm-12 col-md-6 col-md-offset-3" >
 	<div class="panel panel-primary">
-		<div class="panel-heading">
+		<div class="panel-heading" align="center">
 		  <h3 class="panel-title">Profile</h3>
 		</div>
 		<div class="panel-body">

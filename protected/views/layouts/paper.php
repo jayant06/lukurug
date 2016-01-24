@@ -8,16 +8,14 @@
         $cs = Yii::app()->clientScript;		
   		$cs->registerCssFile(Yii::app()->request->baseUrl.'/css/styles.css')
         // ->registerCssFile(Yii::app()->request->baseUrl.'/css/bootstrap.min.css')
-        // ->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.countdown.css') No need for design
         ->registerCssFile(Yii::app()->request->baseUrl.'/css/bootstrap-theme.min.css')
-  		  ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/ckeditor/ckeditor.js',CClientScript::POS_END)
+  		->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/ckeditor/ckeditor.js',CClientScript::POS_END)
         ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/ckeditor/adapters/jquery.js',CClientScript::POS_END)
         ->registerCssFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/bootstrap-wysihtml5.css')
         ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/wysihtml5-0.3.0.js',CClientScript::POS_END)
         ->registerScriptFile(Yii::app()->request->baseUrl.'/vendors/wysiwyg/bootstrap-wysihtml5.js',CClientScript::POS_END)
         // ->registerScriptFile(Yii::app()->request->baseUrl.'/js/bootstrap.min.js',CClientScript::POS_HEAD)
-        ->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.plugin.min.js',CClientScript::POS_END)
-        ->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.countdown.min.js',CClientScript::POS_END);
+        ->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.countdown.js',CClientScript::POS_HEAD);
 
       //LOAD JQUERY
   		Yii::app()->clientScript->registerCoreScript('jquery');
@@ -28,34 +26,16 @@
   	?>
   </head>
 <body>
-    <div id="wrapper">
+<div id="wrapper">
 <?php  
-    $this->beginContent('/layouts/header');
+    $this->beginContent('/layouts/header_paper');
     $this->endContent();                
 ?>
 
 <div class="container">
-  <!-- <div class="row-fluid">
-      <div class="span12" id="content">
-          <div class="row-fluid">
-            <?php /*if(Yii::app()->user->hasFlash('success')):?>
-                <div class="alert alert-success">
-                    <button class="close" data-dismiss="alert" type="button">&times;</button>                              
-                    <?php echo Yii::app()->user->getFlash('success'); ?>
-                </div>
-            <?php elseif(Yii::app()->user->hasFlash('error')): ?>
-                <div class="alert alert-danger">
-                    <button class="close" data-dismiss="alert" type="button">&times;</button>
-                    <?php echo Yii::app()->user->getFlash('error'); ?>
-                </div>
-            <?php endif; ?>
-          </div>
-          <?php echo $content; */?>
-      </div>
-  </div>
-  <hr> -->
   <?php echo $content;?>
 </div>
+
 <?php
     $this->beginContent('/layouts/footer');
     $this->endContent();                

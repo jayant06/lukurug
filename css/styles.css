@@ -282,7 +282,7 @@ textarea{
   padding: 10px;
 }
 .viewExamsCnt{
-  width:50%;
+  width:100%;
 }
 .viewExams{
   border:1px solid #999;background:#FFF;padding:10px;border-radius:5px;margin-bottom:10px;
@@ -293,3 +293,71 @@ textarea{
 .bold{
     font-weight: bold;
 }
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+
+/* PAPER PAGE CSS */
+
+.exam_title{
+    color: #F00; margin-top:5px; padding-bottom: 10px; font-size: 20px; 
+}
+#question_button_container{
+    height:120px; width:100%; overflow-y:scroll; padding: 3px; border: 1px solid #ccc;
+}
+#question_button_container div{
+    display: inline-block; width: 30px; height: 30px; border: 1px solid #000; cursor: pointer; text-align: center; padding: 4px 0px 0px 0px; margin: 0px 4px 0px 0px;
+}
+#question_button_container .questionbutton_0{
+    background: #efec00;
+}
+#question_button_container .questionbutton_1{
+    background: #d600c4;
+}
+#question_button_container .questionbutton_2{
+    background: #f10b00;
+}
+#question_button_container .questionbutton_3{
+    background: #30bf19;
+}
+.statistic_area{
+    font-size: 16px;
+}
+.question_div{
+    display: none;
+}
+.active_question{
+    display: block;
+}
+.question_area {
+    min-height: 210px !important; padding: 25px; border-radius: 6px; background-color: #f6dff9; font-size: 16px;
+}
+.question_number{
+    width: 40px; display: inline-block; float: left; font-weight: bold; color: #f00; font-size: 18px;
+}
+.question_body{
+    float: left;
+}
+.answer_options{
+    clear: both;
+}
+.button-width-70{
+    width: 70px;
+}
+#warning_alert, #red_alert{
+    display: inline-block; display: none;
+}
+#processing_bar{
+    visibility: hidden;
+}
+/* PAPER PAGE CSS */
