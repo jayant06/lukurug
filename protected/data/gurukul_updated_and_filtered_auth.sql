@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.10deb1
+-- version 4.3.11
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Jan 17, 2016 at 11:28 AM
--- Server version: 5.5.46-0ubuntu0.14.04.2
--- PHP Version: 5.5.9-1ubuntu4.14
+-- Host: 127.0.0.1
+-- Generation Time: Jan 25, 2016 at 12:55 AM
+-- Server version: 5.6.24
+-- PHP Version: 5.5.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -30,8 +30,7 @@ CREATE TABLE IF NOT EXISTS `it_authassignment` (
   `itemname` varchar(64) NOT NULL,
   `userid` varchar(64) NOT NULL,
   `bizrule` text,
-  `data` text,
-  PRIMARY KEY (`itemname`,`userid`)
+  `data` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -65,6 +64,8 @@ INSERT INTO `it_authassignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
 ('member', '30', NULL, 'N;'),
 ('member', '31', NULL, 'N;'),
 ('member', '32', NULL, 'N;'),
+('member', '33', NULL, 'N;'),
+('member', '34', NULL, 'N;'),
 ('member', '4', NULL, 'N;'),
 ('member', '5', NULL, 'N;'),
 ('member', '6', NULL, 'N;'),
@@ -83,8 +84,7 @@ CREATE TABLE IF NOT EXISTS `it_authitem` (
   `type` int(11) NOT NULL COMMENT '1 for action 2 for role',
   `description` text,
   `bizrule` text,
-  `data` text,
-  PRIMARY KEY (`name`)
+  `data` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -93,10 +93,6 @@ CREATE TABLE IF NOT EXISTS `it_authitem` (
 
 INSERT INTO `it_authitem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
 ('admin', 2, NULL, NULL, NULL),
-('AdminButtonsCreate', 1, NULL, NULL, NULL),
-('AdminButtonsDelete', 1, NULL, NULL, NULL),
-('AdminButtonsIndex', 1, NULL, NULL, NULL),
-('AdminButtonsUpdate', 1, NULL, NULL, NULL),
 ('AdminCategoriesCreate', 1, '', '', 's:0:"";'),
 ('AdminCategoriesDelete', 1, '', '', 's:0:"";'),
 ('AdminCategoriesIndex', 1, '', '', 's:0:"";'),
@@ -110,29 +106,6 @@ INSERT INTO `it_authitem` (`name`, `type`, `description`, `bizrule`, `data`) VAL
 ('AdminExamsDelete', 1, NULL, NULL, NULL),
 ('AdminExamsIndex', 1, NULL, NULL, NULL),
 ('AdminExamsUpdate', 1, NULL, NULL, NULL),
-('AdminFabricsAddbuttons', 1, NULL, NULL, NULL),
-('AdminFabricsCreate', 1, NULL, NULL, NULL),
-('AdminFabricsDelete', 1, NULL, NULL, NULL),
-('AdminFabricsImageexist', 1, NULL, NULL, NULL),
-('AdminFabricsIndex', 1, NULL, NULL, NULL),
-('AdminFabricsUpdate', 1, NULL, NULL, NULL),
-('AdminFabricsUploadcustomizeimages', 1, NULL, NULL, NULL),
-('AdminFabricsUploadimages', 1, NULL, NULL, NULL),
-('AdminItemsCreate', 1, NULL, NULL, NULL),
-('AdminItemsDelete', 1, NULL, NULL, NULL),
-('AdminItemsIndex', 1, NULL, NULL, NULL),
-('AdminItemsOrders', 1, NULL, NULL, NULL),
-('AdminItemsUpdate', 1, NULL, NULL, NULL),
-('AdminItemsUpdatestatus', 1, NULL, NULL, NULL),
-('AdminItemsVieworders', 1, NULL, NULL, NULL),
-('AdminProductsAddimages', 1, '', '', 's:0:"";'),
-('AdminProductsAddsizes', 1, '', '', 's:0:"";'),
-('AdminProductsCreate', 1, '', '', 's:0:"";'),
-('AdminProductsDelete', 1, '', '', 's:0:"";'),
-('AdminProductsIndex', 1, '', '', 's:0:"";'),
-('AdminProductsUpdate', 1, '', '', 's:0:"";'),
-('AdminProductsUpload', 1, '', '', 's:0:"";'),
-('AdminProductsView', 1, '', '', 's:0:"";'),
 ('AdminQuestionsCreate', 1, NULL, NULL, NULL),
 ('AdminQuestionsDelete', 1, NULL, NULL, NULL),
 ('AdminQuestionsDeleteoption', 1, NULL, NULL, NULL),
@@ -158,22 +131,16 @@ INSERT INTO `it_authitem` (`name`, `type`, `description`, `bizrule`, `data`) VAL
 ('AdminUserStatus', 1, '', '', 's:0:"";'),
 ('AdminUserUserlist', 1, '', '', 's:0:"";'),
 ('AdminUserViewaddress', 1, NULL, NULL, NULL),
-('CartAddtocart', 1, NULL, NULL, NULL),
-('CartCancel', 1, NULL, NULL, NULL),
-('CartCheckout', 1, NULL, NULL, NULL),
-('CartConfirm', 1, NULL, NULL, NULL),
-('CartRemoveitem', 1, NULL, NULL, NULL),
-('CartUpdateqty', 1, NULL, NULL, NULL),
-('CartUpdateusermeasurement', 1, NULL, NULL, NULL),
-('CartView', 1, NULL, NULL, NULL),
-('FabricsIndex', 1, NULL, NULL, NULL),
-('FabricsView', 1, NULL, NULL, NULL),
+('ExamAttempted', 1, NULL, NULL, NULL),
+('ExamDetail', 1, NULL, NULL, NULL),
+('ExamFinish', 1, NULL, NULL, NULL),
+('ExamPaper', 1, NULL, NULL, NULL),
+('ExamSaveanswer', 1, NULL, NULL, NULL),
+('ExamSavestatus', 1, NULL, NULL, NULL),
+('ExamStart', 1, NULL, NULL, NULL),
+('ExamUpcoming', 1, NULL, NULL, NULL),
 ('guest', 2, NULL, NULL, NULL),
 ('member', 2, NULL, NULL, NULL),
-('ProductsIndex', 1, NULL, NULL, NULL),
-('ProductsView', 1, NULL, NULL, NULL),
-('ProductsVieworders', 1, NULL, NULL, NULL),
-('RightsDefaultIndex', 1, NULL, NULL, NULL),
 ('SiteIndex', 1, NULL, NULL, NULL),
 ('SiteLogin', 1, '', '', 's:0:"";'),
 ('SiteLogout', 1, '', '', 's:0:"";'),
@@ -183,11 +150,6 @@ INSERT INTO `it_authitem` (`name`, `type`, `description`, `bizrule`, `data`) VAL
 ('UserExam', 1, NULL, NULL, NULL),
 ('UserFinishexam', 1, NULL, NULL, NULL),
 ('UserForgotpassword', 1, '', '', 's:0:"";'),
-('UserMeasurementsCreate', 1, NULL, NULL, NULL),
-('UserMeasurementsDelete', 1, NULL, NULL, NULL),
-('UserMeasurementsSelectedmeasurements', 1, NULL, NULL, NULL),
-('UserMeasurementsUpdate', 1, NULL, NULL, NULL),
-('UserMeasurementsView', 1, NULL, NULL, NULL),
 ('UserProfile', 1, '', '', 's:0:"";'),
 ('UserResetpassword', 1, '', '', 's:0:"";'),
 ('UserSaveaddress', 1, NULL, NULL, NULL),
@@ -205,9 +167,7 @@ INSERT INTO `it_authitem` (`name`, `type`, `description`, `bizrule`, `data`) VAL
 
 CREATE TABLE IF NOT EXISTS `it_authitemchild` (
   `parent` varchar(64) NOT NULL,
-  `child` varchar(64) NOT NULL,
-  PRIMARY KEY (`parent`,`child`),
-  KEY `child` (`child`)
+  `child` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -215,10 +175,6 @@ CREATE TABLE IF NOT EXISTS `it_authitemchild` (
 --
 
 INSERT INTO `it_authitemchild` (`parent`, `child`) VALUES
-('admin', 'AdminButtonsCreate'),
-('admin', 'AdminButtonsDelete'),
-('admin', 'AdminButtonsIndex'),
-('admin', 'AdminButtonsUpdate'),
 ('admin', 'AdminCategoriesCreate'),
 ('admin', 'AdminCategoriesDelete'),
 ('admin', 'AdminCategoriesIndex'),
@@ -232,29 +188,6 @@ INSERT INTO `it_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminExamsDelete'),
 ('admin', 'AdminExamsIndex'),
 ('admin', 'AdminExamsUpdate'),
-('admin', 'AdminFabricsAddbuttons'),
-('admin', 'AdminFabricsCreate'),
-('admin', 'AdminFabricsDelete'),
-('admin', 'AdminFabricsImageexist'),
-('admin', 'AdminFabricsIndex'),
-('admin', 'AdminFabricsUpdate'),
-('admin', 'AdminFabricsUploadcustomizeimages'),
-('admin', 'AdminFabricsUploadimages'),
-('admin', 'AdminItemsCreate'),
-('admin', 'AdminItemsDelete'),
-('admin', 'AdminItemsIndex'),
-('admin', 'AdminItemsOrders'),
-('admin', 'AdminItemsUpdate'),
-('admin', 'AdminItemsUpdatestatus'),
-('admin', 'AdminItemsVieworders'),
-('admin', 'AdminProductsAddimages'),
-('admin', 'AdminProductsAddsizes'),
-('admin', 'AdminProductsCreate'),
-('admin', 'AdminProductsDelete'),
-('admin', 'AdminProductsIndex'),
-('admin', 'AdminProductsUpdate'),
-('admin', 'AdminProductsUpload'),
-('admin', 'AdminProductsView'),
 ('admin', 'AdminQuestionsCreate'),
 ('admin', 'AdminQuestionsDelete'),
 ('admin', 'AdminQuestionsDeleteoption'),
@@ -280,20 +213,14 @@ INSERT INTO `it_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminUserStatus'),
 ('admin', 'AdminUserUserlist'),
 ('admin', 'AdminUserViewaddress'),
-('guest', 'CartAddtocart'),
-('member', 'CartCancel'),
-('member', 'CartCheckout'),
-('member', 'CartConfirm'),
-('guest', 'CartRemoveitem'),
-('guest', 'CartUpdateqty'),
-('member', 'CartUpdateusermeasurement'),
-('guest', 'CartView'),
-('guest', 'FabricsIndex'),
-('guest', 'FabricsView'),
-('guest', 'ProductsIndex'),
-('guest', 'ProductsView'),
-('member', 'ProductsVieworders'),
-('guest', 'RightsDefaultIndex'),
+('member', 'ExamAttempted'),
+('member', 'ExamDetail'),
+('member', 'ExamFinish'),
+('member', 'ExamPaper'),
+('member', 'ExamSaveanswer'),
+('member', 'ExamSavestatus'),
+('member', 'ExamStart'),
+('member', 'ExamUpcoming'),
 ('guest', 'SiteIndex'),
 ('guest', 'SiteLogin'),
 ('member', 'SiteLogout'),
@@ -303,11 +230,6 @@ INSERT INTO `it_authitemchild` (`parent`, `child`) VALUES
 ('member', 'UserExam'),
 ('member', 'UserFinishexam'),
 ('guest', 'UserForgotpassword'),
-('member', 'UserMeasurementsCreate'),
-('member', 'UserMeasurementsDelete'),
-('member', 'UserMeasurementsSelectedmeasurements'),
-('member', 'UserMeasurementsUpdate'),
-('member', 'UserMeasurementsView'),
 ('member', 'UserProfile'),
 ('guest', 'UserResetpassword'),
 ('member', 'UserSaveaddress'),
@@ -324,25 +246,24 @@ INSERT INTO `it_authitemchild` (`parent`, `child`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `it_categories` (
-  `cat_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cat_id` int(11) NOT NULL,
   `cat_parent_id` int(11) NOT NULL DEFAULT '0',
   `cat_name` varchar(255) NOT NULL,
   `cat_code` varchar(100) NOT NULL,
   `cat_description` text,
   `cat_meta_title` text,
   `cat_meta_keyword` text,
-  `cat_meta_description` text,
-  PRIMARY KEY (`cat_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+  `cat_meta_description` text
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `it_categories`
 --
 
 INSERT INTO `it_categories` (`cat_id`, `cat_parent_id`, `cat_name`, `cat_code`, `cat_description`, `cat_meta_title`, `cat_meta_keyword`, `cat_meta_description`) VALUES
-(10, 0, 'Java in 5 Days', 'C001', 'It''s crash course.', '', '', ''),
-(11, 0, 'Railway Exams', 'C002', 'Railway Exams', NULL, NULL, NULL),
-(12, 0, 'SSC Exams', 'C003', 'SSC Exams', NULL, NULL, NULL),
+(10, 0, 'Java', 'C001', 'It''s crash course.', '', '', ''),
+(11, 0, 'Railway Math', 'C002', 'Railway Exams', NULL, NULL, NULL),
+(12, 0, 'SSC English', 'C003', 'SSC Exams', NULL, NULL, NULL),
 (13, 0, 'IBPS Exams', 'C004', 'IBPS Exams', NULL, NULL, NULL),
 (14, 11, 'General Knowledge', 'C005', 'General Knowledge', NULL, NULL, NULL),
 (15, 11, '10th Class Maths', 'C006', '10th Class Maths', NULL, NULL, NULL),
@@ -357,7 +278,7 @@ INSERT INTO `it_categories` (`cat_id`, `cat_parent_id`, `cat_name`, `cat_code`, 
 --
 
 CREATE TABLE IF NOT EXISTS `it_cmspage` (
-  `c_id` int(11) NOT NULL AUTO_INCREMENT,
+  `c_id` int(11) NOT NULL,
   `c_pagename` varchar(100) NOT NULL,
   `c_title` varchar(250) NOT NULL,
   `c_subtitle` varchar(250) NOT NULL,
@@ -368,9 +289,8 @@ CREATE TABLE IF NOT EXISTS `it_cmspage` (
   `c_meta_description` text NOT NULL,
   `c_status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '0=inactive, 1=active',
   `c_created` datetime NOT NULL,
-  `c_modified` datetime NOT NULL,
-  PRIMARY KEY (`c_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  `c_modified` datetime NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `it_cmspage`
@@ -393,8 +313,7 @@ CREATE TABLE IF NOT EXISTS `it_countries` (
   `cnt_code_char2` varchar(2) NOT NULL,
   `cnt_code_char3` varchar(3) NOT NULL,
   `cnt_un_region` varchar(80) CHARACTER SET utf8 DEFAULT NULL,
-  `cnt_un_subregion` varchar(80) CHARACTER SET utf8 DEFAULT NULL,
-  PRIMARY KEY (`cnt_id`)
+  `cnt_un_subregion` varchar(80) CHARACTER SET utf8 DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -660,14 +579,13 @@ INSERT INTO `it_countries` (`cnt_id`, `cnt_name`, `cnt_code_char2`, `cnt_code_ch
 --
 
 CREATE TABLE IF NOT EXISTS `it_email_manager` (
-  `em_id` int(11) NOT NULL AUTO_INCREMENT,
+  `em_id` int(11) NOT NULL,
   `em_title` varchar(100) DEFAULT NULL,
   `em_email_subject` varchar(100) DEFAULT NULL,
   `em_email_template` text,
   `em_created` datetime DEFAULT NULL,
-  `em_modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`em_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `em_modified` datetime DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `it_email_manager`
@@ -684,7 +602,7 @@ INSERT INTO `it_email_manager` (`em_id`, `em_title`, `em_email_subject`, `em_ema
 --
 
 CREATE TABLE IF NOT EXISTS `it_exams` (
-  `ex_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ex_id` int(11) NOT NULL,
   `ex_category_id` int(11) NOT NULL,
   `ex_title` varchar(200) NOT NULL,
   `ex_details` text,
@@ -693,9 +611,8 @@ CREATE TABLE IF NOT EXISTS `it_exams` (
   `ex_duration` time NOT NULL,
   `ex_is_practical` int(2) NOT NULL DEFAULT '0',
   `ex_created` datetime NOT NULL,
-  `ex_modified` datetime NOT NULL,
-  PRIMARY KEY (`ex_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  `ex_modified` datetime NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `it_exams`
@@ -704,7 +621,9 @@ CREATE TABLE IF NOT EXISTS `it_exams` (
 INSERT INTO `it_exams` (`ex_id`, `ex_category_id`, `ex_title`, `ex_details`, `ex_start_date_time`, `ex_end_date_time`, `ex_duration`, `ex_is_practical`, `ex_created`, `ex_modified`) VALUES
 (1, 10, 'JavaExams', 'JavaExams', '2015-12-01 16:00:00', '2015-12-30 01:00:00', '02:30:00', 0, '2015-09-30 07:14:15', '2015-12-27 08:39:21'),
 (2, 10, 'java exam 2', 'java exam 2', '2015-12-01 16:00:00', '2015-12-30 01:00:00', '02:20:20', 0, '2015-09-30 07:39:40', '2016-01-12 07:58:40'),
-(3, 10, 'java test', 'java test', '2015-12-26 21:36:00', '2016-01-26 11:30:00', '11:20:20', 0, '2015-12-26 21:38:06', '2015-12-26 21:38:06');
+(3, 10, 'java test', 'java test', '2015-12-26 21:36:00', '2016-01-26 11:30:00', '02:00:00', 0, '2015-12-26 21:38:06', '2015-12-26 21:38:06'),
+(4, 11, 'Railway Math version 2', 'Railway Math version 2', '2016-01-17 13:25:00', '2016-01-17 13:25:00', '02:00:00', 0, '2016-01-17 13:25:58', '2016-01-17 13:25:58'),
+(5, 13, 'Test Counters and countdown', '', '2016-01-24 23:36:00', '2016-01-24 23:36:00', '00:10:00', 0, '2016-01-24 23:37:17', '2016-01-24 23:37:17');
 
 -- --------------------------------------------------------
 
@@ -713,7 +632,7 @@ INSERT INTO `it_exams` (`ex_id`, `ex_category_id`, `ex_title`, `ex_details`, `ex
 --
 
 CREATE TABLE IF NOT EXISTS `it_questions` (
-  `qt_id` int(11) NOT NULL AUTO_INCREMENT,
+  `qt_id` int(11) NOT NULL,
   `qt_exam_id` int(11) NOT NULL,
   `qt_name` varchar(255) NOT NULL,
   `qt_description` text,
@@ -721,10 +640,8 @@ CREATE TABLE IF NOT EXISTS `it_questions` (
   `qt_marks` int(11) NOT NULL,
   `qt_image` varchar(255) DEFAULT NULL,
   `qt_created` datetime NOT NULL,
-  `qt_modified` datetime NOT NULL,
-  PRIMARY KEY (`qt_id`),
-  UNIQUE KEY `qt_id` (`qt_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+  `qt_modified` datetime NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `it_questions`
@@ -743,7 +660,16 @@ INSERT INTO `it_questions` (`qt_id`, `qt_exam_id`, `qt_name`, `qt_description`, 
 (10, 1, 'Question2', 'Question2', 1, 1, NULL, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
 (11, 1, 'Question3', 'Question3', 1, 1, NULL, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
 (12, 1, 'Question4', 'Question4', 1, 1, NULL, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
-(13, 1, 'ggggggt', 'lkjljljljlkj', 2, 1, '5695b7be6fbf2.png', '2016-01-13 07:39:01', '2016-01-13 08:04:38');
+(13, 1, 'ggggggt', 'lkjljljljlkj', 2, 1, '5695b7be6fbf2.png', '2016-01-13 07:39:01', '2016-01-13 08:04:38'),
+(14, 1, 'qwqwqqwqwqq', 'qewqwqwq', 1, 1, '', '2016-01-21 00:34:34', '2016-01-21 00:34:34'),
+(15, 5, 'Question1', 'Question1', 1, 1, NULL, '2016-01-24 23:39:49', '2016-01-24 23:39:49'),
+(16, 5, 'Question2', 'Question2', 1, 1, NULL, '2016-01-24 23:39:49', '2016-01-24 23:39:49'),
+(17, 5, 'Question3', 'Question3', 1, 1, NULL, '2016-01-24 23:39:49', '2016-01-24 23:39:49'),
+(18, 5, 'Question4', 'Question4', 1, 1, NULL, '2016-01-24 23:39:49', '2016-01-24 23:39:49'),
+(19, 5, 'Question5', 'Question5', 1, 1, NULL, '2016-01-24 23:39:49', '2016-01-24 23:39:49'),
+(20, 5, 'Question6', 'Question6', 1, 1, NULL, '2016-01-24 23:39:49', '2016-01-24 23:39:49'),
+(21, 5, 'Question7', 'Question7', 1, 1, NULL, '2016-01-24 23:39:49', '2016-01-24 23:39:49'),
+(22, 5, 'Question8', 'Question8', 1, 1, NULL, '2016-01-24 23:39:49', '2016-01-24 23:39:49');
 
 -- --------------------------------------------------------
 
@@ -752,13 +678,12 @@ INSERT INTO `it_questions` (`qt_id`, `qt_exam_id`, `qt_name`, `qt_description`, 
 --
 
 CREATE TABLE IF NOT EXISTS `it_questions_options` (
-  `qto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `qto_id` int(11) NOT NULL,
   `qto_name` varchar(200) NOT NULL,
   `qto_image` varchar(255) DEFAULT NULL,
   `qto_question_id` int(11) NOT NULL,
-  `qto_right_ans` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=wrong, 1=right',
-  PRIMARY KEY (`qto_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=132 ;
+  `qto_right_ans` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=wrong, 1=right'
+) ENGINE=MyISAM AUTO_INCREMENT=168 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `it_questions_options`
@@ -813,7 +738,43 @@ INSERT INTO `it_questions_options` (`qto_id`, `qto_name`, `qto_image`, `qto_ques
 (131, 'd', '5695b65fed0ab.png', 13, 0),
 (130, 'c', '5695b65fed32d.png', 13, 0),
 (129, 'b', '5695b65fed523.png', 13, 1),
-(128, 'a', '5695b65fed70b.png', 13, 0);
+(128, 'a', '5695b65fed70b.png', 13, 0),
+(132, 'qwqw`', NULL, 14, 0),
+(133, 'qwqwq', NULL, 14, 0),
+(134, 'asasa', NULL, 14, 0),
+(135, 'asasas', NULL, 14, 0),
+(136, 'A 1', NULL, 15, 0),
+(137, 'B 1', NULL, 15, 0),
+(138, 'C', NULL, 15, 0),
+(139, 'D', NULL, 15, 0),
+(140, 'A 2', NULL, 16, 0),
+(141, 'B 2', NULL, 16, 0),
+(142, 'C', NULL, 16, 1),
+(143, 'D', NULL, 16, 0),
+(144, 'A 3', NULL, 17, 0),
+(145, 'B 3', NULL, 17, 0),
+(146, 'C', NULL, 17, 0),
+(147, 'D', NULL, 17, 0),
+(148, 'A 4', NULL, 18, 0),
+(149, 'B 4', NULL, 18, 0),
+(150, 'C', NULL, 18, 0),
+(151, 'D', NULL, 18, 1),
+(152, 'A 5', NULL, 19, 0),
+(153, 'B 5', NULL, 19, 0),
+(154, 'C', NULL, 19, 0),
+(155, 'D', NULL, 19, 0),
+(156, 'A 6', NULL, 20, 0),
+(157, 'B 6', NULL, 20, 0),
+(158, 'C', NULL, 20, 1),
+(159, 'D', NULL, 20, 0),
+(160, 'A 7', NULL, 21, 0),
+(161, 'B 7', NULL, 21, 0),
+(162, 'C', NULL, 21, 0),
+(163, 'D', NULL, 21, 0),
+(164, 'A 8', NULL, 22, 0),
+(165, 'B 8', NULL, 22, 0),
+(166, 'C', NULL, 22, 0),
+(167, 'D', NULL, 22, 1);
 
 -- --------------------------------------------------------
 
@@ -822,11 +783,10 @@ INSERT INTO `it_questions_options` (`qto_id`, `qto_name`, `qto_image`, `qto_ques
 --
 
 CREATE TABLE IF NOT EXISTS `it_site_settings` (
-  `sst_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sst_id` int(11) NOT NULL,
   `sst_name` varchar(255) NOT NULL,
-  `sst_value` varchar(255) NOT NULL,
-  PRIMARY KEY (`sst_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `sst_value` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -842,8 +802,7 @@ CREATE TABLE IF NOT EXISTS `it_states` (
   `st_name` varchar(80) CHARACTER SET utf8 DEFAULT NULL,
   `st_alternate_name` varchar(200) CHARACTER SET utf8 DEFAULT NULL,
   `st_primary_level_name` varchar(80) CHARACTER SET utf8 DEFAULT NULL,
-  `st_code` varchar(50) NOT NULL,
-  PRIMARY KEY (`st_id`)
+  `st_code` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -1552,13 +1511,13 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 (13052, 51, 'CO', 'COL', 'Chocó', '', 'department', 'CO-CHO'),
 (13053, 51, 'CO', 'COL', 'Córdoba', '', 'department', 'CO-COR'),
 (13054, 51, 'CO', 'COL', 'Guainía', '', 'department', 'CO-GUA'),
-(13055, 51, 'CO', 'COL', 'Antioquia', '', 'department', 'CO-ANT');
-INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
+(13055, 51, 'CO', 'COL', 'Antioquia', '', 'department', 'CO-ANT'),
 (13056, 51, 'CO', 'COL', 'Distrito Capital de Bogotá', 'Santafé de Bogotá Distrito Capital', 'capital district', 'CO-DC'),
 (13057, 51, 'CO', 'COL', 'Boyacá', '', 'department', 'CO-BOY'),
 (13058, 51, 'CO', 'COL', 'Casanare', '', 'department', 'CO-CAS'),
 (13059, 51, 'CO', 'COL', 'Cesar', '', 'department', 'CO-CES'),
-(13060, 51, 'CO', 'COL', 'Cundinamarca', '', 'department', 'CO-CUN'),
+(13060, 51, 'CO', 'COL', 'Cundinamarca', '', 'department', 'CO-CUN');
+INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
 (13061, 51, 'CO', 'COL', 'Guaviare', '', 'department', 'CO-GUV'),
 (13062, 51, 'CO', 'COL', 'Magdalena', '', 'department', 'CO-MAG'),
 (13063, 51, 'CO', 'COL', 'Huila', '', 'department', 'CO-HUI'),
@@ -2262,8 +2221,7 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 (14752, 107, 'IR', 'IRN', 'Hamadan', 'Hamedan', 'Province', 'IR-24'),
 (14753, 107, 'IR', 'IRN', 'Ilam', 'Ilam', 'Province', 'IR-05'),
 (14754, 107, 'IR', 'IRN', 'Semnan', '', 'Province', 'IR-12'),
-(14755, 107, 'IR', 'IRN', 'Tehran', 'Teheran', 'Province', 'IR-07');
-INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
+(14755, 107, 'IR', 'IRN', 'Tehran', 'Teheran', 'Province', 'IR-07'),
 (14756, 107, 'IR', 'IRN', 'Az¯arbayjan-e Gharbi', 'Azarbayjān-e Bakhtari, West Azerbaijan', 'Province', 'IR-02'),
 (14757, 107, 'IR', 'IRN', 'Bushehr', '', 'Province', 'IR-06'),
 (14758, 107, 'IR', 'IRN', 'Esfahan', 'Isfahan', 'Province', 'IR-04'),
@@ -2272,7 +2230,8 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 (14761, 107, 'IR', 'IRN', 'Hormozgan', '', 'Province', 'IR-23'),
 (14762, 107, 'IR', 'IRN', 'Kerman', '', 'Province', 'IR-15'),
 (14763, 107, 'IR', 'IRN', 'Yazd', '', 'Province', 'IR-25'),
-(14764, 107, 'IR', 'IRN', 'Sistan va Baluchestan', 'Sistan-e Baluchistan', 'Province', 'IR-13'),
+(14764, 107, 'IR', 'IRN', 'Sistan va Baluchestan', 'Sistan-e Baluchistan', 'Province', 'IR-13');
+INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
 (14765, 108, 'IQ', 'IRQ', 'At Ta''mim', 'at-Tamim', 'Province', 'IQ-TS'),
 (14766, 108, 'IQ', 'IRQ', 'Al Qadisiyah', 'al-Qadisiyah', 'Province', 'IQ-QA'),
 (14767, 108, 'IQ', 'IRQ', 'Salah ad Din', 'Salah-ad-Din', 'Province', 'IQ-SD'),
@@ -2957,8 +2916,7 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 (15771, 163, 'NI', 'NIC', 'Atlántico Sur*', 'RAAS, Región Autónoma Atlántico Sur, Zelaya Sur', 'autonomous region', 'NI-AS'),
 (15772, 163, 'NI', 'NIC', 'Boaco', '', 'department', 'NI-BO'),
 (15773, 163, 'NI', 'NIC', 'Estelí', '', 'department', 'NI-ES'),
-(15774, 163, 'NI', 'NIC', 'León', '', 'department', 'NI-LE');
-INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
+(15774, 163, 'NI', 'NIC', 'León', '', 'department', 'NI-LE'),
 (15775, 163, 'NI', 'NIC', 'Matagalpa', '', 'department', 'NI-MT'),
 (15776, 163, 'NI', 'NIC', 'Rivas', '', 'department', 'NI-RI'),
 (15777, 163, 'NI', 'NIC', 'Granada', '', 'department', 'NI-GR'),
@@ -2971,7 +2929,8 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 (15786, 164, 'NE', 'NER', 'Niamey', '', 'Capital District', 'NE-8'),
 (15787, 164, 'NE', 'NER', 'Tahoua', '', 'Region', 'NE-5'),
 (15788, 164, 'NE', 'NER', 'Tillabéri', 'Tillaberi', 'Region', 'NE-6'),
-(15789, 164, 'NE', 'NER', 'Zinder', '', 'Region', 'NE-7'),
+(15789, 164, 'NE', 'NER', 'Zinder', '', 'Region', 'NE-7');
+INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
 (15792, 165, 'NG', 'NGA', 'Zamfara', '', 'state', 'NG-ZA'),
 (15793, 165, 'NG', 'NGA', 'Taraba', '', 'state', 'NG-TA'),
 (15794, 165, 'NG', 'NGA', 'Nassarawa', 'Nasarawa', 'state', 'NG-NA'),
@@ -3625,8 +3584,7 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 (18228, 217, 'SZ', 'SWZ', 'Lubombo', 'Lebombo', 'District', 'SZ-LU'),
 (18230, 218, 'SE', 'SWE', 'Östergötlands län [SE-05]', '', 'County', 'SE-E'),
 (18231, 218, 'SE', 'SWE', 'Södermanlands län [SE-04]', '', 'County', 'SE-D'),
-(18232, 218, 'SE', 'SWE', 'Uppsala län [SE-03]', '', 'County', 'SE-C');
-INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
+(18232, 218, 'SE', 'SWE', 'Uppsala län [SE-03]', '', 'County', 'SE-C'),
 (18233, 218, 'SE', 'SWE', 'Värmlands län [SE-17]', '', 'County', 'SE-S'),
 (18234, 218, 'SE', 'SWE', 'Västernorrlands län [SE-22]', '', 'County', 'SE-Y'),
 (18235, 218, 'SE', 'SWE', 'Västra Götalands län [SE-14]', '', 'County', 'SE-O'),
@@ -3640,7 +3598,8 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 (18247, 218, 'SE', 'SWE', 'Skåne län [SE-12]', 'Scania', 'County', 'SE-M'),
 (18248, 218, 'SE', 'SWE', 'Dalarnas län [SE-20]', 'Dalarnas, Dalecarlia, Kopparberg', 'County', 'SE-W'),
 (18249, 218, 'SE', 'SWE', 'Gotlands län [SE-09]', '', 'County', 'SE-I'),
-(18250, 218, 'SE', 'SWE', 'Jönköpings län [SE-06]', '', 'County', 'SE-F'),
+(18250, 218, 'SE', 'SWE', 'Jönköpings län [SE-06]', '', 'County', 'SE-F');
+INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
 (18251, 218, 'SE', 'SWE', 'Norrbottens län [SE-25]', '', 'County', 'SE-BD'),
 (18252, 218, 'SE', 'SWE', 'Stockholms län [SE-01]', '', 'County', 'SE-AB'),
 (18253, 218, 'SE', 'SWE', 'Västmanlands län [SE-19]', '', 'County', 'SE-U'),
@@ -4326,8 +4285,7 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 (19419, 46, 'TD', 'TCD', 'Māyū Kībbī al Gharbī', '', 'Region', 'TD-MO'),
 (19420, 46, 'TD', 'TCD', 'Madīnat Injamīnā', '', 'Region', 'TD-ND'),
 (19421, 46, 'TD', 'TCD', 'Wādī Fīrā', '', 'Region', 'TD-WF'),
-(19428, 60, 'CY', 'CYP', 'Keryneia', '', 'District', 'CY-06');
-INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
+(19428, 60, 'CY', 'CYP', 'Keryneia', '', 'District', 'CY-06'),
 (19429, 60, 'CY', 'CYP', 'Larnaka', '', 'District', 'CY-03'),
 (19430, 60, 'CY', 'CYP', 'Lefkosia', '', 'District', 'CY-01'),
 (19431, 60, 'CY', 'CYP', 'Lemesos', '', 'District', 'CY-02'),
@@ -4346,7 +4304,8 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 (19445, 103, 'HU', 'HUN', 'Eger', '', 'city of county right', 'HU-EG'),
 (19446, 103, 'HU', 'HUN', 'Gyor', '', 'city of county right', 'HU-GY'),
 (19447, 103, 'HU', 'HUN', 'Hódmezovásárhely', '', 'city of county right', 'HU-HV'),
-(19448, 103, 'HU', 'HUN', 'Kaposvár', '', 'city of county right', 'HU-KV'),
+(19448, 103, 'HU', 'HUN', 'Kaposvár', '', 'city of county right', 'HU-KV');
+INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
 (19449, 103, 'HU', 'HUN', 'Kecskemét', '', 'city of county right', 'HU-KM'),
 (19450, 103, 'HU', 'HUN', 'Miskolc', '', 'city of county right', 'HU-MI'),
 (19451, 103, 'HU', 'HUN', 'Nagykanizsa', '', 'city of county right', 'HU-NK'),
@@ -5072,8 +5031,7 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 (47999, 239, 'GB', 'GBR', 'Limavady', '', 'district council area (Northern Ireland)', 'GB-LMV'),
 (48000, 239, 'GB', 'GBR', 'Larne', '', 'district council area (Northern Ireland)', 'GB-LRN'),
 (48001, 239, 'GB', 'GBR', 'Fermanagh', '', 'district council area (Northern Ireland)', 'GB-FER'),
-(48002, 239, 'GB', 'GBR', 'Dungannon', '', 'district council area (Northern Ireland)', 'GB-DGN');
-INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
+(48002, 239, 'GB', 'GBR', 'Dungannon', '', 'district council area (Northern Ireland)', 'GB-DGN'),
 (48003, 239, 'GB', 'GBR', 'Down', '', 'district council area (Northern Ireland)', 'GB-DOW'),
 (48004, 239, 'GB', 'GBR', 'Craigavon', '', 'district council area (Northern Ireland)', 'GB-CGV'),
 (48005, 239, 'GB', 'GBR', 'Cookstown', '', 'district council area (Northern Ireland)', 'GB-CKT'),
@@ -5089,7 +5047,8 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 (48015, 239, 'GB', 'GBR', 'Antrim', '', 'district council area (Northern Ireland)', 'GB-ANT'),
 (48016, 239, 'GB', 'GBR', 'York', '', 'unitary authority', 'GB-YOR'),
 (48017, 239, 'GB', 'GBR', 'Worcestershire', '', 'two-tier county', 'GB-WOR'),
-(48018, 239, 'GB', 'GBR', 'Wokingham', '', 'unitary authority', 'GB-WOK'),
+(48018, 239, 'GB', 'GBR', 'Wokingham', '', 'unitary authority', 'GB-WOK');
+INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code_char3`, `st_name`, `st_alternate_name`, `st_primary_level_name`, `st_code`) VALUES
 (48019, 239, 'GB', 'GBR', 'Windsor and Maidenhead', '', 'unitary authority', 'GB-WNM'),
 (48020, 239, 'GB', 'GBR', 'Wiltshire', '', 'unitary authority', 'GB-WIL'),
 (48022, 239, 'GB', 'GBR', 'West Sussex', '', 'two-tier county', 'GB-WSX'),
@@ -5283,7 +5242,7 @@ INSERT INTO `it_states` (`st_id`, `st_cnt_id`, `st_cnt_code_char2`, `st_cnt_code
 --
 
 CREATE TABLE IF NOT EXISTS `it_user` (
-  `u_id` int(11) NOT NULL AUTO_INCREMENT,
+  `u_id` int(11) NOT NULL,
   `u_first_name` varchar(200) NOT NULL,
   `u_last_name` varchar(200) NOT NULL,
   `u_email` varchar(200) DEFAULT NULL,
@@ -5298,9 +5257,8 @@ CREATE TABLE IF NOT EXISTS `it_user` (
   `u_addmission_date` date DEFAULT NULL,
   `u_image` varchar(255) DEFAULT NULL,
   `u_created` datetime NOT NULL,
-  `u_modified` datetime NOT NULL,
-  PRIMARY KEY (`u_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+  `u_modified` datetime NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `it_user`
@@ -5308,7 +5266,7 @@ CREATE TABLE IF NOT EXISTS `it_user` (
 
 INSERT INTO `it_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_addmission_date`, `u_image`, `u_created`, `u_modified`) VALUES
 (1, 'It', 'Gurukul', 'admin@itgurukul.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '02c00693466cf0cc34bdc26042f19677', '2015-06-03 01:26:27', NULL, NULL, '2014-12-23 02:20:00', '2015-09-07 21:06:04'),
-(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2016-01-17 10:22:46', '2016-01-10', '56945a854994a.png', '2015-06-04 02:51:57', '2016-01-17 10:22:46'),
+(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2016-01-25 04:08:35', '2016-01-10', '56945a854994a.png', '2015-06-04 02:51:57', '2016-01-25 04:08:35'),
 (6, 'asdasdsd', 'dfsdf', 'asdasd@gmail.com', '$2a$13$p5sOHpLUGx68C3ci/zE9zOz.qk4Ha6xp6HU0gLCFYWgZEpxTqvVEK', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-02 20:38:56', '2016-01-10 10:45:10'),
 (7, 'erewrwerwerwer', 'dfsdf', 'erewrwerwerwer@gmail.com', '$2a$13$jUuhjDP/4A07DJo9fiYw7u.ie1EZTMq.rRZofsXDRRsy975qdiQoi', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-02 20:40:26', '2016-01-03 07:11:13'),
 (8, 'sdjlfjdsf', 'fljljfd', 'lkfldfjgl@gmail.com', '$2a$13$lBKmQASHZZv.5pFL6ywoJOyIu9NKpLc5h5tmk0PM1T6DmtrFcxR0u', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-02 20:51:15', '2016-01-03 07:11:32'),
@@ -5335,7 +5293,9 @@ INSERT INTO `it_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_pass
 (29, 'name14', 'A', 'name14@gmail.com', '$2a$13$BtzfeFEdAJeB0nJDJ1VKzeXRM.tLWBVPabCixf038.oGn9ZGpoTm2', 'member', 1, 1, 1, NULL, NULL, NULL, '2016-01-17', NULL, '2016-01-17 09:18:27', '2016-01-17 09:18:27'),
 (30, 'name15', 'A', 'name15@gmail.com', '$2a$13$nIY3ugdcRDr74Ebe1AvNG.Ky8urn6yDbqv1UZI4mwyzHREHJBo7I.', 'member', 1, 1, 1, NULL, NULL, NULL, '2016-01-17', NULL, '2016-01-17 09:18:28', '2016-01-17 09:18:28'),
 (31, 'name16', 'A', 'name16@gmail.com', '$2a$13$plau7AvPHK3i1qORyZYaqeKQwkxXhgQ7KtlhenITKW/DISs/SxjES', 'member', 1, 1, 1, NULL, NULL, '2016-01-17 10:20:42', '2016-01-17', NULL, '2016-01-17 09:18:29', '2016-01-17 10:20:42'),
-(32, 'name17', 'A', 'name17@gmail.com', '$2a$13$iLv9IYLFMyXSyG.RocnzO.vCm1j/ZMbYbERM00bu0XO/AigWPmsIe', 'member', 1, 1, 1, NULL, NULL, NULL, '2016-01-17', NULL, '2016-01-17 09:18:30', '2016-01-17 09:18:30');
+(32, 'name17', 'A', 'name17@gmail.com', '$2a$13$iLv9IYLFMyXSyG.RocnzO.vCm1j/ZMbYbERM00bu0XO/AigWPmsIe', 'member', 1, 1, 1, NULL, NULL, NULL, '2016-01-17', NULL, '2016-01-17 09:18:30', '2016-01-17 09:18:30'),
+(33, 'sss', 'ssss', 'ssss@gmail.com', '$2a$13$MMJRZM8FsNW7r84jhGCPo.w9OVqqeeHASQOqYtFjeSgiXawSf7ID2', 'member', 1, 1, 1, NULL, NULL, NULL, '2015-12-15', '569fda0a82790.jpg', '2016-01-21 00:33:39', '2016-01-21 00:33:39'),
+(34, 'aa', 'aa', 'aa@gmail.com', '$2a$13$rxwBibaG8yBi4fDqyq0yTuH72Y0tAmmqWT3.YSTf3SmgbJPag8EOy', 'member', 1, 1, 1, NULL, NULL, '2016-01-25 05:24:14', '2016-11-15', NULL, '2016-01-25 05:10:36', '2016-01-25 05:24:14');
 
 -- --------------------------------------------------------
 
@@ -5344,7 +5304,7 @@ INSERT INTO `it_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_pass
 --
 
 CREATE TABLE IF NOT EXISTS `it_user_address` (
-  `uad_id` int(11) NOT NULL AUTO_INCREMENT,
+  `uad_id` int(11) NOT NULL,
   `uad_user_id` int(11) NOT NULL,
   `uad_add1` varchar(255) NOT NULL,
   `uad_add2` varchar(255) DEFAULT NULL,
@@ -5355,17 +5315,16 @@ CREATE TABLE IF NOT EXISTS `it_user_address` (
   `uad_mobile` varchar(200) NOT NULL,
   `uad_type` tinyint(2) NOT NULL COMMENT '1=Shipping Address, 2=Billing Address',
   `uad_created` datetime NOT NULL,
-  `uad_modified` datetime NOT NULL,
-  PRIMARY KEY (`uad_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
+  `uad_modified` datetime NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `it_user_address`
 --
 
 INSERT INTO `it_user_address` (`uad_id`, `uad_user_id`, `uad_add1`, `uad_add2`, `uad_country_id`, `uad_state_id`, `uad_city`, `uad_zipcode`, `uad_mobile`, `uad_type`, `uad_created`, `uad_modified`) VALUES
-(1, 5, 'add1 hhhh', 'add2 lll', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2015-07-24 07:45:43', '2016-01-17 10:05:07'),
-(2, 5, 'add1 hhhh', 'add2 lll', 105, 14691, 'jodhpur', '342001', '123456789', 2, '2015-07-24 07:45:43', '2016-01-17 10:05:07'),
+(1, 5, 'add1 hhhh', 'add2 lll', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2015-07-24 07:45:43', '2016-01-21 00:32:29'),
+(2, 5, 'add1 hhhh', 'add2 lll', 105, 14691, 'jodhpur', '342001', '123456789', 2, '2015-07-24 07:45:43', '2016-01-21 00:32:29'),
 (3, 9, 'asd', 'asdas', 15, 12471, 'jodhpur', '342001', '9660303635', 1, '2016-01-02 20:53:24', '2016-01-03 07:11:39'),
 (4, 9, 'asd', 'asdas', 15, 12471, 'jodhpur', '342001', '9660303635', 2, '2016-01-02 20:53:24', '2016-01-03 07:11:39'),
 (5, 6, 'asdasasdasd', 'dfsdfdfdfsdf', 105, 14691, 'jaipur', '342001', '123456789', 1, '2016-01-03 07:26:48', '2016-01-10 10:45:10'),
@@ -5397,7 +5356,11 @@ INSERT INTO `it_user_address` (`uad_id`, `uad_user_id`, `uad_add1`, `uad_add2`, 
 (31, 29, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-17 09:18:27', '2016-01-17 09:18:27'),
 (32, 30, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-17 09:18:28', '2016-01-17 09:18:28'),
 (33, 31, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-17 09:18:29', '2016-01-17 09:18:29'),
-(34, 32, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-17 09:18:30', '2016-01-17 09:18:30');
+(34, 32, 'add1', 'add2', 105, 14691, 'jodhpur', '342001', '123456789', 1, '2016-01-17 09:18:30', '2016-01-17 09:18:30'),
+(35, 33, 'aaaa', 'aaa', 105, 14691, 'sss', '21323', '5655455656', 1, '2016-01-21 00:33:39', '2016-01-21 00:33:39'),
+(36, 33, 'aaaa', 'aaa', 105, 14691, 'sss', '21323', '5655455656', 2, '2016-01-21 00:33:39', '2016-01-21 00:33:39'),
+(37, 34, 'aaa', 'aaa', 105, 14691, 'jodhpur', '324002', '5655455656', 1, '2016-01-25 05:10:36', '2016-01-25 05:10:36'),
+(38, 34, 'aaa', 'aaa', 105, 14691, 'jodhpur', '324002', '5655455656', 2, '2016-01-25 05:10:36', '2016-01-25 05:10:36');
 
 -- --------------------------------------------------------
 
@@ -5406,28 +5369,52 @@ INSERT INTO `it_user_address` (`uad_id`, `uad_user_id`, `uad_add1`, `uad_add2`, 
 --
 
 CREATE TABLE IF NOT EXISTS `it_user_answers` (
-  `ua_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ua_id` int(11) NOT NULL,
   `ua_user_id` int(11) NOT NULL,
   `ua_exam_id` int(11) NOT NULL,
+  `ua_user_exam_id` int(11) NOT NULL,
   `ua_question_id` int(11) NOT NULL,
   `ua_option_id` int(11) NOT NULL,
+  `ua_answer` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0 = wrong, 1 = right',
+  `ua_answer_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=notviewed, 1=viewed, 2=attempte (save) but not sumitted, 3=submitted',
   `ua_created` datetime NOT NULL,
-  `ua_modified` datetime NOT NULL,
-  PRIMARY KEY (`ua_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+  `ua_modified` datetime NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=80 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `it_user_answers`
 --
 
-INSERT INTO `it_user_answers` (`ua_id`, `ua_user_id`, `ua_exam_id`, `ua_question_id`, `ua_option_id`, `ua_created`, `ua_modified`) VALUES
-(1, 5, 2, 3, 63, '2016-01-12 23:04:56', '2016-01-12 23:04:56'),
-(2, 5, 2, 8, 97, '2016-01-12 23:05:01', '2016-01-12 23:05:01'),
-(3, 5, 2, 2, 58, '2016-01-12 23:05:07', '2016-01-12 23:05:07'),
-(4, 5, 3, 5, 86, '2016-01-13 08:23:00', '2016-01-13 08:23:00'),
-(5, 31, 3, 5, 86, '2016-01-17 10:22:15', '2016-01-17 10:22:15'),
-(6, 31, 3, 6, 90, '2016-01-17 10:22:26', '2016-01-17 10:22:26'),
-(7, 5, 3, 6, 91, '2016-01-17 10:23:00', '2016-01-17 10:23:00');
+INSERT INTO `it_user_answers` (`ua_id`, `ua_user_id`, `ua_exam_id`, `ua_user_exam_id`, `ua_question_id`, `ua_option_id`, `ua_answer`, `ua_answer_status`, `ua_created`, `ua_modified`) VALUES
+(1, 5, 2, 0, 3, 63, 0, 0, '2016-01-12 23:04:56', '2016-01-12 23:04:56'),
+(2, 5, 2, 0, 8, 97, 0, 0, '2016-01-12 23:05:01', '2016-01-12 23:05:01'),
+(3, 5, 2, 0, 2, 58, 0, 0, '2016-01-12 23:05:07', '2016-01-12 23:05:07'),
+(5, 31, 3, 0, 5, 86, 0, 0, '2016-01-17 10:22:15', '2016-01-17 10:22:15'),
+(6, 31, 3, 0, 6, 90, 0, 0, '2016-01-17 10:22:26', '2016-01-17 10:22:26'),
+(27, 5, 3, 32, 5, 84, 1, 3, '2016-01-24 19:17:32', '2016-01-24 22:32:06'),
+(26, 5, 3, 32, 6, 91, 0, 2, '2016-01-24 19:17:32', '2016-01-24 22:38:51'),
+(25, 5, 3, 31, 6, 0, 0, 0, '2016-01-24 15:16:23', '2016-01-24 15:16:23'),
+(24, 5, 3, 31, 5, 0, 0, 0, '2016-01-24 15:16:23', '2016-01-24 15:16:23'),
+(28, 5, 3, 33, 6, 90, 0, 3, '2016-01-24 23:34:26', '2016-01-25 02:05:34'),
+(29, 5, 3, 33, 5, 84, 1, 3, '2016-01-24 23:34:26', '2016-01-25 02:05:37'),
+(62, 5, 5, 38, 16, 142, 1, 0, '2016-01-25 04:56:22', '2016-01-25 05:05:32'),
+(63, 5, 5, 38, 20, 0, 0, 1, '2016-01-25 04:56:22', '2016-01-25 04:56:34'),
+(64, 5, 5, 38, 22, 165, 0, 3, '2016-01-25 04:56:22', '2016-01-25 04:56:47'),
+(65, 5, 5, 38, 19, 153, 0, 3, '2016-01-25 04:56:22', '2016-01-25 04:57:16'),
+(66, 5, 5, 38, 17, 144, 0, 3, '2016-01-25 04:56:22', '2016-01-25 04:57:44'),
+(67, 5, 5, 38, 18, 149, 0, 3, '2016-01-25 04:56:22', '2016-01-25 04:57:56'),
+(68, 5, 5, 38, 15, 0, 0, 1, '2016-01-25 04:56:22', '2016-01-25 04:57:59'),
+(69, 5, 5, 38, 21, 162, 0, 3, '2016-01-25 04:56:22', '2016-01-25 04:58:16'),
+(70, 34, 5, 39, 16, 0, 0, 0, '2016-01-25 05:11:11', '2016-01-25 05:11:11'),
+(71, 34, 5, 39, 15, 137, 0, 3, '2016-01-25 05:11:11', '2016-01-25 05:11:27'),
+(72, 34, 5, 39, 19, 153, 0, 3, '2016-01-25 05:11:11', '2016-01-25 05:12:33'),
+(73, 34, 5, 39, 20, 0, 0, 1, '2016-01-25 05:11:11', '2016-01-25 05:14:47'),
+(74, 34, 5, 39, 18, 151, 1, 3, '2016-01-25 05:11:11', '2016-01-25 05:14:59'),
+(75, 34, 5, 39, 17, 144, 0, 3, '2016-01-25 05:11:11', '2016-01-25 05:15:37'),
+(76, 34, 5, 39, 21, 160, 0, 3, '2016-01-25 05:11:11', '2016-01-25 05:16:37'),
+(77, 34, 5, 39, 22, 0, 0, 0, '2016-01-25 05:11:11', '2016-01-25 05:11:11'),
+(78, 34, 3, 40, 6, 89, 0, 3, '2016-01-25 05:20:15', '2016-01-25 05:20:22'),
+(79, 34, 3, 40, 5, 86, 0, 3, '2016-01-25 05:20:15', '2016-01-25 05:20:29');
 
 -- --------------------------------------------------------
 
@@ -5436,19 +5423,18 @@ INSERT INTO `it_user_answers` (`ua_id`, `ua_user_id`, `ua_exam_id`, `ua_question
 --
 
 CREATE TABLE IF NOT EXISTS `it_user_courses` (
-  `cr_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cr_id` int(11) NOT NULL,
   `cr_user_id` int(11) NOT NULL,
-  `cr_category_id` int(11) NOT NULL,
-  PRIMARY KEY (`cr_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+  `cr_category_id` int(11) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `it_user_courses`
 --
 
 INSERT INTO `it_user_courses` (`cr_id`, `cr_user_id`, `cr_category_id`) VALUES
-(27, 5, 15),
-(26, 5, 14),
+(35, 5, 17),
+(34, 5, 16),
 (5, 6, 11),
 (6, 18, 11),
 (7, 19, 12),
@@ -5460,9 +5446,11 @@ INSERT INTO `it_user_courses` (`cr_id`, `cr_user_id`, `cr_category_id`) VALUES
 (18, 22, 10),
 (24, 28, 11),
 (25, 28, 12),
-(28, 5, 18),
-(29, 5, 16),
-(30, 5, 17);
+(33, 5, 18),
+(32, 5, 15),
+(31, 5, 14),
+(36, 33, 16),
+(37, 34, 15);
 
 -- --------------------------------------------------------
 
@@ -5471,24 +5459,206 @@ INSERT INTO `it_user_courses` (`cr_id`, `cr_user_id`, `cr_category_id`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `it_user_exams` (
-  `ue_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ue_id` int(11) NOT NULL,
   `ue_user_id` int(11) NOT NULL,
   `ue_exam_id` int(11) NOT NULL,
   `ue_exam_start` datetime DEFAULT NULL,
+  `ue_exam_end` timestamp NULL DEFAULT NULL,
+  `ue_total_question` int(11) NOT NULL,
+  `ue_total_attempted` int(11) NOT NULL,
+  `ue_total_reviewed` int(11) NOT NULL,
+  `ue_total_submitted` int(11) NOT NULL,
+  `ue_total_pending` int(11) NOT NULL,
+  `ue_total_marks` int(11) NOT NULL,
+  `ue_total_timespent` time NOT NULL,
+  `ue_is_finished` tinyint(2) NOT NULL DEFAULT '0',
   `ue_created` datetime NOT NULL,
-  `ue_modified` datetime NOT NULL,
-  PRIMARY KEY (`ue_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  `ue_modified` datetime NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `it_user_exams`
 --
 
-INSERT INTO `it_user_exams` (`ue_id`, `ue_user_id`, `ue_exam_id`, `ue_exam_start`, `ue_created`, `ue_modified`) VALUES
-(1, 5, 2, '2016-01-12 19:55:13', '2016-01-12 23:05:10', '2016-01-12 23:05:10'),
-(2, 5, 3, '2016-01-13 14:13:17', '2016-01-13 08:23:02', '2016-01-13 08:23:02'),
-(3, 5, 3, '2016-01-17 16:12:29', '2016-01-17 10:23:05', '2016-01-17 10:23:05');
+INSERT INTO `it_user_exams` (`ue_id`, `ue_user_id`, `ue_exam_id`, `ue_exam_start`, `ue_exam_end`, `ue_total_question`, `ue_total_attempted`, `ue_total_reviewed`, `ue_total_submitted`, `ue_total_pending`, `ue_total_marks`, `ue_total_timespent`, `ue_is_finished`, `ue_created`, `ue_modified`) VALUES
+(1, 5, 2, '2016-01-12 19:55:13', '2016-01-20 20:35:47', 0, 0, 0, 0, 0, 0, '00:00:00', 0, '2016-01-12 23:05:10', '2016-01-12 23:05:10'),
+(40, 34, 3, '2016-01-24 23:01:15', '2016-01-24 18:20:34', 2, 0, 0, 2, 0, 0, '23:59:41', 1, '2016-01-25 05:20:15', '2016-01-25 05:20:34'),
+(39, 34, 5, '2016-01-24 23:01:11', '2016-01-24 18:19:19', 8, 0, 1, 5, 0, 1, '23:51:52', 1, '2016-01-25 05:11:11', '2016-01-25 05:19:19'),
+(38, 5, 5, '2016-01-24 23:01:22', '2016-01-24 18:06:21', 8, 0, 2, 5, 0, 1, '23:50:00', 1, '2016-01-25 04:56:22', '2016-01-25 05:06:21'),
+(33, 5, 3, '2016-01-24 18:01:26', '2016-01-24 15:11:26', 2, 0, 0, 2, 0, 1, '21:22:59', 1, '2016-01-24 23:34:26', '2016-01-25 02:11:26'),
+(32, 5, 3, '2016-01-24 13:01:32', NULL, 0, 0, 0, 0, 0, 0, '00:00:00', 0, '2016-01-24 19:17:32', '2016-01-24 19:17:32'),
+(31, 5, 3, '2016-01-24 09:01:23', NULL, 0, 0, 0, 0, 0, 0, '00:00:00', 0, '2016-01-24 15:16:23', '2016-01-24 15:16:23');
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `it_authassignment`
+--
+ALTER TABLE `it_authassignment`
+  ADD PRIMARY KEY (`itemname`,`userid`);
+
+--
+-- Indexes for table `it_authitem`
+--
+ALTER TABLE `it_authitem`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- Indexes for table `it_authitemchild`
+--
+ALTER TABLE `it_authitemchild`
+  ADD PRIMARY KEY (`parent`,`child`), ADD KEY `child` (`child`);
+
+--
+-- Indexes for table `it_categories`
+--
+ALTER TABLE `it_categories`
+  ADD PRIMARY KEY (`cat_id`);
+
+--
+-- Indexes for table `it_cmspage`
+--
+ALTER TABLE `it_cmspage`
+  ADD PRIMARY KEY (`c_id`);
+
+--
+-- Indexes for table `it_countries`
+--
+ALTER TABLE `it_countries`
+  ADD PRIMARY KEY (`cnt_id`);
+
+--
+-- Indexes for table `it_email_manager`
+--
+ALTER TABLE `it_email_manager`
+  ADD PRIMARY KEY (`em_id`);
+
+--
+-- Indexes for table `it_exams`
+--
+ALTER TABLE `it_exams`
+  ADD PRIMARY KEY (`ex_id`);
+
+--
+-- Indexes for table `it_questions`
+--
+ALTER TABLE `it_questions`
+  ADD PRIMARY KEY (`qt_id`), ADD UNIQUE KEY `qt_id` (`qt_id`);
+
+--
+-- Indexes for table `it_questions_options`
+--
+ALTER TABLE `it_questions_options`
+  ADD PRIMARY KEY (`qto_id`);
+
+--
+-- Indexes for table `it_site_settings`
+--
+ALTER TABLE `it_site_settings`
+  ADD PRIMARY KEY (`sst_id`);
+
+--
+-- Indexes for table `it_states`
+--
+ALTER TABLE `it_states`
+  ADD PRIMARY KEY (`st_id`);
+
+--
+-- Indexes for table `it_user`
+--
+ALTER TABLE `it_user`
+  ADD PRIMARY KEY (`u_id`);
+
+--
+-- Indexes for table `it_user_address`
+--
+ALTER TABLE `it_user_address`
+  ADD PRIMARY KEY (`uad_id`);
+
+--
+-- Indexes for table `it_user_answers`
+--
+ALTER TABLE `it_user_answers`
+  ADD PRIMARY KEY (`ua_id`);
+
+--
+-- Indexes for table `it_user_courses`
+--
+ALTER TABLE `it_user_courses`
+  ADD PRIMARY KEY (`cr_id`);
+
+--
+-- Indexes for table `it_user_exams`
+--
+ALTER TABLE `it_user_exams`
+  ADD PRIMARY KEY (`ue_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `it_categories`
+--
+ALTER TABLE `it_categories`
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT for table `it_cmspage`
+--
+ALTER TABLE `it_cmspage`
+  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `it_email_manager`
+--
+ALTER TABLE `it_email_manager`
+  MODIFY `em_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `it_exams`
+--
+ALTER TABLE `it_exams`
+  MODIFY `ex_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `it_questions`
+--
+ALTER TABLE `it_questions`
+  MODIFY `qt_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+--
+-- AUTO_INCREMENT for table `it_questions_options`
+--
+ALTER TABLE `it_questions_options`
+  MODIFY `qto_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=168;
+--
+-- AUTO_INCREMENT for table `it_site_settings`
+--
+ALTER TABLE `it_site_settings`
+  MODIFY `sst_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `it_user`
+--
+ALTER TABLE `it_user`
+  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
+--
+-- AUTO_INCREMENT for table `it_user_address`
+--
+ALTER TABLE `it_user_address`
+  MODIFY `uad_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
+--
+-- AUTO_INCREMENT for table `it_user_answers`
+--
+ALTER TABLE `it_user_answers`
+  MODIFY `ua_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=80;
+--
+-- AUTO_INCREMENT for table `it_user_courses`
+--
+ALTER TABLE `it_user_courses`
+  MODIFY `cr_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
+--
+-- AUTO_INCREMENT for table `it_user_exams`
+--
+ALTER TABLE `it_user_exams`
+  MODIFY `ue_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=41;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

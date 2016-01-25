@@ -1,0 +1,7 @@
+
+
+https://www.youtube.com/watch?v=loU9qJd28hM
+
+Tokill task by process id : taskkill /pid 3116 /f
+
+to active administration right for user: net user administrator /active:yes

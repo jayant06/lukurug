@@ -44,7 +44,7 @@ class SiteController extends Controller
 	*/
 	public function actionLogin(){
 		
-		$this->layout = 'login';
+		// $this->layout = 'login';
 		if (!defined('CRYPT_BLOWFISH')||!CRYPT_BLOWFISH)
 			throw new CHttpException(500,"This application requires that PHP was compiled with Blowfish support for crypt().");
 
@@ -63,7 +63,7 @@ class SiteController extends Controller
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login()){
-				$this->redirect(array('/dashboard'));
+				$this->redirect(array('user/profile'));
 			}
 		}
 		

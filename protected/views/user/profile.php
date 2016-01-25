@@ -1,5 +1,5 @@
 <?php
-$this->widget('zii.widgets.jui.CJuiTabs',array(
+/*$this->widget('zii.widgets.jui.CJuiTabs',array(
     'tabs'=>array(
         'ACCOUNT INFO'=>array(
         	'content'=>$this->renderPartial(
@@ -16,8 +16,12 @@ $this->widget('zii.widgets.jui.CJuiTabs',array(
         	'id' => 'accountInfoTab'
         ),                
     ),    
-)); 
-?>			
+)); */
+?>
+<div class="row">
+	<?php //$this->renderPartial('_profile',array('model' => $model,'userAddressModel' => $userAddressModel,'countries' => $countries,'states1' => $states1,'states2' => $states2,'address' => $address),true); ?>
+	<?php echo $this->renderPartial('_profile',array('model' => $model),true); ?>
+</div>
 <script type="text/javascript">
 	$(document).ready(function($) {
 		$('#UserAddress_uad_country_id_1').change(function(event) {
