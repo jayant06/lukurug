@@ -60,14 +60,20 @@
                 	?>
                 </div>
             </div>
-            <div class="panel-body">                 
+            <div class="panel-body">
+            	<?php echo CHtml::beginForm(Yii::app()->baseUrl.'/admin/questions/deleteall'); ?>                 
 	          	<?php
 	            $this->widget('bootstrap.widgets.TbGridView', array(
 	                'type'=>'bordered striped',
 	                'dataProvider' => $model->search(),                           
 	                'template'=>"{summary}{items}{pager}",
 	                'filter'=>$model,
+	                'selectableRows' => 2,
 	                'columns'=>array(
+	                	array(
+				            'id' => 'selectedIds',
+				            'class' => 'CCheckBoxColumn'
+				        ),
 						array(
 							'name'=>'qt_name',
 							'type'=>'raw',
@@ -103,6 +109,16 @@
 					),
 	            ));         
 	          	?>
+	          	<?php 
+	          	echo CHtml::submitButton(
+	          		'Delete', 
+					array(
+						'name' => 'DeleteButton',
+						'confirm' => 'Are you sure you want to permanently delete these questions?'
+					)
+				);
+				?>
+				<?php echo CHtml::endForm(); ?>
         	</div>
       	</div>
     </div>

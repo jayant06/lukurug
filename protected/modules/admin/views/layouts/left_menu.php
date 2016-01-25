@@ -48,9 +48,24 @@ else if($page=='StatesIndex')
                 ?>                
             </li>
             <li>
-                <?php
-                echo CHtml::link('<i class="fa fa-sitemap"></i> Courses',array('/admin/categories/index'),array('class' => $categories));
-                ?>
+                <a href="javascript:void(0);"><i class="fa fa-sitemap"></i>&nbsp;Courses</a>
+                <ul>
+                    <li class="courceMenus">
+                        <?php
+                        echo CHtml::link('Main Courses',array('/admin/categories/index','type' => 1));
+                        ?>
+                    </li>
+                    <li class="courceMenus">
+                        <?php
+                        echo CHtml::link('Sub Courses',array('/admin/categories/index','type' => 2));
+                        ?>
+                    </li>
+                    <li class="courceMenus">
+                        <?php
+                        echo CHtml::link('Courses',array('/admin/categories/index','type' => 3));
+                        ?>
+                    </li>
+                </ul>
             </li>
             <li>
                 <?php

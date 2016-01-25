@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 17, 2016 at 11:28 AM
+-- Generation Time: Jan 22, 2016 at 08:08 AM
 -- Server version: 5.5.46-0ubuntu0.14.04.2
 -- PHP Version: 5.5.9-1ubuntu4.14
 
@@ -100,6 +100,7 @@ INSERT INTO `it_authitem` (`name`, `type`, `description`, `bizrule`, `data`) VAL
 ('AdminCategoriesCreate', 1, '', '', 's:0:"";'),
 ('AdminCategoriesDelete', 1, '', '', 's:0:"";'),
 ('AdminCategoriesIndex', 1, '', '', 's:0:"";'),
+('AdminCategoriesSubcategories', 1, NULL, NULL, NULL),
 ('AdminCategoriesUpdate', 1, '', '', 's:0:"";'),
 ('AdminCmspageAccessdenied', 1, '', '', 's:0:"";'),
 ('AdminCmspageEdit', 1, '', '', 's:0:"";'),
@@ -135,6 +136,7 @@ INSERT INTO `it_authitem` (`name`, `type`, `description`, `bizrule`, `data`) VAL
 ('AdminProductsView', 1, '', '', 's:0:"";'),
 ('AdminQuestionsCreate', 1, NULL, NULL, NULL),
 ('AdminQuestionsDelete', 1, NULL, NULL, NULL),
+('AdminQuestionsDeleteall', 1, NULL, NULL, NULL),
 ('AdminQuestionsDeleteoption', 1, NULL, NULL, NULL),
 ('AdminQuestionsIndex', 1, NULL, NULL, NULL),
 ('AdminQuestionsUpdate', 1, NULL, NULL, NULL),
@@ -222,6 +224,7 @@ INSERT INTO `it_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminCategoriesCreate'),
 ('admin', 'AdminCategoriesDelete'),
 ('admin', 'AdminCategoriesIndex'),
+('admin', 'AdminCategoriesSubcategories'),
 ('admin', 'AdminCategoriesUpdate'),
 ('guest', 'AdminCmspageAccessdenied'),
 ('admin', 'AdminCmspageEdit'),
@@ -257,6 +260,7 @@ INSERT INTO `it_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminProductsView'),
 ('admin', 'AdminQuestionsCreate'),
 ('admin', 'AdminQuestionsDelete'),
+('admin', 'AdminQuestionsDeleteall'),
 ('admin', 'AdminQuestionsDeleteoption'),
 ('admin', 'AdminQuestionsIndex'),
 ('admin', 'AdminQuestionsUpdate'),
@@ -326,29 +330,29 @@ INSERT INTO `it_authitemchild` (`parent`, `child`) VALUES
 CREATE TABLE IF NOT EXISTS `it_categories` (
   `cat_id` int(11) NOT NULL AUTO_INCREMENT,
   `cat_parent_id` int(11) NOT NULL DEFAULT '0',
-  `cat_name` varchar(255) NOT NULL,
+  `cat_parent_type` int(2) NOT NULL DEFAULT '0',
+  `cat_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `cat_code` varchar(100) NOT NULL,
-  `cat_description` text,
+  `cat_description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `cat_meta_title` text,
   `cat_meta_keyword` text,
   `cat_meta_description` text,
   PRIMARY KEY (`cat_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `it_categories`
 --
 
-INSERT INTO `it_categories` (`cat_id`, `cat_parent_id`, `cat_name`, `cat_code`, `cat_description`, `cat_meta_title`, `cat_meta_keyword`, `cat_meta_description`) VALUES
-(10, 0, 'Java in 5 Days', 'C001', 'It''s crash course.', '', '', ''),
-(11, 0, 'Railway Exams', 'C002', 'Railway Exams', NULL, NULL, NULL),
-(12, 0, 'SSC Exams', 'C003', 'SSC Exams', NULL, NULL, NULL),
-(13, 0, 'IBPS Exams', 'C004', 'IBPS Exams', NULL, NULL, NULL),
-(14, 11, 'General Knowledge', 'C005', 'General Knowledge', NULL, NULL, NULL),
-(15, 11, '10th Class Maths', 'C006', '10th Class Maths', NULL, NULL, NULL),
-(16, 12, 'G.K.', 'C007', 'General Knowledge.', NULL, NULL, NULL),
-(17, 12, 'Maths', 'C008', 'Maths', NULL, NULL, NULL),
-(18, 11, 'General Awarwness', 'C009', 'General Awarwness', NULL, NULL, NULL);
+INSERT INTO `it_categories` (`cat_id`, `cat_parent_id`, `cat_parent_type`, `cat_name`, `cat_code`, `cat_description`, `cat_meta_title`, `cat_meta_keyword`, `cat_meta_description`) VALUES
+(1, 0, 0, 'सामान्यज्ञान', 'C001', 'सामान्यज्ञान', NULL, NULL, NULL),
+(2, 1, 2, 'सामान्यज्ञान - 1', 'C002', 'सामान्यज्ञान - 1', NULL, NULL, NULL),
+(3, 2, 0, 'सामान्यज्ञान - 2', 'C003', 'सामान्यज्ञान - 2', NULL, NULL, NULL),
+(5, 1, 2, 'सामान्यज्ञान - II', 'C005', 'सामान्यज्ञान - II', NULL, NULL, NULL),
+(6, 5, 0, 'सामान्यज्ञान - II-2', 'C006', 'सामान्यज्ञान - II-2', NULL, NULL, NULL),
+(7, 0, 0, 'करन्ट अफेर्स', 'C007', 'करन्ट अफेर्स', NULL, NULL, NULL),
+(8, 7, 2, 'करन्ट अफेर्स - I', 'C008', 'करन्ट अफेर्स - I', NULL, NULL, NULL),
+(9, 8, 0, 'करन्ट अफेर्स - II', 'C009', 'करन्ट अफेर्स - II', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -686,8 +690,8 @@ INSERT INTO `it_email_manager` (`em_id`, `em_title`, `em_email_subject`, `em_ema
 CREATE TABLE IF NOT EXISTS `it_exams` (
   `ex_id` int(11) NOT NULL AUTO_INCREMENT,
   `ex_category_id` int(11) NOT NULL,
-  `ex_title` varchar(200) NOT NULL,
-  `ex_details` text,
+  `ex_title` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `ex_details` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `ex_start_date_time` datetime NOT NULL,
   `ex_end_date_time` datetime NOT NULL,
   `ex_duration` time NOT NULL,
@@ -695,16 +699,15 @@ CREATE TABLE IF NOT EXISTS `it_exams` (
   `ex_created` datetime NOT NULL,
   `ex_modified` datetime NOT NULL,
   PRIMARY KEY (`ex_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `it_exams`
 --
 
 INSERT INTO `it_exams` (`ex_id`, `ex_category_id`, `ex_title`, `ex_details`, `ex_start_date_time`, `ex_end_date_time`, `ex_duration`, `ex_is_practical`, `ex_created`, `ex_modified`) VALUES
-(1, 10, 'JavaExams', 'JavaExams', '2015-12-01 16:00:00', '2015-12-30 01:00:00', '02:30:00', 0, '2015-09-30 07:14:15', '2015-12-27 08:39:21'),
-(2, 10, 'java exam 2', 'java exam 2', '2015-12-01 16:00:00', '2015-12-30 01:00:00', '02:20:20', 0, '2015-09-30 07:39:40', '2016-01-12 07:58:40'),
-(3, 10, 'java test', 'java test', '2015-12-26 21:36:00', '2016-01-26 11:30:00', '11:20:20', 0, '2015-12-26 21:38:06', '2015-12-26 21:38:06');
+(1, 3, 'सामान्य ज्ञान exam', 'सामान्य ज्ञान exam', '2016-01-20 07:51:00', '2016-01-20 07:51:00', '01:00:00', 0, '2016-01-20 07:52:16', '2016-01-20 07:52:16'),
+(2, 9, 'करन्ट अफेर्स - Q', 'करन्ट अफेर्स - Q', '2016-01-20 08:08:00', '2016-01-20 08:08:00', '01:00:00', 0, '2016-01-20 08:09:06', '2016-01-20 08:09:06');
 
 -- --------------------------------------------------------
 
@@ -715,8 +718,8 @@ INSERT INTO `it_exams` (`ex_id`, `ex_category_id`, `ex_title`, `ex_details`, `ex
 CREATE TABLE IF NOT EXISTS `it_questions` (
   `qt_id` int(11) NOT NULL AUTO_INCREMENT,
   `qt_exam_id` int(11) NOT NULL,
-  `qt_name` varchar(255) NOT NULL,
-  `qt_description` text,
+  `qt_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `qt_description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `qt_type` int(2) NOT NULL,
   `qt_marks` int(11) NOT NULL,
   `qt_image` varchar(255) DEFAULT NULL,
@@ -724,26 +727,18 @@ CREATE TABLE IF NOT EXISTS `it_questions` (
   `qt_modified` datetime NOT NULL,
   PRIMARY KEY (`qt_id`),
   UNIQUE KEY `qt_id` (`qt_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `it_questions`
 --
 
 INSERT INTO `it_questions` (`qt_id`, `qt_exam_id`, `qt_name`, `qt_description`, `qt_type`, `qt_marks`, `qt_image`, `qt_created`, `qt_modified`) VALUES
-(1, 1, 'What is the capital of india?', '', 1, 10, NULL, '2015-11-15 06:56:02', '2015-11-15 06:56:02'),
-(2, 2, 'What is correct map of india?', 'Please select correct image also.', 2, 10, NULL, '2015-11-15 06:59:28', '2015-11-19 23:13:30'),
-(3, 2, 'Question One', 'Question One', 1, 20, NULL, '2015-11-21 05:19:59', '2015-11-21 05:19:59'),
-(4, 1, 'Question Two Question Two', 'Question Two', 2, 20, NULL, '2015-11-21 05:21:40', '2015-11-24 07:31:29'),
-(5, 3, 'first question', 'first question', 1, 10, NULL, '2015-12-26 21:59:05', '2015-12-26 21:59:05'),
-(6, 3, 'second question', 'second question', 1, 20, NULL, '2015-12-26 22:00:28', '2015-12-26 22:00:28'),
-(7, 1, 'test options', 'test options', 1, 1, NULL, '2016-01-08 05:45:15', '2016-01-08 05:45:15'),
-(8, 2, 'test options oooo', 'test options oooo', 2, 10, NULL, '2016-01-08 05:48:42', '2016-01-08 05:48:42'),
-(9, 1, 'Question1', 'Question1', 1, 1, NULL, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
-(10, 1, 'Question2', 'Question2', 1, 1, NULL, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
-(11, 1, 'Question3', 'Question3', 1, 1, NULL, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
-(12, 1, 'Question4', 'Question4', 1, 1, NULL, '2016-01-09 08:36:03', '2016-01-09 08:36:03'),
-(13, 1, 'ggggggt', 'lkjljljljlkj', 2, 1, '5695b7be6fbf2.png', '2016-01-13 07:39:01', '2016-01-13 08:04:38');
+(1, 1, 'सामान्य ज्ञान q 1', 'सामान्य ज्ञान q 1', 1, 1, '', '2016-01-20 07:53:34', '2016-01-20 07:53:34'),
+(9, 1, 'Question4', 'Question4', 1, 1, NULL, '2016-01-22 07:27:31', '2016-01-22 07:27:31'),
+(8, 1, 'Question3', 'Question3', 1, 1, NULL, '2016-01-22 07:27:31', '2016-01-22 07:27:31'),
+(7, 1, 'Question2', 'Question2', 1, 1, NULL, '2016-01-22 07:27:31', '2016-01-22 07:27:31'),
+(6, 1, 'Question1', 'Question1', 1, 1, NULL, '2016-01-22 07:27:31', '2016-01-22 07:27:31');
 
 -- --------------------------------------------------------
 
@@ -753,67 +748,38 @@ INSERT INTO `it_questions` (`qt_id`, `qt_exam_id`, `qt_name`, `qt_description`, 
 
 CREATE TABLE IF NOT EXISTS `it_questions_options` (
   `qto_id` int(11) NOT NULL AUTO_INCREMENT,
-  `qto_name` varchar(200) NOT NULL,
+  `qto_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `qto_image` varchar(255) DEFAULT NULL,
   `qto_question_id` int(11) NOT NULL,
   `qto_right_ans` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=wrong, 1=right',
   PRIMARY KEY (`qto_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=132 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
 
 --
 -- Dumping data for table `it_questions_options`
 --
 
 INSERT INTO `it_questions_options` (`qto_id`, `qto_name`, `qto_image`, `qto_question_id`, `qto_right_ans`) VALUES
-(1, 'India', NULL, 1, 0),
-(2, 'Delhi', NULL, 1, 1),
-(61, 'Option ONe', NULL, 3, 0),
-(60, 'A', NULL, 2, 0),
-(59, 'D', NULL, 2, 0),
-(58, 'C', NULL, 2, 0),
-(57, 'B', NULL, 2, 1),
-(62, 'Option Two', NULL, 3, 0),
-(63, 'Option Three', NULL, 3, 1),
-(64, 'Option Four', NULL, 3, 0),
-(83, 'Option Two', '5653c4ce288ea.png', 4, 1),
-(82, 'Option Three', '5653c4ce2866f.png', 4, 0),
-(81, 'Option Four', '5653c4ce2833c.png', 4, 0),
-(84, 'opt A', NULL, 5, 1),
-(85, 'opt B', NULL, 5, 1),
-(86, 'opt C', NULL, 5, 1),
-(87, 'opt D', NULL, 5, 1),
-(88, 'opt A', NULL, 6, 1),
-(89, 'opt B', NULL, 6, 0),
-(90, 'opt C', NULL, 6, 0),
-(91, 'opt D', NULL, 6, 0),
-(92, 'option a', NULL, 7, 0),
-(93, 'option b', NULL, 7, 0),
-(94, 'option c', NULL, 7, 1),
-(95, 'option d', NULL, 7, 0),
-(96, 'option a', '568f006244664.png', 8, 0),
-(97, 'option b', '568f006244911.png', 8, 0),
-(98, 'option c', '568f006244bd1.png', 8, 1),
-(99, 'option d', '568f006244e62.png', 8, 0),
-(100, 'A', NULL, 9, 0),
-(101, 'B', NULL, 9, 1),
-(102, 'C', NULL, 9, 0),
-(103, 'D', NULL, 9, 0),
-(104, 'A', NULL, 10, 0),
-(105, 'B', NULL, 10, 0),
-(106, 'C', NULL, 10, 1),
-(107, 'D', NULL, 10, 0),
-(108, 'A', NULL, 11, 1),
-(109, 'B', NULL, 11, 0),
-(110, 'C', NULL, 11, 0),
-(111, 'D', NULL, 11, 0),
-(112, 'A', NULL, 12, 0),
-(113, 'B', NULL, 12, 0),
-(114, 'C', NULL, 12, 0),
-(115, 'D', NULL, 12, 1),
-(131, 'd', '5695b65fed0ab.png', 13, 0),
-(130, 'c', '5695b65fed32d.png', 13, 0),
-(129, 'b', '5695b65fed523.png', 13, 1),
-(128, 'a', '5695b65fed70b.png', 13, 0);
+(1, 'सामान्य ज्ञान A', NULL, 1, 0),
+(2, 'सामान्य ज्ञान B', NULL, 1, 1),
+(3, 'सामान्य ज्ञान C', NULL, 1, 0),
+(4, 'सामान्य ज्ञान D', NULL, 1, 0),
+(36, 'D', NULL, 9, 1),
+(35, 'C', NULL, 9, 0),
+(34, 'B', NULL, 9, 0),
+(33, 'A', NULL, 9, 0),
+(32, 'D', NULL, 8, 0),
+(31, 'C', NULL, 8, 0),
+(30, 'B', NULL, 8, 0),
+(29, 'A', NULL, 8, 1),
+(28, 'D', NULL, 7, 0),
+(27, 'C', NULL, 7, 1),
+(26, 'B', NULL, 7, 0),
+(25, 'A', NULL, 7, 0),
+(24, 'D', NULL, 6, 0),
+(23, 'C', NULL, 6, 0),
+(22, 'B', NULL, 6, 1),
+(21, 'A', NULL, 6, 0);
 
 -- --------------------------------------------------------
 
@@ -5414,20 +5380,7 @@ CREATE TABLE IF NOT EXISTS `it_user_answers` (
   `ua_created` datetime NOT NULL,
   `ua_modified` datetime NOT NULL,
   PRIMARY KEY (`ua_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
-
---
--- Dumping data for table `it_user_answers`
---
-
-INSERT INTO `it_user_answers` (`ua_id`, `ua_user_id`, `ua_exam_id`, `ua_question_id`, `ua_option_id`, `ua_created`, `ua_modified`) VALUES
-(1, 5, 2, 3, 63, '2016-01-12 23:04:56', '2016-01-12 23:04:56'),
-(2, 5, 2, 8, 97, '2016-01-12 23:05:01', '2016-01-12 23:05:01'),
-(3, 5, 2, 2, 58, '2016-01-12 23:05:07', '2016-01-12 23:05:07'),
-(4, 5, 3, 5, 86, '2016-01-13 08:23:00', '2016-01-13 08:23:00'),
-(5, 31, 3, 5, 86, '2016-01-17 10:22:15', '2016-01-17 10:22:15'),
-(6, 31, 3, 6, 90, '2016-01-17 10:22:26', '2016-01-17 10:22:26'),
-(7, 5, 3, 6, 91, '2016-01-17 10:23:00', '2016-01-17 10:23:00');
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -5440,29 +5393,7 @@ CREATE TABLE IF NOT EXISTS `it_user_courses` (
   `cr_user_id` int(11) NOT NULL,
   `cr_category_id` int(11) NOT NULL,
   PRIMARY KEY (`cr_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
-
---
--- Dumping data for table `it_user_courses`
---
-
-INSERT INTO `it_user_courses` (`cr_id`, `cr_user_id`, `cr_category_id`) VALUES
-(27, 5, 15),
-(26, 5, 14),
-(5, 6, 11),
-(6, 18, 11),
-(7, 19, 12),
-(8, 20, 11),
-(9, 20, 12),
-(15, 21, 12),
-(14, 21, 11),
-(13, 21, 10),
-(18, 22, 10),
-(24, 28, 11),
-(25, 28, 12),
-(28, 5, 18),
-(29, 5, 16),
-(30, 5, 17);
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -5478,16 +5409,7 @@ CREATE TABLE IF NOT EXISTS `it_user_exams` (
   `ue_created` datetime NOT NULL,
   `ue_modified` datetime NOT NULL,
   PRIMARY KEY (`ue_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `it_user_exams`
---
-
-INSERT INTO `it_user_exams` (`ue_id`, `ue_user_id`, `ue_exam_id`, `ue_exam_start`, `ue_created`, `ue_modified`) VALUES
-(1, 5, 2, '2016-01-12 19:55:13', '2016-01-12 23:05:10', '2016-01-12 23:05:10'),
-(2, 5, 3, '2016-01-13 14:13:17', '2016-01-13 08:23:02', '2016-01-13 08:23:02'),
-(3, 5, 3, '2016-01-17 16:12:29', '2016-01-17 10:23:05', '2016-01-17 10:23:05');
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
