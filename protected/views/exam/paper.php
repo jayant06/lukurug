@@ -6,13 +6,7 @@
 
 <div class="row">
 	<div class="col-sm-9">
-		<div id="question_button_container">
-			<!-- <div class="questionbutton_0">10</div>
-			<div class="questionbutton_1">20</div>
-			<div class="questionbutton_2">30</div>
-			<div class="questionbutton_3">40</div>
-			<div class="questionbutton_4">50</div> -->
-		</div>
+		<div id="question_button_container"></div>
 	</div>
 	<div class="col-sm-3" class="statistic_area">
 		<p>Total Question Pending: <span id="total_pending_que"><?php echo $statistics['total_not_attempted']+$statistics['total_attempted']+$statistics['total_not_viewed']; ?></span></p>
@@ -39,9 +33,11 @@
 	  <strong>Info!</strong> Indicates a neutral informative change or action.
 	</div>
 	-->
+
 	<div class="alert alert-warning deactive-alert" id="warning-msg-box"> 
 	  <strong>Warning!</strong> Please consider your remaining time, hurry up.
 	</div> 
+	
 	<div class="alert alert-danger deactive-alert" id="alert-msg-box">
 	  <strong>Danger!</strong> Only fine minute to finish, submit your pending questions.
 	</div>
@@ -72,7 +68,7 @@
 	var current_statistics = <?php echo json_encode($statistics)?>;
 	var total_question = current_statistics.total_question;
 	var baseurl = "<?php echo Yii::app()->baseUrl.'/';?>";
-	var alertstimout = 5000;
+	var alertstimout = 10000;
 	var timetoexpire = '<?php echo $timeRemaining;?>';
 	var alerts = [{'name':'alert-msg-box','remainingtime':5,'appeared':false,'closetime':alertstimout},
 				{'name':'warning-msg-box','remainingtime':7,'appeared':false,'closetime':alertstimout},
