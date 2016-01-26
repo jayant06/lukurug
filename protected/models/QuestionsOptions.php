@@ -26,7 +26,8 @@ class QuestionsOptions extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('qto_name, qto_question_id, qto_right_ans', 'required'),
+			// qto_name
+			array('qto_question_id, qto_right_ans', 'required'),
 			array('qto_name', 'length', 'max'=>200),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

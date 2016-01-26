@@ -199,6 +199,7 @@
 
 		$( ".add-edit-question-form" ).on( "click", "input[type='radio']", function() {
 			if($(this).is(':checked')){
+				$(".question_options").find("input[type='hidden']").val(0);
 				$(this).parent().find("input[type='hidden']").val(1);
 			}else{
 				$(this).parent().find("input[type='hidden']").val(0);

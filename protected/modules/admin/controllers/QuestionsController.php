@@ -18,6 +18,32 @@ class QuestionsController extends Controller
 		// $this->performAjaxValidation($model);
 		if(isset($_POST['Questions']))
 		{
+			/*echo '<pre>';
+			print_r($_POST);
+			$type=2;
+			foreach ($_POST['rightansh'] as $optKey => $optName) {
+						// if(!empty($optName)){
+							$optionModel = new QuestionsOptions;
+							// $optionModel->qto_name = $optName;
+							$optionModel->qto_question_id = 10; //$model->qt_id;
+
+							if(!empty($_POST['rightansh'][$optKey]))
+								$optionModel->qto_right_ans = 1;
+							else
+								$optionModel->qto_right_ans = 0;
+
+							if($type==2){
+								if(!empty($_FILES['qfile']['name'][$optKey])){
+									$imgName = $this->imageUpload($_FILES['qfile']['name'][$optKey],$_FILES['qfile']['tmp_name'][$optKey],'qoptions');
+									$optionModel->qto_image = $imgName;
+								}
+							}
+							print_r($optionModel);
+							$optionModel->save();
+
+						// }
+					}
+			exit;*/
 			$model->attributes=$_POST['Questions'];
 			if(!empty($_FILES['Questions']['name']['qt_image'])){
 				$imgName = $this->imageUpload($_FILES['Questions']['name']['qt_image'],$_FILES['Questions']['tmp_name']['qt_image'],'questions');
@@ -27,7 +53,7 @@ class QuestionsController extends Controller
 			if($model->save()){
 				if(!empty($_POST['qoptions'])){
 					foreach ($_POST['qoptions'] as $optKey => $optName) {
-						if(!empty($optName)){
+						// if(!empty($optName)){
 							$optionModel = new QuestionsOptions;
 							$optionModel->qto_name = $optName;
 							$optionModel->qto_question_id = $model->qt_id;
@@ -44,8 +70,8 @@ class QuestionsController extends Controller
 								}
 							}
 							$optionModel->save();
-						}
-					}					
+						// }
+					}				
 				}
 				$this->redirect(array('index'));
 			}
@@ -82,7 +108,7 @@ class QuestionsController extends Controller
 					$criteria->params = array(':qto_question_id' => $model->qt_id);
 					QuestionsOptions::model()->deleteAll($criteria);
 					foreach ($_POST['qoptions'] as $optKey => $optName) {
-						if(!empty($optName)){
+						// if(!empty($optName)){
 							$optionModel = new QuestionsOptions;
 							$optionModel->qto_name = $optName;
 							$optionModel->qto_question_id = $model->qt_id;
@@ -103,7 +129,7 @@ class QuestionsController extends Controller
 								}
 							}
 							$optionModel->save();
-						}
+						// }
 					}						
 				}
 				$this->redirect(array('index'));
