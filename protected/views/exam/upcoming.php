@@ -5,14 +5,15 @@
         		<h3 class="panel-title">Exams List</h3>
       		</div>
       		<div class="panel-body" align="left">
-				<?php
-				$this->widget('zii.widgets.CListView', array(
-				    'dataProvider'=>$examDataProvider,
-				    'itemView'=>'_examdashboard',  
-				    'summaryText'=>'', 
-				    'id' => 'examView', 
-				));
-				?>
+					<?php
+					$this->widget('zii.widgets.CListView', array(
+					    'dataProvider'=>$examDataProvider,
+					    'itemView'=>'_examdashboard',  
+					    'summaryText'=>'', 
+					    'id' => 'exam_list_boxes', 
+					    'htmlOptions'=>array('class'=>'')
+					));
+					?>
 			</div>
 		</div>
 	</div>

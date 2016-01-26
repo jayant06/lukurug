@@ -21,7 +21,7 @@
 							'type'=>'raw',
 							'value'=>'CHtml::encode($data->ueExam->ex_title)'
 						),
-						array(
+						/*array(
 							'name'=>'ex_details',
 							'type'=>'raw',
 							'value'=>'CHtml::encode($data->ueExam->ex_details)'
@@ -35,7 +35,7 @@
 							'name'=>'ex_end_date_time',
 							'type'=>'raw',
 							'value'=>'date("d-m-Y",strtotime($data->ueExam->ex_end_date_time))'
-						),
+						),*/
 						array(
 							'name'=>'ue_exam_start',
 							'type'=>'raw',

@@ -1,0 +1,71 @@
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  /* Styles */
+  .top-header .left-div{
+    float: none; text-align: center;
+  }
+  .top-header .middle-div{
+    float: none; text-align: center;
+  }
+  .top-header .right-div{
+    float: none; text-align: center; display: none;
+  }
+  .top-header .middle-div img{
+    width: 145px;
+  }
+}
+
+/* Samsung Galaxy S5 ----------- */
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px){
+  .top-header .left-div{
+    float: none; text-align: center;
+  }
+  .top-header .middle-div{
+    float: none; text-align: center;
+  }
+  .top-header .right-div{
+    float: none; text-align: center; display: none;
+  }
+  .top-header .middle-div img{
+    width: 145px;
+  }
+}
+/* and (-webkit-device-pixel-ratio: 3)*/
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : landscape){
+/* Styles */
+  /*.top-header .left-div{
+    float: none; text-align: center;
+  }
+  .top-header .middle-div{
+    float: none; text-align: center;
+  }
+  .top-header .right-div{
+    float: none; text-align: center; display: none;
+  }
+  .top-header .middle-div img{
+    width: 145px;
+  }*/
+}
+/* and (-webkit-device-pixel-ratio: 3)*/
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait){
+/* Styles */
+    /*.top-header .left-div{
+      float: none; text-align: center;
+    }
+    .top-header .middle-div{
+      float: none; text-align: center;
+    }
+    .top-header .right-div{
+      float: none; text-align: center; display: none;
+    }
+    .top-header .middle-div img{
+      width: 145px;
+    }*/
+}
+
+/*.top-header{
+  height: 122px; padding-top:5px;
+}
+.top-header .middle-div img{
+  width: 145px;
+}

@@ -30,6 +30,22 @@
 	<div align="center" class="col-sm-12" id="processing_bar">
 		<span id="processing_bar_msg">Processing....</span> <img src="<?php echo Yii::app()->request->baseUrl.'/images/processing.gif';?>" alt="Processing..." border="0" />
 	</div>
+
+	<!-- <div class="alert alert-success">
+	  <strong>Success!</strong> Indicates a successful or positive action.
+	</div>
+
+	<div class="alert alert-info">
+	  <strong>Info!</strong> Indicates a neutral informative change or action.
+	</div>
+	-->
+	<div class="alert alert-warning deactive-alert" id="warning-msg-box"> 
+	  <strong>Warning!</strong> Please consider your remaining time, hurry up.
+	</div> 
+	<div class="alert alert-danger deactive-alert" id="alert-msg-box">
+	  <strong>Danger!</strong> Only fine minute to finish, submit your pending questions.
+	</div>
+
 </div>
 <div class="row">
 	<div class="col-sm-12 question_area">
@@ -56,9 +72,12 @@
 	var current_statistics = <?php echo json_encode($statistics)?>;
 	var total_question = current_statistics.total_question;
 	var baseurl = "<?php echo Yii::app()->baseUrl.'/';?>";
-	var warning_alert_time = 6;
-	var red_alert_time = 5;
+	var alertstimout = 5000;
 	var timetoexpire = '<?php echo $timeRemaining;?>';
+	var alerts = [{'name':'alert-msg-box','remainingtime':5,'appeared':false,'closetime':alertstimout},
+				{'name':'warning-msg-box','remainingtime':7,'appeared':false,'closetime':alertstimout},
+				{'name':'red-light-box','remainingtime':5,'appeared':false,'closetime':alertstimout},
+				{'name':'warning-light-box','remainingtime':7,'appeared':false,'closetime':alertstimout}];
 	// console.log(initial_question_list_data,current_statistics);
 
 	$(document).ready(function(){
@@ -74,12 +93,17 @@
 					finishExam(0);
 				},
 				onTick: function(preiods){
-					if(preiods[4]==0 && preiods[5]==red_alert_time && $('#red_alert').css('display')=='none'){
-						$('#warning_alert').css('display','none');
-						$('#red_alert').css('display','inline-block');
+					console.log(alerts[2],alerts[3]);
+					if(preiods[4]==0 && preiods[5]==alerts[2].remainingtime && !alerts[2].appeared){
+						// $('#warning_alert').css('display','none');
+						// $('#red_alert').css('display','inline-block');
+						showHideAlerts(true,1,2);
+						showHideAlerts(true,2,0);
 					}
-					if(preiods[4]==0 && preiods[5]<=warning_alert_time  && $('#warning_alert').css('display')=='none'){
-						$('#warning_alert').css('display','inline-block');
+					if(preiods[4]==0 && preiods[5]==alerts[3].remainingtime  && !alerts[3].appeared){
+						// $('#warning_alert').css('display','inline-block');
+						showHideAlerts(true,1,3);
+						showHideAlerts(true,2,1);
 					}
 				}
 			});
@@ -87,6 +111,38 @@
 		initQuestionBar();
 		updateStatus(status);
 	});
+	function showHideAlerts(showhide,alerttype,type){
+		if(showhide){
+			if(alerttype==1){ // Lights
+				if(type==3){
+					$('#warning_alert').css('display','inline-block');
+					alerts[3].appeared = true;
+				}else if(type==2){
+					$('#warning_alert').css('display','none');
+					$('#red_alert').css('display','inline-block');
+					alerts[2].appeared = true;
+				}
+			}else if(alerttype==2){ // Messages
+				if(type==1){
+					$('#warning-msg-box').show('slow');
+					alerts[1].appeared = true;
+					setTimeout( function() { showHideAlerts(false,2,1); },alerts[1].closetime);
+				}else if(type==0){
+					$('#alert-msg-box').show('slow');
+					alerts[0].appeared = true;
+					setTimeout( function() { showHideAlerts(false,2,0); },alerts[0].closetime);
+				}
+			}
+		}else{
+			if(alerttype==2){ // Messages
+				if(type==1){
+					$('#warning-msg-box').hide('slow');
+				}else if(type==0){
+					$('#alert-msg-box').hide('slow');
+				}
+			}
+		}
+	}
 	function initQuestionBar(){
 		var html = '';
 		for (var i = 0; i < initial_question_list_data.length; i++) {

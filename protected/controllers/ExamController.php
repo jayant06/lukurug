@@ -36,7 +36,8 @@ class ExamController extends Controller
     
     public function actionUpcoming(){
 		$examModel = new Exams;
-		$examDataProvider = $examModel->getexams();
+		// $examDataProvider = $examModel->getexams();
+		$examDataProvider = $examModel->getUpcomingExams();
     	$this->render('upcoming',array('examDataProvider' => $examDataProvider));
     }
 
@@ -83,8 +84,7 @@ class ExamController extends Controller
 			if(empty($examEntry)){
 				// do entry
 				$examEntry = UserExams::model()->putUserExamEntry($user_id,$exam_id); // new UserExams();
-				/*echo 'ue_id: '.$examEntry->ue_id;
-				exit;*/
+				// echo 'ue_id: '.$examEntry->ue_id; exit;
 				if(isset($examEntry->ue_id) && $examEntry->ue_id>0){
 					// Create all the questions for this user for this exam.
 					$uaModel = new UserAnswers;
@@ -99,6 +99,7 @@ class ExamController extends Controller
 					// Error handle here redirect on exam start page or exam list page
 				}
 			}else{
+				// echo 'ue_id else : '.$examEntry->ue_id; exit;
 				if(isset($examEntry->ue_id) && $examEntry->ue_id>0){
 					// check if user answer table entries exists or not
 					$uaModel = new UserAnswers;
@@ -300,18 +301,23 @@ class ExamController extends Controller
 				$ansModel = UserAnswers::model()->find($ansCriteria);
 				
 				if(!empty($ansModel->ua_id)){
-					$ansModel->ua_answer_status = $status;
-				}
-
-				if($ansModel->save()){
-					$return['msg'] = 'Status updated successfully.';
-					$return['error'] = 0;
-					// $return['data'] = array('isWrongAnswer' => $_answer, 'rightanswer' => $rightanswer,'qScore' => $qModel->qt_marks);
-					$return['data'] = array('isWrongAnswer' => 1, 'rightanswer' => 1,'qScore' => 1);
-				}else{
-					$return['msg'] = 'Status not updated successfully please refresh and try again.';
-					$return['error'] = 1;
-					$return['data'] = array('isWrongAnswer' => 1, 'rightanswer' => 1,'qScore' => 1);
+					if($ansModel->ua_answer_status==0 || $ansModel->ua_answer_status==1){
+						$ansModel->ua_answer_status = $status;	
+						if($ansModel->save()){
+							$return['msg'] = 'Status updated successfully.';
+							$return['error'] = 0;
+							// $return['data'] = array('isWrongAnswer' => $_answer, 'rightanswer' => $rightanswer,'qScore' => $qModel->qt_marks);
+							$return['data'] = array('isWrongAnswer' => 1, 'rightanswer' => 1,'qScore' => 1);
+						}else{
+							$return['msg'] = 'Status not updated successfully please refresh and try again.';
+							$return['error'] = 1;
+							$return['data'] = array('isWrongAnswer' => 1, 'rightanswer' => 1,'qScore' => 1);
+						}
+					}else{
+						$return['msg'] = 'No need to update this status.';
+						$return['error'] = 0;
+						$return['data'] = array('isWrongAnswer' => 1, 'rightanswer' => 1,'qScore' => 1);
+					}
 				}
 			}			
 			echo CJSON::encode($return);

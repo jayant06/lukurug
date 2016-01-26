@@ -1,12 +1,12 @@
-<div style="height:122px; padding-top:5px;">
+<div class="top-header">
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <div style="float:left;"><?php echo CHtml::link(CHtml::image(Yii::app()->baseUrl.'/images/logo-adarsh-gurukul.png','Gurukul',array('width'=>150)),array('/')); ?></div>
-                <div style="float:left;"><?php echo CHtml::link(CHtml::image(Yii::app()->baseUrl.'/images/aadarsh-gurukul.png','Gurukul',array('width'=>350)),array('/')); ?></div>
-                <div style="float:right;"><?php echo CHtml::link(CHtml::image(Yii::app()->baseUrl.'/images/glob.jpg','Gurukul',array('width'=>70)),array('/')); ?></div>
+                <div class="left-div"><?php echo CHtml::link(CHtml::image(Yii::app()->baseUrl.'/images/logo-adarsh-gurukul.png','Gurukul',array()),array('/')); ?></div>
+                <div class="middle-div"><?php echo CHtml::link(CHtml::image(Yii::app()->baseUrl.'/images/aadarsh-gurukul.png','Gurukul',array()),array('/')); ?></div>
+                <div class="right-div"><?php echo CHtml::link(CHtml::image(Yii::app()->baseUrl.'/images/glob.jpg','Gurukul',array()),array('/')); ?></div>
 
-                <div style="font-weight: bold;color: red;" align="right">
+                <div class="marquee">
                     <marquee direction="left"> Contact: 9829198118</marquee >
                 </div>
             </div>

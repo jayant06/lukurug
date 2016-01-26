@@ -11,7 +11,7 @@
                     'type'=>'vertical',
                     'enableAjaxValidation'=>false,
                     'htmlOptions'=>array(
-                        'class'=>'form-signin',
+                        'class'=>''
                     )    
                 )); 
             ?>
@@ -26,8 +26,9 @@
                   <?php echo Yii::app()->user->getFlash('error'); ?>
               </div>
             <?php endif; ?>
-        	<?php echo $form->textFieldRow($model,'username',array('class'=>'input-block-level','placeholder'=>'Email address','labelOptions'=>array('label'=>false))); ?>    
-            <?php echo $form->passwordFieldRow($model,'password',array('class'=>'input-block-level','placeholder'=>'Password','labelOptions'=>array('label'=>false))); ?>    
+            
+        	<div class="form-group"><?php echo $form->textFieldRow($model,'username',array('class'=>'form-control','placeholder'=>'Email address','labelOptions'=>array('label'=>false))); ?></div>
+            <div class="form-group"><?php echo $form->passwordFieldRow($model,'password',array('class'=>'form-control','placeholder'=>'Password','labelOptions'=>array('label'=>false))); ?></div>
             <label for="LoginForm_rememberMe" class="checkbox">
             	<?php echo $form->checkBox($model,'rememberMe',array('class'=>'nomargin','uncheckValue'=>'','hiddenField'=>false)); ?>
                 Remember me next time

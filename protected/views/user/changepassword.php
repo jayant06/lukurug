@@ -8,12 +8,12 @@
       			<?php /** @var BootActiveForm $form */
 					$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					    'id'=>'verticalForm',
-					    'type'=>'horizontal',    
+					    'type'=>'vertical',
 					)); 
 				?>
-				<?php echo $form->passwordFieldRow($model, 'old_password', array('class'=>'input-block-level')); ?>
-				<?php echo $form->passwordFieldRow($model, 'new_password', array('class'=>'input-block-level')); ?>
-				<?php echo $form->passwordFieldRow($model, 'new_repeat_password', array('class'=>'input-block-level')); ?>
+				<div class="form-group"><?php echo $form->passwordFieldRow($model, 'old_password', array('class'=>'input-block-level')); ?></div>
+				<div class="form-group"><?php echo $form->passwordFieldRow($model, 'new_password', array('class'=>'input-block-level')); ?></div>
+				<div class="form-group"><?php echo $form->passwordFieldRow($model, 'new_repeat_password', array('class'=>'input-block-level')); ?></div>
 				<div class="form-actions">
 				    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Submit')); ?>
 				    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Reset')); ?>

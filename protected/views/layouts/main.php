@@ -7,6 +7,7 @@
   		//THEME ASSETS
         $cs = Yii::app()->clientScript;		
   		$cs->registerCssFile(Yii::app()->request->baseUrl.'/css/styles.css')
+        ->registerCssFile(Yii::app()->request->baseUrl.'/css/responsive-styles.css')
         // ->registerCssFile(Yii::app()->request->baseUrl.'/css/bootstrap.min.css')
         // ->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.countdown.css') No need for design
         ->registerCssFile(Yii::app()->request->baseUrl.'/css/bootstrap-theme.min.css')

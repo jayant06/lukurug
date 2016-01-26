@@ -9,7 +9,15 @@
 	        	<div class="col-lg-2 bold">First Name:</div><div class="col-lg-10"><?php echo $model->u_first_name;?></div>
 	        	<div class="col-lg-2 bold">Last Name:</div><div class="col-lg-10"><?php echo $model->u_last_name;?></div>
 	        	<div class="col-lg-2 bold">Gender:</div><div class="col-lg-10"><?php echo ($model->u_gender==2)? 'Female' : 'Male';?></div>
-	        	<div class="col-lg-2 bold">Image:</div><div class="col-lg-10"><img src="<?php echo Yii::app()->baseUrl; ?>/storage/users/<?php echo $model->u_image; ?>" width="100"></div>
+	        	<div class="col-lg-2 bold">Image:</div><div class="col-lg-10">
+	        		<?php 
+	        			$profile_img = $model->u_image;
+	        			if(!($profile_img!='' && file_exists(Yii::getPathOfAlias('webroot').'/storage/users/'.$profile_img))){
+	        				$profile_img = 'default.png';
+	        			}
+	        		?>
+	        		<img src="<?php echo Yii::app()->baseUrl; ?>/storage/users/<?php echo $profile_img; ?>" width="100">
+	        	</div>
 	        	<div class="col-lg-2 bold">Today Exam Code:</div><div class="col-lg-10"><?php echo '';?></div>
 			</div>
 		</div>

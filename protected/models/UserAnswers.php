@@ -209,7 +209,7 @@ class UserAnswers extends CActiveRecord
 
 	public function getUserQuestionsStatistics($user_id=0,$ua_user_exam_id=0){
 		$result = Yii::app()->db->createCommand()
-				    ->select('COUNT(ua.ua_id) total_question,SUM(IF(ua.ua_answer_status=2,1,0)) total_attempted,SUM(IF(ua.ua_answer_status=1,1,0)) total_not_attempted,SUM(IF(ua.ua_answer_status=0,1,0)) total_not_viewed,SUM(IF(ua.ua_answer_status=3,1,0)) total_submitted,SUM(IF(ua.ua_answer=1,1,0)) total_correct,SUM(IF(ua.ua_answer=0,1,0)) total_wrong,ex.ex_title,ex.ex_start_date_time,ex.ex_end_date_time,ex.ex_duration')
+				    ->select('COUNT(ua.ua_id) total_question,SUM(IF(ua.ua_answer_status=2,1,0)) total_attempted,SUM(IF(ua.ua_answer_status=1,1,0)) total_not_attempted,SUM(IF(ua.ua_answer_status=0,1,0)) total_not_viewed,SUM(IF(ua.ua_answer_status=3,1,0)) total_submitted,SUM(IF(ua.ua_answer=1 AND ua.ua_answer_status=3,1,0)) total_correct,SUM(IF(ua.ua_answer=0 AND ua.ua_answer_status=3,1,0)) total_wrong,ex.ex_title,ex.ex_start_date_time,ex.ex_end_date_time,ex.ex_duration')
 				    ->from('{{user_answers}} ua')
 				    ->join('{{exams}} ex', 'ex.ex_id = ua.ua_exam_id')
 				    ->where('ua_user_id=:ua_user_id AND ua_user_exam_id=:ua_user_exam_id' , array(':ua_user_id' =>$user_id, ':ua_user_exam_id' =>$ua_user_exam_id))

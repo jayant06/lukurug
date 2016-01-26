@@ -63,6 +63,9 @@ class SiteController extends Controller
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login()){
+				unset(Yii::app()->session['exam_started']);
+				unset(Yii::app()->session['user_exam_id']);
+				unset(Yii::app()->session['startTime']);
 				$this->redirect(array('user/profile'));
 			}
 		}
@@ -80,7 +83,10 @@ class SiteController extends Controller
 	 */
 	public function actionLogout()
 	{
-		Yii::app()->user->logout(false);		
+		Yii::app()->user->logout(false);	
+		unset(Yii::app()->session['exam_started']);
+		unset(Yii::app()->session['user_exam_id']);
+		unset(Yii::app()->session['startTime']);
 		$this->redirect(Yii::app()->homeUrl);
 	}
 

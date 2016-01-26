@@ -37,20 +37,47 @@ class ExamsController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+		$model = $this->loadModel($id);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Exams']))
-		{
+		if(isset($_POST['Exams'])){
 			$model->attributes=$_POST['Exams'];
 			if($model->save())
 				$this->redirect(array('index'));
 		}
 
+		// echo $model->ex_category_id; exit;
+		$criteria = new CDbCriteria;
+		$criteria->select = array('t.*','(SELECT cat_parent_id FROM {{categories}} WHERE cat_id = t.cat_parent_id) AS main_cat_id');
+		$criteria->order = 'cat_name';
+		$criteria->condition = 'cat_id=:cat_id';
+		$criteria->params = array(':cat_id'=>$model->ex_category_id);
+		$CategoryData = Categories::model()->find($criteria);
+		/*echo '<pre> dd';
+		print_r($CategoryData->main_cat_id);
+		exit;*/
+
+		// $mainCategories = CHtml::listData($mainCategoryData,'cat_id','cat_name');
+
+		$sub_cat_id = $CategoryData->cat_parent_id;
+		$main_cat_id = $CategoryData->main_cat_id;
+
+		// SUB CATEGORY LIST
+		$criteria = new CDbCriteria;
+		$criteria->select = array('t.*','(SELECT cat_parent_id FROM {{categories}} WHERE cat_id = t.cat_parent_id) AS main_cat_id');
+		$criteria->order = 'cat_name';
+		$criteria->condition = 'cat_parent_id=:cat_id';
+		$criteria->params = array(':cat_id'=>$main_cat_id);
+		$SubCategoryData = Categories::model()->findAll($criteria);
+		$SubCategories = CHtml::listData($SubCategoryData,'cat_id','cat_name');
+
+		$maincategories = 
+		$subcategories = 
+
 		$this->render('update',array(
 			'model'=>$model,
+			'sub_cat_id'=>$sub_cat_id,
+			'main_cat_id'=>$main_cat_id,
+			'SubCategories'=>$SubCategories
 		));
 	}
 

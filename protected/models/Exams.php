@@ -114,16 +114,51 @@ class Exams extends CActiveRecord
 		}
 		
 		$criteria=new CDbCriteria;
-		$cond = "ex_end_date_time >= '".date('Y-m-d')."'";
+		$cond = "ex_end_date_time >= '".date('Y-m-d H:i')."'";
 		// $cond = 'NOW() between ex_start_date_time and ex_end_date_time';
 		if(!empty($uExams)){
-			$cond .= " AND ex_id NOT IN (".implode(', ',$uExams).")";
+			// $cond .= " AND ex_id NOT IN (".implode(', ',$uExams).")";
 		}
 		$criteria->condition = $cond;
 		$criteria->order = "ex_title ASC";
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function getUpcomingExams(){
+		$user_id = Yii::app()->user->id;
+
+		$result = Yii::app()->db->createCommand()
+					// ->select('ex.*')
+				    ->select('ex.*,ue.ue_id')
+				    ->from('{{exams}} ex')
+				    ->leftJoin('{{user_exams}} ue', 'ue.ue_exam_id = ex.ex_id AND ue.ue_user_id = '.$user_id.' AND ue.ue_is_finished=1')
+				    ->where('ex_end_date_time>=:ex_end_date_time AND ue.ue_id IS NULL' , array(':ex_end_date_time' =>date('Y-m-d H:i')))
+				    ->order('ex_end_date_time DESC');
+				    // ->queryAll(); // this will be returned as an array of arrays
+				    // ->query();
+		// print_r($result->query()); exit;
+		// echo $result->text; exit;
+
+		$query = str_replace(":ex_end_date_time", "'".date('Y-m-d H:i')."'", $result->text);
+		// echo $query; exit;
+		// $count = $result->queryScalar();
+		$count = Yii::app()->db->createCommand($query)->queryScalar();
+        $dataProvider = new CSqlDataProvider($query,array(
+                'totalItemCount'=>$count,
+                'keyField' => 'ex_id',
+                'sort'=>array(
+                    'attributes'=>array(
+                        'ex_title'
+                    ),
+                ),
+                'pagination'=>array(
+                    'pageSize'=>10,
+                ),
+                // 'params' => array(':ex_end_date_time' =>date('Y-m-d H:i'))
+        ));
+		return $dataProvider;
 	}
 	/**
 	 * Returns the static model of the specified AR class.

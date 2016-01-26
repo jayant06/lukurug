@@ -27,6 +27,7 @@
 	                	<?php
 	                	$criteria=new CDbCriteria;
 	                	$criteria->condition = 'cat_parent_id=0 AND cat_parent_type=0';
+	                	$criteria->order = 'cat_name';
 	                	$categoryData = Categories::model()->findAll($criteria);
 						$categories = CHtml::listData($categoryData,'cat_id','cat_name');
 	                	?>

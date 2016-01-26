@@ -15,13 +15,33 @@ body {
 	padding-bottom: 40px;
 	background-color: #f5f5f5;
 }
-
-.navbar-fixed-bottom, .navbar-fixed-top{
-  margin-bottom: 20px !important;
+.top-header{
+  height: 122px; padding-top:5px;
 }
+.top-header .left-div, .top-header .middle-div{
+  float: left;
+}
+.top-header .right-div{
+  float: right;
+}
+.top-header .left-div img{
+  width: 150px;
+}
+.top-header .middle-div img{
+  width: 350px;
+}
+.top-header .right-div img{
+  width: 70px;
+}
+.marquee{
+  font-weight: bold;color: red; text-align: right;
+}
+/*.navbar-fixed-bottom, .navbar-fixed-top{
+  margin-bottom: 20px !important;
+}*/
 
 /** Login Page **/
-.loginbody {
+/*.loginbody {
     padding-top: 40px;
     padding-bottom: 40px;
 }
@@ -49,9 +69,10 @@ body {
     height: auto;
     margin-bottom: 10px;
     padding: 7px 9px;
-}
+}*/
 
 /** 2 level sub menu **/
+/*
 .dropdown-menu-with-subs .sub-menu {
   left: 100%;
   position: absolute;
@@ -82,6 +103,7 @@ body {
   top: 11px;
   left: -6px;
 }
+*/
 
 /** Global **/
 #content {
@@ -266,9 +288,9 @@ textarea{
   color: #000;
 }
 
-.examBlocks{
+/*.examBlocks{
   border:2px solid #CCC; border-radius:5px;background-color:#EEE;float:left;padding:3%;margin:0 10px 0 10px;font-weight:bold;
-}
+}*/
 .examCnt{
   padding:5px;border-radius:5px;border:1px solid #CCC;
 }
@@ -305,6 +327,12 @@ textarea{
     text-align:left;
     /* inline-block space fix */
     margin-right:-4px;
+}
+#exam_list_boxes .items a .examBlocks{
+  width: 100%; border:2px solid #CCC; border-radius:5px;background-color:#EEE;float:left;padding:3%;margin:5px 0px 0px 0px;font-weight:bold;
+}
+#exam_list_boxes .items a .examBlocks div{
+  text-align: center;
 }
 
 /* PAPER PAGE CSS */
@@ -359,5 +387,11 @@ textarea{
 }
 #processing_bar{
     visibility: hidden;
+}
+.active-alert{
+  display: block; margin-top: 10px;
+}
+.deactive-alert{
+  display: none; margin-top: 10px;
 }
 /* PAPER PAGE CSS */

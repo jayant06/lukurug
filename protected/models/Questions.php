@@ -92,7 +92,7 @@ class Questions extends CActiveRecord
 		$criteria->compare('qt_name',$this->qt_name,true);
 		$criteria->compare('qt_description',$this->qt_description,true);
 		$criteria->compare('qt_type',$this->qt_type);
-		$criteria->compare('qt_marks',$this->qt_marks);
+		// $criteria->compare('qt_marks',$this->qt_marks);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -142,6 +142,7 @@ class CategoriesController extends Controller
 		$subcatIds = array();
 		if(!empty($_POST['maincatid'])){
 			$criteria=new CDbCriteria;
+			$criteria->order = 'cat_name';
 			$criteria->condition = "cat_parent_id='".$_POST['maincatid']."'";
 			$categories = Categories::model()->findAll($criteria);
 			if(!empty($categories)){

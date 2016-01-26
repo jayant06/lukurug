@@ -26,22 +26,32 @@ $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.simple.datetimepi
 				<?php
 				if(!empty($mainCategories)){
 					foreach ($mainCategories as $mcatid => $mcatname) {
-						?>
-						<option value="<?php echo $mcatid; ?>"><?php echo $mcatname; ?></option>					
-						<?php
+						$selected = ($mcatid==$main_cat_id)? "selected='selected'": "";
+						?><option <?php echo $selected?> value="<?php echo $mcatid; ?>"><?php echo $mcatname; ?></option><?php
 					}
 				}
 				?>					
 			</select>
 			<label for="sub_category_id">Sub Course</label>
-			<select id="sub_category_id" name="sub_category_id" class="form-control"></select>
+			<select id="sub_category_id" name="sub_category_id" class="form-control">
+				<option value="">--Sub Course--</option>
+				<?php
+				if(!empty($SubCategories)){
+					foreach ($SubCategories as $catid => $catname) {
+						$selected = ($catid==$sub_cat_id)? "selected='selected'": "";
+						?><option <?php echo $selected?> value="<?php echo $catid; ?>"><?php echo $catname; ?></option><?php
+					}
+				}
+				?>	
+			</select>
 			<?php
 			$cources = array();
 			if(!empty($model->ex_category_id)){
 				$criteria=new CDbCriteria;
 				$criteria->order = 'cat_name';
-				$criteria->condition = 'cat_id="'.$model->ex_category_id.'"';
+				$criteria->condition = 'cat_parent_id="'.$sub_cat_id.'"';
 				$courcesData = Categories::model()->findAll($criteria);
+
 				$cources = CHtml::listData($courcesData,'cat_id','cat_name');
 			}
 			echo $form->dropDownListRow($model,'ex_category_id',$cources,array('class'=>'form-control','empty' => 'Select Course')); 

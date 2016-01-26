@@ -14,6 +14,7 @@
 class Categories extends CActiveRecord
 {
 	public $categoryType;
+	public $main_cat_id;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -103,6 +104,7 @@ class Categories extends CActiveRecord
 		if(!empty($conditions))
 			$criteria->condition = $conditions;
 
+		$criteria->order = 'cat_name';
 		$criteria->compare('cat_id',$this->cat_id);
 		$criteria->compare('cat_name',$this->cat_name,true);
 		$criteria->compare('cat_description',$this->cat_description,true);

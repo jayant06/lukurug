@@ -15,6 +15,7 @@
 				else
 					$criteria->condition = 'cat_parent_id!=0 AND cat_parent_type=2';
 
+				$criteria->order = 'cat_name';
 				if($model->categoryType!=1){
 					$categoryData = Categories::model()->findAll($criteria);
 					$categories = CHtml::listData($categoryData,'cat_id','cat_name');
@@ -23,6 +24,7 @@
 			if($model->categoryType==3){
 				$mainCriteria = new CDbCriteria;
 				$mainCriteria->condition = 'cat_parent_id=0 AND cat_parent_type=0';
+				$mainCriteria->order = 'cat_name';
 				$mainCategoryData = Categories::model()->findAll($mainCriteria);
 				$mainCategories = CHtml::listData($mainCategoryData,'cat_id','cat_name');
 				?>
@@ -69,7 +71,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#cancelBtn').click(function(){
-			window.location = '<?php echo Yii::app()->baseUrl; ?>/admin/categories';
+			window.location = '<?php echo Yii::app()->baseUrl."/admin/categories/index/?type=".$model->categoryType; ?>';
 		});	
 		$('#main_category_id').change(function(){
 			$.ajax({

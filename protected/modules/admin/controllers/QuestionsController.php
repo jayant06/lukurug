@@ -171,15 +171,16 @@ class QuestionsController extends Controller
 										$qModel->qt_name = $question;
 										$qModel->qt_exam_id = $_POST['exam_select'];
 										$qModel->qt_type = 1;
-										$qModel->qt_marks = $totalmarks;
+										$qModel->qt_marks = ($totalmarks>=1)? $totalmarks : 1;
 										$qModel->qt_description = $question;
+
 										if($qModel->save()){
 											//First Option
 											/***********************************/
 											$optionModel = new QuestionsOptions;
 											$optionModel->qto_name = $option1;
 											$optionModel->qto_question_id = $qModel->qt_id;
-											if($rightans==$option1)
+											if($rightans=='A')
 												$optionModel->qto_right_ans = 1;
 											else
 												$optionModel->qto_right_ans = 0;
@@ -190,7 +191,7 @@ class QuestionsController extends Controller
 											$optionModel = new QuestionsOptions;
 											$optionModel->qto_name = $option2;
 											$optionModel->qto_question_id = $qModel->qt_id;
-											if($rightans==$option2)
+											if($rightans=='B')
 												$optionModel->qto_right_ans = 1;
 											else
 												$optionModel->qto_right_ans = 0;
@@ -201,7 +202,7 @@ class QuestionsController extends Controller
 											$optionModel = new QuestionsOptions;
 											$optionModel->qto_name = $option3;
 											$optionModel->qto_question_id = $qModel->qt_id;
-											if($rightans==$option3)
+											if($rightans=='C')
 												$optionModel->qto_right_ans = 1;
 											else
 												$optionModel->qto_right_ans = 0;
@@ -212,7 +213,7 @@ class QuestionsController extends Controller
 											$optionModel = new QuestionsOptions;
 											$optionModel->qto_name = $option4;
 											$optionModel->qto_question_id = $qModel->qt_id;
-											if($rightans==$option4)
+											if($rightans=='D')
 												$optionModel->qto_right_ans = 1;
 											else
 												$optionModel->qto_right_ans = 0;
@@ -235,6 +236,7 @@ class QuestionsController extends Controller
 			}
 			$this->redirect(array('index'));	
 		}
+		
 		$model = new Questions;
 		if(isset($_GET['Questions'])) {
 	        $model->attributes =$_GET['Questions'];

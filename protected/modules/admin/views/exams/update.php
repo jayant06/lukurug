@@ -5,7 +5,7 @@
                 Update Exams
             </div>
             <div class="panel-body">
-				<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+				<?php echo $this->renderPartial('_update_form', array('model'=>$model,'main_cat_id'=>$main_cat_id,'sub_cat_id'=>$sub_cat_id,'SubCategories'=>$SubCategories)); ?>
 			</div>
 		</div>
 	</div>

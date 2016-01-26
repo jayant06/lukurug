@@ -84,11 +84,11 @@
 							'type'=>'raw',
 							'value'=>'CHtml::encode($data->qt_description)'
 						),
-						array(
+						/*array(
 							'name'=>'qt_marks',
 							'type'=>'raw',
 							'value'=>'CHtml::encode($data->qt_marks)'
-						),
+						),*/
 						array(
 							'header'=>'Action',
 							'class'=>'CButtonColumn',																		
