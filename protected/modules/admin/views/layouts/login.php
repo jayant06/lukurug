@@ -9,7 +9,7 @@
   	?>
   </head>
   <body id="login" class="loginbody">
-    <div class="container">           
+    <div class="container" style="margin-top:10%;">           
      <?php echo $content; ?>
     </div>    
   </body>
