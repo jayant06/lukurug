@@ -89,7 +89,6 @@
 					finishExam(0);
 				},
 				onTick: function(preiods){
-					console.log(alerts[2],alerts[3]);
 					if(preiods[4]==0 && preiods[5]==alerts[2].remainingtime && !alerts[2].appeared){
 						// $('#warning_alert').css('display','none');
 						// $('#red_alert').css('display','inline-block');
