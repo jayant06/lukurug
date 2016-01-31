@@ -31,7 +31,7 @@ class Exams extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ex_category_id, ex_title, ex_start_date_time, ex_end_date_time, ex_duration', 'required'),
+			array('ex_category_id, ex_title, ex_start_date_time, ex_end_date_time, ex_duration, ex_status', 'required'),
 			array('ex_category_id', 'numerical', 'integerOnly'=>true),
 			array('ex_title', 'length', 'max'=>200),
 			array('ex_details, ex_is_practical', 'safe'),
@@ -160,6 +160,19 @@ class Exams extends CActiveRecord
         ));
 		return $dataProvider;
 	}
+
+	public function getStatus(){
+	    $stats = array(
+	        0 => 'Pending',
+	        1 => 'Start',
+	        2 => 'Completed',
+	    );
+	    return CHtml::dropDownlist($this->ex_id.'_status',$this->ex_status,$stats, array(
+	        'class'     => 'status',
+	        'data-id'   => $this->ex_id,
+	    ));
+	}
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

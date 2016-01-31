@@ -8,8 +8,10 @@
                 	echo CHtml::link('Add Exams',array('/admin/exams/create'),array('class' => 'btn btn-primary'));
                 	?>
                 </div>
+                
                 <div style="clear:both;"></div>
             </div>
+            <div id="alert-message" class="custom-error-success">566 dsdfda</div>
             <div class="panel-body">                 
 	          	<?php
 	            $this->widget('bootstrap.widgets.TbGridView', array(
@@ -32,6 +34,12 @@
 							'name'=>'ex_end_date_time',
 							'type'=>'raw',
 							'value'=>'CHtml::encode($data->ex_end_date_time)'
+						),
+						array(
+							'name'=>'ex_status',
+							'type'=>'raw',
+							'value'=> '$data->status',
+							'filter'=>false,
 						),
 						array(
 							'header'=>'Action',
@@ -57,3 +65,22 @@
       	</div>
     </div>
 </div>
+<?php
+$url = $this->createUrl('/admin/exams/status');
+Yii::app()->clientScript->registerScript('initStatus',
+    "$('select.status').on('change',function() {
+        el = $(this);
+        $.ajax({
+			url: '$url',
+			data: {status: el.val(), ex_id: el.data('id')},
+			type: 'POST',
+			success: function(data){
+				$('#alert-message').html('Status updated successfully...');	
+				$('#alert-message').css('visibility','visible');
+				setTimeout(function(){ $('#alert-message').html(''); $('#alert-message').css('visibility','hidden'); },5000);
+			}
+		});
+    });",
+    CClientScript::POS_READY
+);
+?>

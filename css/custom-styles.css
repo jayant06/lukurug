@@ -454,3 +454,6 @@ font-size: 19px;
   color:#FFF;
   background: none;
 }
+.custom-error-success{
+  float:left; width:100%; padding:0px 15px 0px 15px; text-align:center; visibility: hidden; height: 18px;
+}

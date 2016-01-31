@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2016 at 12:19 PM
+-- Generation Time: Jan 31, 2016 at 10:35 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.5.24
 
@@ -106,6 +106,7 @@ INSERT INTO `it_authitem` (`name`, `type`, `description`, `bizrule`, `data`) VAL
 ('AdminExamsCreate', 1, NULL, NULL, NULL),
 ('AdminExamsDelete', 1, NULL, NULL, NULL),
 ('AdminExamsIndex', 1, NULL, NULL, NULL),
+('AdminExamsStatus', 1, NULL, NULL, NULL),
 ('AdminExamsUpdate', 1, NULL, NULL, NULL),
 ('AdminQuestionsCreate', 1, NULL, NULL, NULL),
 ('AdminQuestionsDelete', 1, NULL, NULL, NULL),
@@ -190,6 +191,7 @@ INSERT INTO `it_authitemchild` (`parent`, `child`) VALUES
 ('admin', 'AdminExamsCreate'),
 ('admin', 'AdminExamsDelete'),
 ('admin', 'AdminExamsIndex'),
+('admin', 'AdminExamsStatus'),
 ('admin', 'AdminExamsUpdate'),
 ('admin', 'AdminQuestionsCreate'),
 ('admin', 'AdminQuestionsDelete'),
@@ -667,6 +669,7 @@ CREATE TABLE IF NOT EXISTS `it_exams` (
   `ex_end_date_time` datetime NOT NULL,
   `ex_duration` time NOT NULL,
   `ex_is_practical` int(2) NOT NULL DEFAULT '0',
+  `ex_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0 = pending, 1= start, 2=completed',
   `ex_created` datetime NOT NULL,
   `ex_modified` datetime NOT NULL
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -675,10 +678,10 @@ CREATE TABLE IF NOT EXISTS `it_exams` (
 -- Dumping data for table `it_exams`
 --
 
-INSERT INTO `it_exams` (`ex_id`, `ex_category_id`, `ex_title`, `ex_details`, `ex_start_date_time`, `ex_end_date_time`, `ex_duration`, `ex_is_practical`, `ex_created`, `ex_modified`) VALUES
-(1, 61, 'O level - C language - Array', 'O level - C language', '2016-01-26 11:32:00', '2016-01-26 15:30:00', '00:10:00', 0, '2016-01-26 11:34:05', '2016-01-26 15:03:18'),
-(2, 61, 'O level - C language - Array2', 'O level - C language - Array2', '2016-01-26 15:07:00', '2016-01-26 15:07:00', '00:10:00', 0, '2016-01-26 15:08:23', '2016-01-26 15:08:23'),
-(3, 61, 'O level - C language - Array3', 'O level - C language - Array3', '2016-01-26 15:08:00', '2016-01-26 15:08:00', '00:10:00', 0, '2016-01-26 15:08:47', '2016-01-26 15:08:47');
+INSERT INTO `it_exams` (`ex_id`, `ex_category_id`, `ex_title`, `ex_details`, `ex_start_date_time`, `ex_end_date_time`, `ex_duration`, `ex_is_practical`, `ex_status`, `ex_created`, `ex_modified`) VALUES
+(1, 61, 'O level - C language - Array', 'O level - C language', '2016-01-26 11:32:00', '2016-02-27 15:30:00', '00:30:00', 0, 0, '2016-01-26 11:34:05', '2016-02-01 02:33:55'),
+(2, 61, 'O level - C language - Array2', 'O level - C language - Array2', '2016-01-26 15:07:00', '2016-01-26 15:07:00', '00:10:00', 0, 0, '2016-01-26 15:08:23', '2016-01-26 15:08:23'),
+(3, 61, 'O level - C language - Array3', 'O level - C language - Array3', '2016-01-26 15:08:00', '2016-01-26 15:08:00', '00:10:00', 0, 0, '2016-01-26 15:08:47', '2016-01-26 15:08:47');
 
 -- --------------------------------------------------------
 
@@ -696,7 +699,7 @@ CREATE TABLE IF NOT EXISTS `it_questions` (
   `qt_image` varchar(255) DEFAULT NULL,
   `qt_created` datetime NOT NULL,
   `qt_modified` datetime NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `it_questions`
@@ -709,7 +712,12 @@ INSERT INTO `it_questions` (`qt_id`, `qt_exam_id`, `qt_name`, `qt_description`, 
 (4, 1, 'निम्न में से कौन-सा धात्विक अयस्क है ?', 'निम्न में से कौन-सा धात्विक अयस्क है ?', 1, 1, NULL, '2016-01-26 13:56:59', '2016-01-26 13:56:59'),
 (5, 1, 'निम्नलिखित में से खरीफ फसल कौन-सी है ?', 'निम्नलिखित में से खरीफ फसल कौन-सी है ?', 1, 1, NULL, '2016-01-26 13:56:59', '2016-01-26 13:56:59'),
 (6, 1, 'भारत के निम्नलिखित किस राज्य में अनुकूल लिंग अनुपात है ?', 'भारत के निम्नलिखित किस राज्य में अनुकूल लिंग अनुपात है ?', 1, 1, NULL, '2016-01-26 13:56:59', '2016-01-26 13:56:59'),
-(7, 1, 'भारत के पश्चिमी तट का उत्तरी भाग जाना जाता है', 'भारत के पश्चिमी तट का उत्तरी भाग जाना जाता है', 1, 1, NULL, '2016-01-26 13:56:59', '2016-01-26 13:56:59');
+(7, 1, 'भारत के पश्चिमी तट का उत्तरी भाग जाना जाता है', 'भारत के पश्चिमी तट का उत्तरी भाग जाना जाता है', 1, 1, NULL, '2016-01-26 13:56:59', '2016-01-26 13:56:59'),
+(8, 1, 'qqqqq', 'qqqqq', 2, 1, '56a7d49cdc63c.png', '2016-01-27 01:48:36', '2016-01-27 01:48:36'),
+(9, 1, '45', '45', 2, 1, '56a7d7ce2f042.png', '2016-01-27 02:02:14', '2016-01-27 02:02:14'),
+(10, 1, '56', '56', 2, 1, '56a7d81573303.png', '2016-01-27 02:03:25', '2016-01-27 02:03:25'),
+(11, 1, '12', '12', 2, 1, '56a7d950df25d.png', '2016-01-27 02:08:40', '2016-01-27 02:08:40'),
+(12, 1, '23', '23', 2, 1, '', '2016-01-27 02:10:23', '2016-01-27 02:24:10');
 
 -- --------------------------------------------------------
 
@@ -723,7 +731,7 @@ CREATE TABLE IF NOT EXISTS `it_questions_options` (
   `qto_image` varchar(255) DEFAULT NULL,
   `qto_question_id` int(11) NOT NULL,
   `qto_right_ans` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0=wrong, 1=right'
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `it_questions_options`
@@ -757,7 +765,15 @@ INSERT INTO `it_questions_options` (`qto_id`, `qto_name`, `qto_image`, `qto_ques
 (25, 'कोंकण कट', NULL, 7, 1),
 (26, 'उत्तरी सिरकास कट', NULL, 7, 0),
 (27, 'कोरोमंडल तट', NULL, 7, 0),
-(28, 'मलबार तट', NULL, 7, 0);
+(28, 'मलबार तट', NULL, 7, 0),
+(29, '', NULL, 10, 0),
+(30, '', NULL, 10, 1),
+(31, '', NULL, 10, 0),
+(32, '', NULL, 10, 0),
+(48, '', NULL, 12, 0),
+(47, '', NULL, 12, 0),
+(46, '', NULL, 12, 1),
+(45, '', NULL, 12, 0);
 
 -- --------------------------------------------------------
 
@@ -5239,6 +5255,8 @@ CREATE TABLE IF NOT EXISTS `it_user` (
   `u_last_login_date` datetime DEFAULT NULL,
   `u_addmission_date` date DEFAULT NULL,
   `u_image` varchar(255) DEFAULT NULL,
+  `u_last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `u_is_login` tinyint(2) NOT NULL DEFAULT '0',
   `u_created` datetime NOT NULL,
   `u_modified` datetime NOT NULL
 ) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
@@ -5247,38 +5265,38 @@ CREATE TABLE IF NOT EXISTS `it_user` (
 -- Dumping data for table `it_user`
 --
 
-INSERT INTO `it_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_addmission_date`, `u_image`, `u_created`, `u_modified`) VALUES
-(1, 'It', 'Gurukul', 'admin@itgurukul.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '02c00693466cf0cc34bdc26042f19677', '2015-06-03 01:26:27', NULL, NULL, '2014-12-23 02:20:00', '2015-09-07 21:06:04'),
-(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2016-01-26 07:49:18', '2016-01-10', '56945a854994a.png', '2015-06-04 02:51:57', '2016-01-26 07:49:18'),
-(6, 'asdasdsd', 'dfsdf', 'asdasd@gmail.com', '$2a$13$p5sOHpLUGx68C3ci/zE9zOz.qk4Ha6xp6HU0gLCFYWgZEpxTqvVEK', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-02 20:38:56', '2016-01-10 10:45:10'),
-(7, 'erewrwerwerwer', 'dfsdf', 'erewrwerwerwer@gmail.com', '$2a$13$jUuhjDP/4A07DJo9fiYw7u.ie1EZTMq.rRZofsXDRRsy975qdiQoi', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-02 20:40:26', '2016-01-03 07:11:13'),
-(8, 'sdjlfjdsf', 'fljljfd', 'lkfldfjgl@gmail.com', '$2a$13$lBKmQASHZZv.5pFL6ywoJOyIu9NKpLc5h5tmk0PM1T6DmtrFcxR0u', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-02 20:51:15', '2016-01-03 07:11:32'),
-(9, 'eiruowueoru', ';lwokeqwe', 'sadasd@gmail.com', '$2a$13$sVXnA19utoSez7Xis2Y1O.IaBqH4YIg8lmBaQ.1yO2BJ54A4ne0mG', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-02 20:53:24', '2016-01-03 07:11:39'),
-(10, 'name1', 'A', 'name1@gmail.com', '$2a$13$6kJnUiefvwCa0vEs/hKNk.kzDOSXe21/swO6w4hY5iKTSne3lMnM2', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-10 00:01:27', '2016-01-10 00:01:27'),
-(11, 'name2', 'A', 'name2@gmail.com', '$2a$13$POyTzv8MQvbGkoOkqNRxDezRJ1n9jewy6YyhYZ1rESIaxSlAUflRO', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-10 00:01:29', '2016-01-10 00:01:29'),
-(12, 'name3', 'A', 'name3@gmail.com', '$2a$13$t/UJxUsXpkQxlMHI0wvRleEGy5p2L15MwTWfrWykBO1J4l0ehgZCS', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-10 00:01:30', '2016-01-10 00:01:30'),
-(13, 'name4', 'A', 'name4@gmail.com', '$2a$13$M04r1CmGsLFmpBS9musGdOcSQvFcIKMsP8AARTd0RtxHuTbv0JmOa', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-10 00:01:31', '2016-01-10 00:01:31'),
-(14, 'name5', 'A', 'name5@gmail.com', '$2a$13$iUsYc9ccfBskJdSxCIr8zum59nSFhB64bmmzZ6LpENueUv0QNyQvy', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-10 00:05:03', '2016-01-10 00:05:03'),
-(15, 'name6', 'A', 'name6@gmail.com', '$2a$13$bReokKX5TuVJif9kMlnFz.3qOQKi1YRj7M9r/XZOYj4hDNqSutcCa', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-10 00:05:04', '2016-01-10 00:05:04'),
-(16, 'name7', 'A', 'name7@gmail.com', '$2a$13$Qh.ET5GHZzn0DIW3MGftbO8dUKahaZTr1yRx/nhO5drzpotV3/H2G', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-10 00:05:05', '2016-01-10 00:05:05'),
-(17, 'name8', 'A', 'name8@gmail.com', '$2a$13$3REzxdXm5xxErxt9Wa6UVeH3kundUF/Og5zwqrPSds1bjH9JyipRq', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-10 00:05:06', '2016-01-10 00:05:06'),
-(18, 'hhhh', 'ggg', 'ggg@gmail.com', '$2a$13$NXD.y4Q/d8RuX6IBe4EJIu8XuhOZgYmOXLP4OdhxQSTz23.kuAmeS', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-10 10:58:47', '2016-01-10 10:58:47'),
-(19, 'kkkkkkk', 'lllllll', 'lllllll@gmail.com', '$2a$13$.BN1HYhmsWla4npGbbg/yuKUVXvXxGm95A//cuALnM5Uq52Ye7tFC', 'member', 1, 1, 1, NULL, NULL, '2016-01-10 11:05:56', NULL, NULL, '2016-01-10 11:05:29', '2016-01-10 11:05:56'),
-(20, 'jsaddashdk', 'saldjlasldjsal', 'jsaddashdk@gmail.com', '$2a$13$b2XXsgDsNRtyCTdcno63SeOZGYZk7NlcbDlDziFgApO5Td0tWwMTu', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', NULL, '2016-01-10 11:28:11', '2016-01-10 11:28:11'),
-(21, 'dssdsds', 'dssdsds', 'dssdsds@gmail.com', '$2a$13$RBJgmSUZrmjFypr3U/FM/ubR0J4lnYDD9M3046dSyvTrHYOjmEO4G', 'member', 1, 1, 1, NULL, NULL, '1970-01-01 00:00:00', '2016-01-10', NULL, '2016-01-10 11:30:58', '2016-01-10 11:36:54'),
-(22, 'sdfsdfsdf', 'fgdfgdfgdf', 'dsfsdfsdfs@gmail.com', '$2a$13$w68sOTrzqgUezr9fjwTwqeUWZEXb1W4K0kzZuEZY1LM5agMLVhpiC', 'member', 1, 1, 1, NULL, NULL, NULL, '2016-01-10', NULL, '2016-01-10 11:38:07', '2016-01-10 11:38:07'),
-(23, 'name9', 'A', 'name9@gmail.com', '$2a$13$9F3ZRnFIUP5sAvcbig.tL.RXvDwTdxSLtNS3KQ.a5CY1OcuoNRmfO', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', NULL, '2016-01-10 11:42:10', '2016-01-10 11:42:10'),
-(24, 'name10', 'A', 'name10@gmail.com', '$2a$13$ZBgpSGGxqMsHXb4T63g7ieondzHXtpqFafsIHKoC5hZcU1VFN69dy', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', NULL, '2016-01-10 11:42:12', '2016-01-10 11:42:12'),
-(25, 'name11', 'A', 'name11@gmail.com', '$2a$13$oMB0ZbyW82NSuG5asA3LfOdgdzQ.L0anA4jSjVS8Z9lWQQGoZ39EG', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', NULL, '2016-01-10 11:42:14', '2016-01-10 11:42:14'),
-(26, 'name12', 'A', 'name12@gmail.com', '$2a$13$m57QBUC5LRI2oLP/uWS1H.wtxWdsS.5ApHEdJ0H/LWTsrhvXFwP2C', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', NULL, '2016-01-10 11:42:15', '2016-01-10 11:42:15'),
-(27, 'adsdasd', 'asdasdasdas', 'asdasdsad@gmail.com', '$2a$13$ofbUsh9oVynCg6Yi2YU1uOcD3EtLyB9wNII.7og9p6JW4kVyRXrou', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, '56931be610c8e.png', '2016-01-11 08:35:11', '2016-01-11 08:35:11'),
-(28, 'ldkfjsdfjsdjfl', 'sdjfkljsdlfjsd', 'kdjfsjdfkjsldkfjksdjflk@gmail.com', '$2a$13$QE38RLoOYvqAwEenFRUoNeLXldppwguNpwY1L4BemoBDI3F.BmqKC', 'member', 1, 1, 1, NULL, NULL, '1970-01-01 00:00:00', '2016-01-12', '56945d3a6c7eb.png', '2016-01-12 07:21:37', '2016-01-12 07:26:10'),
-(29, 'name14', 'A', 'name14@gmail.com', '$2a$13$BtzfeFEdAJeB0nJDJ1VKzeXRM.tLWBVPabCixf038.oGn9ZGpoTm2', 'member', 1, 1, 1, NULL, NULL, NULL, '2016-01-17', NULL, '2016-01-17 09:18:27', '2016-01-17 09:18:27'),
-(30, 'name15', 'A', 'name15@gmail.com', '$2a$13$nIY3ugdcRDr74Ebe1AvNG.Ky8urn6yDbqv1UZI4mwyzHREHJBo7I.', 'member', 1, 1, 1, NULL, NULL, NULL, '2016-01-17', NULL, '2016-01-17 09:18:28', '2016-01-17 09:18:28'),
-(31, 'name16', 'A', 'name16@gmail.com', '$2a$13$plau7AvPHK3i1qORyZYaqeKQwkxXhgQ7KtlhenITKW/DISs/SxjES', 'member', 1, 1, 1, NULL, NULL, '2016-01-17 10:20:42', '2016-01-17', NULL, '2016-01-17 09:18:29', '2016-01-17 10:20:42'),
-(32, 'name17', 'A', 'name17@gmail.com', '$2a$13$iLv9IYLFMyXSyG.RocnzO.vCm1j/ZMbYbERM00bu0XO/AigWPmsIe', 'member', 1, 1, 1, NULL, NULL, NULL, '2016-01-17', NULL, '2016-01-17 09:18:30', '2016-01-17 09:18:30'),
-(33, 'sss', 'ssss', 'ssss@gmail.com', '$2a$13$MMJRZM8FsNW7r84jhGCPo.w9OVqqeeHASQOqYtFjeSgiXawSf7ID2', 'member', 1, 1, 1, NULL, NULL, NULL, '2015-12-15', '569fda0a82790.jpg', '2016-01-21 00:33:39', '2016-01-21 00:33:39'),
-(34, 'aa', 'aa', 'aa@gmail.com', '$2a$13$rxwBibaG8yBi4fDqyq0yTuH72Y0tAmmqWT3.YSTf3SmgbJPag8EOy', 'member', 1, 1, 1, NULL, NULL, '2016-01-26 15:13:19', '2016-11-15', NULL, '2016-01-25 05:10:36', '2016-01-26 15:13:19');
+INSERT INTO `it_user` (`u_id`, `u_first_name`, `u_last_name`, `u_email`, `u_password`, `u_role`, `u_gender`, `u_status`, `u_mail_verify`, `u_verkey`, `u_scrkey`, `u_last_login_date`, `u_addmission_date`, `u_image`, `u_last_login`, `u_is_login`, `u_created`, `u_modified`) VALUES
+(1, 'It', 'Gurukul', 'admin@itgurukul.com', '$2a$13$mFlSnpEY4X7.gf3ff4UKdeeZhgIskbSYyIVPWaUn7x2icbsUs11Aa', 'admin', 1, 1, 1, NULL, '02c00693466cf0cc34bdc26042f19677', '2015-06-03 01:26:27', NULL, NULL, '2016-01-31 07:16:39', 0, '2014-12-23 02:20:00', '2015-09-07 21:06:04'),
+(5, 'testuser', 'One', 'testuserone@gmail.com', '$2a$13$VzURb1EeBFmX/9yd7yiGZ.iar3xBDl/a4tC8gT.QLHcceStU.PMjK', 'member', 1, 1, 1, NULL, NULL, '2016-01-27 02:32:35', '2016-01-10', '56945a854994a.png', '2016-01-31 07:16:39', 0, '2015-06-04 02:51:57', '2016-01-27 02:32:35'),
+(6, 'asdasdsd', 'dfsdf', 'asdasd@gmail.com', '$2a$13$p5sOHpLUGx68C3ci/zE9zOz.qk4Ha6xp6HU0gLCFYWgZEpxTqvVEK', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-02 20:38:56', '2016-01-10 10:45:10'),
+(7, 'erewrwerwerwer', 'dfsdf', 'erewrwerwerwer@gmail.com', '$2a$13$jUuhjDP/4A07DJo9fiYw7u.ie1EZTMq.rRZofsXDRRsy975qdiQoi', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-02 20:40:26', '2016-01-03 07:11:13'),
+(8, 'sdjlfjdsf', 'fljljfd', 'lkfldfjgl@gmail.com', '$2a$13$lBKmQASHZZv.5pFL6ywoJOyIu9NKpLc5h5tmk0PM1T6DmtrFcxR0u', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-02 20:51:15', '2016-01-03 07:11:32'),
+(9, 'eiruowueoru', ';lwokeqwe', 'sadasd@gmail.com', '$2a$13$sVXnA19utoSez7Xis2Y1O.IaBqH4YIg8lmBaQ.1yO2BJ54A4ne0mG', 'member', 1, 1, 0, NULL, NULL, '1970-01-01 00:00:00', NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-02 20:53:24', '2016-01-03 07:11:39'),
+(10, 'name1', 'A', 'name1@gmail.com', '$2a$13$6kJnUiefvwCa0vEs/hKNk.kzDOSXe21/swO6w4hY5iKTSne3lMnM2', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-10 00:01:27', '2016-01-10 00:01:27'),
+(11, 'name2', 'A', 'name2@gmail.com', '$2a$13$POyTzv8MQvbGkoOkqNRxDezRJ1n9jewy6YyhYZ1rESIaxSlAUflRO', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-10 00:01:29', '2016-01-10 00:01:29'),
+(12, 'name3', 'A', 'name3@gmail.com', '$2a$13$t/UJxUsXpkQxlMHI0wvRleEGy5p2L15MwTWfrWykBO1J4l0ehgZCS', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-10 00:01:30', '2016-01-10 00:01:30'),
+(13, 'name4', 'A', 'name4@gmail.com', '$2a$13$M04r1CmGsLFmpBS9musGdOcSQvFcIKMsP8AARTd0RtxHuTbv0JmOa', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-10 00:01:31', '2016-01-10 00:01:31'),
+(14, 'name5', 'A', 'name5@gmail.com', '$2a$13$iUsYc9ccfBskJdSxCIr8zum59nSFhB64bmmzZ6LpENueUv0QNyQvy', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-10 00:05:03', '2016-01-10 00:05:03'),
+(15, 'name6', 'A', 'name6@gmail.com', '$2a$13$bReokKX5TuVJif9kMlnFz.3qOQKi1YRj7M9r/XZOYj4hDNqSutcCa', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-10 00:05:04', '2016-01-10 00:05:04'),
+(16, 'name7', 'A', 'name7@gmail.com', '$2a$13$Qh.ET5GHZzn0DIW3MGftbO8dUKahaZTr1yRx/nhO5drzpotV3/H2G', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-10 00:05:05', '2016-01-10 00:05:05'),
+(17, 'name8', 'A', 'name8@gmail.com', '$2a$13$3REzxdXm5xxErxt9Wa6UVeH3kundUF/Og5zwqrPSds1bjH9JyipRq', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-10 00:05:06', '2016-01-10 00:05:06'),
+(18, 'hhhh', 'ggg', 'ggg@gmail.com', '$2a$13$NXD.y4Q/d8RuX6IBe4EJIu8XuhOZgYmOXLP4OdhxQSTz23.kuAmeS', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-10 10:58:47', '2016-01-10 10:58:47'),
+(19, 'kkkkkkk', 'lllllll', 'lllllll@gmail.com', '$2a$13$.BN1HYhmsWla4npGbbg/yuKUVXvXxGm95A//cuALnM5Uq52Ye7tFC', 'member', 1, 1, 1, NULL, NULL, '2016-01-10 11:05:56', NULL, NULL, '2016-01-31 07:16:39', 0, '2016-01-10 11:05:29', '2016-01-10 11:05:56'),
+(20, 'jsaddashdk', 'saldjlasldjsal', 'jsaddashdk@gmail.com', '$2a$13$b2XXsgDsNRtyCTdcno63SeOZGYZk7NlcbDlDziFgApO5Td0tWwMTu', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', NULL, '2016-01-31 07:16:39', 0, '2016-01-10 11:28:11', '2016-01-10 11:28:11'),
+(21, 'dssdsds', 'dssdsds', 'dssdsds@gmail.com', '$2a$13$RBJgmSUZrmjFypr3U/FM/ubR0J4lnYDD9M3046dSyvTrHYOjmEO4G', 'member', 1, 1, 1, NULL, NULL, '1970-01-01 00:00:00', '2016-01-10', NULL, '2016-01-31 07:16:39', 0, '2016-01-10 11:30:58', '2016-01-10 11:36:54'),
+(22, 'sdfsdfsdf', 'fgdfgdfgdf', 'dsfsdfsdfs@gmail.com', '$2a$13$w68sOTrzqgUezr9fjwTwqeUWZEXb1W4K0kzZuEZY1LM5agMLVhpiC', 'member', 1, 1, 1, NULL, NULL, NULL, '2016-01-10', NULL, '2016-01-31 07:16:39', 0, '2016-01-10 11:38:07', '2016-01-10 11:38:07'),
+(23, 'name9', 'A', 'name9@gmail.com', '$2a$13$9F3ZRnFIUP5sAvcbig.tL.RXvDwTdxSLtNS3KQ.a5CY1OcuoNRmfO', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', NULL, '2016-01-31 07:16:39', 0, '2016-01-10 11:42:10', '2016-01-10 11:42:10'),
+(24, 'name10', 'A', 'name10@gmail.com', '$2a$13$ZBgpSGGxqMsHXb4T63g7ieondzHXtpqFafsIHKoC5hZcU1VFN69dy', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', NULL, '2016-01-31 07:16:39', 0, '2016-01-10 11:42:12', '2016-01-10 11:42:12'),
+(25, 'name11', 'A', 'name11@gmail.com', '$2a$13$oMB0ZbyW82NSuG5asA3LfOdgdzQ.L0anA4jSjVS8Z9lWQQGoZ39EG', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', NULL, '2016-01-31 07:16:39', 0, '2016-01-10 11:42:14', '2016-01-10 11:42:14'),
+(26, 'name12', 'A', 'name12@gmail.com', '$2a$13$m57QBUC5LRI2oLP/uWS1H.wtxWdsS.5ApHEdJ0H/LWTsrhvXFwP2C', 'member', 1, 1, 1, NULL, NULL, NULL, '0000-00-00', NULL, '2016-01-31 07:16:39', 0, '2016-01-10 11:42:15', '2016-01-10 11:42:15'),
+(27, 'adsdasd', 'asdasdasdas', 'asdasdsad@gmail.com', '$2a$13$ofbUsh9oVynCg6Yi2YU1uOcD3EtLyB9wNII.7og9p6JW4kVyRXrou', 'member', 1, 1, 0, NULL, NULL, NULL, NULL, '56931be610c8e.png', '2016-01-31 07:16:39', 0, '2016-01-11 08:35:11', '2016-01-11 08:35:11'),
+(28, 'ldkfjsdfjsdjfl', 'sdjfkljsdlfjsd', 'kdjfsjdfkjsldkfjksdjflk@gmail.com', '$2a$13$QE38RLoOYvqAwEenFRUoNeLXldppwguNpwY1L4BemoBDI3F.BmqKC', 'member', 1, 1, 1, NULL, NULL, '1970-01-01 00:00:00', '2016-01-12', '56945d3a6c7eb.png', '2016-01-31 07:16:39', 0, '2016-01-12 07:21:37', '2016-01-12 07:26:10'),
+(29, 'name14', 'A', 'name14@gmail.com', '$2a$13$BtzfeFEdAJeB0nJDJ1VKzeXRM.tLWBVPabCixf038.oGn9ZGpoTm2', 'member', 1, 1, 1, NULL, NULL, NULL, '2016-01-17', NULL, '2016-01-31 07:16:39', 0, '2016-01-17 09:18:27', '2016-01-17 09:18:27'),
+(30, 'name15', 'A', 'name15@gmail.com', '$2a$13$nIY3ugdcRDr74Ebe1AvNG.Ky8urn6yDbqv1UZI4mwyzHREHJBo7I.', 'member', 1, 1, 1, NULL, NULL, NULL, '2016-01-17', NULL, '2016-01-31 07:16:39', 0, '2016-01-17 09:18:28', '2016-01-17 09:18:28'),
+(31, 'name16', 'A', 'name16@gmail.com', '$2a$13$plau7AvPHK3i1qORyZYaqeKQwkxXhgQ7KtlhenITKW/DISs/SxjES', 'member', 1, 1, 1, NULL, NULL, '2016-01-17 10:20:42', '2016-01-17', NULL, '2016-01-31 07:16:39', 0, '2016-01-17 09:18:29', '2016-01-17 10:20:42'),
+(32, 'name17', 'A', 'name17@gmail.com', '$2a$13$iLv9IYLFMyXSyG.RocnzO.vCm1j/ZMbYbERM00bu0XO/AigWPmsIe', 'member', 1, 1, 1, NULL, NULL, NULL, '2016-01-17', NULL, '2016-01-31 07:16:39', 0, '2016-01-17 09:18:30', '2016-01-17 09:18:30'),
+(33, 'sss', 'ssss', 'ssss@gmail.com', '$2a$13$MMJRZM8FsNW7r84jhGCPo.w9OVqqeeHASQOqYtFjeSgiXawSf7ID2', 'member', 1, 1, 1, NULL, NULL, NULL, '2015-12-15', '569fda0a82790.jpg', '2016-01-31 07:16:39', 0, '2016-01-21 00:33:39', '2016-01-21 00:33:39'),
+(34, 'aa', 'aa', 'aa@gmail.com', '$2a$13$rxwBibaG8yBi4fDqyq0yTuH72Y0tAmmqWT3.YSTf3SmgbJPag8EOy', 'member', 1, 1, 1, NULL, NULL, '2016-01-26 15:13:19', '2016-11-15', NULL, '2016-01-31 07:16:39', 0, '2016-01-25 05:10:36', '2016-01-26 15:13:19');
 
 -- --------------------------------------------------------
 
@@ -5558,12 +5576,12 @@ ALTER TABLE `it_exams`
 -- AUTO_INCREMENT for table `it_questions`
 --
 ALTER TABLE `it_questions`
-  MODIFY `qt_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `qt_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `it_questions_options`
 --
 ALTER TABLE `it_questions_options`
-  MODIFY `qto_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
+  MODIFY `qto_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `it_site_settings`
 --

@@ -62,6 +62,7 @@ $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.simple.datetimepi
 			<?php echo $form->textFieldRow($model,'ex_end_date_time',array('class'=>'form-control')); ?>
 			<?php echo $form->textFieldRow($model,'ex_duration',array('class'=>'form-control','maxlength'=> 8,'style' => 'width:90px;')); ?>
 			<?php echo $form->radioButtonListInlineRow($model, 'ex_is_practical', array(0 => 'No',1 =>'Yes')); ?>		
+			<?php $ex_status_list = array('0'=>'Pending','1'=>'Start','2'=>'Completed'); echo $form->dropDownListRow($model,'ex_status',$ex_status_list,array('class'=>'form-control')); ?>			
 			<div>&nbsp;</div>
 			<div class="form-actions">
 				<?php 

@@ -101,6 +101,32 @@ class ExamsController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
+	public function actionStatus(){
+		$this->layout = false;
+		if(Yii::app()->request->isAjaxRequest){
+			$return['msg'] = 'Status was not updated successfully.';
+			$return['error'] = 2;
+			$return['data'] = '';
+			if(Yii::app()->request->getPost('ex_id') && Yii::app()->request->getPost('ex_id')>0){
+				$model = Exams::model()->findByPk(Yii::app()->request->getPost('ex_id'));
+				// print_r($model);
+				if(!empty($model)){
+					$model->ex_status = Yii::app()->request->getPost('status');
+					if($model->save()){
+						$return['msg'] = 'Status updated successfully.';
+						$return['error'] = 0;
+					}else{
+						$return['msg'] = 'Status was not updated successfully.';
+						$return['error'] = 1;
+					}
+				}
+			}
+			echo CJSON::encode($return);
+		}else{
+			$this->redirect(array('admin'));
+		}
+	}
+
 	/**
 	 * Lists all models.
 	 */
@@ -134,8 +160,7 @@ class ExamsController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='exams-form')
-		{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='exams-form'){
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}

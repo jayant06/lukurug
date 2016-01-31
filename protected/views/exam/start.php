@@ -27,6 +27,7 @@
 		            <label>Medium: <select id="medium" name="medium"><option value="English">English</option></select></label>
 					<?php //$model = array(); echo $form->textFieldRow('k','username',array('class'=>'input-block-level','placeholder'=>'Email address','labelOptions'=>array('label'=>false))); ?>    
 					<input type="submit" class="btn btn-default" value="Start" />
+					<?php if($wait_for_start){ ?><div style="color:red">You will be able to start as soon as administrator allow, please wait for few seconds and try again or contact to administrator.</div><?php }?>
 					<?php $this->endWidget(); ?>
 				</div>
 			</div>

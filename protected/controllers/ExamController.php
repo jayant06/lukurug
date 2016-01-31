@@ -65,7 +65,7 @@ class ExamController extends Controller
     		$this->redirect(array('exam/paper'));
     	}
 		$data['ex_title'] = 'demo';
-		$params = array('examdata' => $data,'ur_exam_id'=> $ur_exam_id);
+		$params = array('examdata' => $data,'ur_exam_id'=> $ur_exam_id,'wait_for_start'=>Yii::app()->session['wait_for_start']);
     	$this->render('start',$params);
     }
 
@@ -76,9 +76,16 @@ class ExamController extends Controller
 		if(Yii::app()->request->isPostRequest){
 			// echo 'not direct'; exit;
 			$exam_id = Yii::app()->request->getPost('ur_exam_id');
-			if(empty($exam_id) || empty($user_id))
-				throw new CHttpException(404,'The requested page does not exist.');
+			if(empty($exam_id) || empty($user_id)){
+				$this->redirect(array('exam/start/'.$exam_id));	
+				// throw new CHttpException(404,'The requested page does not exist.');
+			}
 
+			$exam = Exams::model()->findByPk($exam_id);
+			if(empty($exam) || $exam->ex_status!=1){
+				Yii::app()->session['wait_for_start'] = 1;
+				$this->redirect(array('exam/start/'.$exam_id));	
+			}
 			$examEntry = UserExams::model()->getUserExamEntry($user_id,$exam_id);
 
 			if(empty($examEntry)){
